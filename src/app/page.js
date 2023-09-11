@@ -1,11 +1,11 @@
 // pages/index.js
 import React from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar.js';
 
 const HomePage = () => {
   return (
     <div>
-      <Navbar/>
+      <p>Here is some page content.</p>
     </div>
   );
 };
