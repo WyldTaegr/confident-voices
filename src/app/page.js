@@ -1,6 +1,5 @@
 // pages/index.js
 import React from 'react';
-import Navbar from '../components/Navbar.js';
 
 const HomePage = () => {
   return (
