@@ -10,8 +10,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div>
-          <h1>Hello, Next.js!</h1>
-          <p>Welcome to  Next.js application.</p>
+          <h1>Confident Voices !</h1>
           <MyComponent/>
         </div>
         {children}
