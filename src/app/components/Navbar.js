@@ -21,6 +21,11 @@ const Navbar = () => {
                 <a className="text-white hover:text-gray-300">Progress Page</a>
               </Link>
             </li>
+            <li>
+              <Link href="/FeedbackPage">
+                <a className="text-white hover:text-gray-300">Feedback Page</a>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
