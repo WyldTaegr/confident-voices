@@ -9,14 +9,14 @@ const UserProfilePage = () => {
   });
 
   return (
-    <div className="user-profile">
+    <div className="flex flex-col items-center justify-center">
       <img
         src={user.profilePicture}
         alt="Profile"
-        className="profile-picture"
+        className="w-32 h-32 rounded-full mb-4"
       />
-      <h1>{user.name}</h1>
-      <p>{user.bio}</p>
+      <h1 className="text-2xl font-semibold">{user.name}</h1>
+      <p className="text-gray-600 mt-2">{user.bio}</p>
     </div>
   );
 };
