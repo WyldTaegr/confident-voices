@@ -13,17 +13,17 @@ const Navbar = () => {
           <ul className="flex space-x-4">
             <li>
               <Link href="/CommunityPage">
-                <a className="text-white hover:text-gray-300">Community Page</a>
+                <a className="text-white hover:text-gray-300">Community</a>
               </Link>
             </li>
             <li>
               <Link href="/ProgressPage">
-                <a className="text-white hover:text-gray-300">Progress Page</a>
+                <a className="text-white hover:text-gray-300">Progress</a>
               </Link>
             </li>
             <li>
               <Link href="/FeedbackPage">
-                <a className="text-white hover:text-gray-300">Feedback Page</a>
+                <a className="text-white hover:text-gray-300">Feedback</a>
               </Link>
             </li>
           </ul>

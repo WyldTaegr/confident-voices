@@ -12,7 +12,6 @@ export default function RootLayout({ children }) {
       <body>
         <div>
         <Navbar/>
-          <h1>Confident Voices !</h1>
         </div>
         {children}
       </body>
