@@ -2,6 +2,7 @@
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 import { Auth } from '@aws-amplify/auth';
 import { useEffect, useState } from 'react';
+import '@aws-amplify/ui-react/styles.css';
 
 function LoginPage() {
   const [user, setUser] = useState(null);
@@ -37,4 +38,4 @@ function LoginPage() {
 //withAuthenticator removed why doesnt this work ...HMMM 
 //TO DO: understand AWS COGNITO
 
-export default (LoginPage);
+export default withAuthenticator(LoginPage);
