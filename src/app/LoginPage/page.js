@@ -10,6 +10,7 @@ export default function LoginPage() {
     <Authenticator
       // Default to Sign Up screen
       initialState="signUp"
+      /*TO-DO: set up role based access views*/
       // Customize `Authenticator.SignUp.FormFields`
       components={{
         SignUp: {
