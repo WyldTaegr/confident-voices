@@ -26,6 +26,11 @@ const Navbar = () => {
                 <a className="text-white hover:text-gray-300">Feedback</a>
               </Link>
             </li>
+            <li>
+              <Link href="/InteractiveExercisesPage">
+                <a className="text-white hover:text-gray-300">Interactive Exercises</a>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

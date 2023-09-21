@@ -5,10 +5,16 @@ import Link from 'next/link';
 const InteractiveExercisesPage = () => {
   return (
     <div>
-      <h1> Interactive Exercises PAGE</h1>
-      <button>
-        <Link href='/'> GO BACK HOME</Link>
-      </button>     
+      <h1> Interactive Exercises</h1>
+      <div>
+        <h3>Beginner: Short description</h3>  
+      </div> 
+      <div>
+        <h3>Intermediate: Short description</h3>
+      </div>
+      <div>
+        <h3>Advanced: Short description</h3>
+      </div>
     </div>
   );
 };
