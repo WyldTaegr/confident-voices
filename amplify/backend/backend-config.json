@@ -1,4 +1,22 @@
 {
+  "api": {
+    "confidentvoices": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "confidentvoices": {
       "customAuth": false,
@@ -18,8 +36,6 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "PROFILE",
-          "PHONE_NUMBER",
           "NAME",
           "FAMILY_NAME"
         ],

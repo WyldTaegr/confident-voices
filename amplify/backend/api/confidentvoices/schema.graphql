@@ -1,0 +1,66 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+# Example types provided by the default schema template:
+# 
+# type Blog @model {
+#   id: ID!
+#   name: String!
+#   posts: [Post] @hasMany
+# }
+# 
+# type Post @model {
+#   id: ID!
+#   title: String!
+#   blog: Blog @belongsTo
+#   comments: [Comment] @hasMany
+# }
+# 
+# type Comment @model {
+#   id: ID!
+#   post: Post @belongsTo
+#   content: String!
+# }
+
+type Therapist @model {
+  id: ID!
+  parent: Boolean!
+  students: [Student] @hasMany
+}
+
+type Student @model {
+  id: ID!
+  therapist: Therapist @belongsTo
+  parents: [Therapist] @hasMany
+  progress: [ExerciseProgress] @hasMany
+}
+
+type Exercise @model {
+  id: ID!
+  questions: [Question] @hasMany
+}
+
+type Question @model {
+  id: ID!
+}
+
+type ExerciseProgress @model {
+  id: ID!
+  student: Student! @belongsTo
+  progress: [QuestionProgress] @hasMany
+}
+
+type QuestionProgress @model {
+  id: ID!
+  exerciseProgress: ExerciseProgress! @belongsTo
+  question: Question! @hasOne
+  completed: Boolean!
+}
+
+# Used to reference file in S3
+type Recording {
+  bucket: String!
+  region: String!
+  key: String!
+}
