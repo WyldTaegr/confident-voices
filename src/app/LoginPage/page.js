@@ -3,7 +3,8 @@ import { Amplify, Auth } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { useAuthenticator, useTheme } from '@aws-amplify/ui-react';
 import { View, Image, Text, Heading, Button, SelectField, CheckboxField } from '@aws-amplify/ui-react';
-import awsExports from '../../aws-exports';
+import '@aws-amplify/ui-react/styles.css';
+import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 import '@aws-amplify/ui-react/styles.css';
 
