@@ -5,13 +5,12 @@ function AudioRecorder() {
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState([]);
   const mediaRecorder = useRef(null);
-  const audioStream = useRef(null);
+  const mediaStream = useRef(null); // Add this line to store the media stream
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      audioStream.current = stream;
-
+      mediaStream.current = stream; // Store the stream
       const recorder = new MediaRecorder(stream);
       mediaRecorder.current = recorder;
 
@@ -22,23 +21,27 @@ function AudioRecorder() {
       };
 
       recorder.onstop = () => {
-        audioStream.current.getTracks().forEach((track) => track.stop());
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-
-        // Create a download link for the recorded audio
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const a = document.createElement('a');
-        a.href = audioUrl;
-        a.download = 'recorded-audio.wav';
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        URL.revokeObjectURL(audioUrl);
-        document.body.removeChild(a);
-
+        setAudioChunks((prevChunks) => {
+          const audioBlob = new Blob(prevChunks, { type: 'audio/webm' });
+      
+          // Create a download link for the recorded audio
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const a = document.createElement('a');
+          a.href = audioUrl;
+          a.download = 'recorded-audio.webm';
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(audioUrl);
+          document.body.removeChild(a);
+      
+          // Now reset the audio chunks
+          return [];
+        });
+      
         setRecording(false);
-        setAudioChunks([]); // Clear audioChunks after processing
-      };
+    };
+      
 
       recorder.start();
       setRecording(true);
@@ -48,8 +51,12 @@ function AudioRecorder() {
   };
 
   const stopRecording = () => {
-    if (mediaRecorder.current) {
+    if (mediaRecorder.current && mediaRecorder.current.state === 'recording') {
       mediaRecorder.current.stop();
+    }
+    if (mediaStream.current) { // Check if the stream is available
+      mediaStream.current.getTracks().forEach(track => track.stop()); // Stop each track
+      mediaStream.current = null; // Reset the media stream ref
     }
   };
 
