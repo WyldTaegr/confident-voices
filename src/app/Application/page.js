@@ -3,13 +3,13 @@ import React from 'react';
 
 import Link from 'next/link';
 
-const HomePage = () => {
+const ApplicationPage = () => {
   return (
     <div>
-      Landing Page
+      ApplicationPage
     </div>
   );
 };
 
 
-export default HomePage;
+export default ApplicationPage;

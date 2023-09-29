@@ -7,27 +7,27 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <Link href="/UserProfilePage">
+          <Link href="/Application/UserProfilePage">
             <a className="text-white text-2xl font-bold">Home</a>
           </Link>
           <ul className="flex space-x-4">
             <li>
-              <Link href="/CommunityPage">
+              <Link href="/Application/CommunityPage">
                 <a className="text-white hover:text-gray-300">Community</a>
               </Link>
             </li>
             <li>
-              <Link href="/ProgressPage">
+              <Link href="/Application/ProgressPage">
                 <a className="text-white hover:text-gray-300">Progress</a>
               </Link>
             </li>
             <li>
-              <Link href="/FeedbackPage">
+              <Link href="/Application/FeedbackPage">
                 <a className="text-white hover:text-gray-300">Feedback</a>
               </Link>
             </li>
             <li>
-              <Link href="/InteractiveExercisesPage">
+              <Link href="/Application/InteractiveExercisesPage">
                 <a className="text-white hover:text-gray-300">Interactive Exercises</a>
               </Link>
             </li>
