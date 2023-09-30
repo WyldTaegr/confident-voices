@@ -1,0 +1,6 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Amplify CLI always pulls with LF line endings
+amplify/** text eol=lf
+src/ui-components/* text eol=lf
