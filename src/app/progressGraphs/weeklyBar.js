@@ -2,7 +2,9 @@
 import React, {useEffect} from 'react';
 import Link from 'next/link';
 import Chart from 'chart.js';
-import "./graph.css";
+//import "./graph.css";
+import { Rating, Grid } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
 function WeeklyBarChart(){
     useEffect(() => {
@@ -129,17 +131,20 @@ function WeeklyBarChart(){
     }, [])
     /* end of creation of bar graph*/
     return (
-        <div class = "container">
-            <div class= "item-1">
+        <Grid columnGap = "0.5rem"
+        rowGap = "0.5rem"
+        templateColumns = "1fr 1.5fr"
+        templateRows = "3fr">
+        
+            <div>
+                <Rating value={5} maxValue = {5} fillColor = "hsl(84, 92%, 71%)" />
                 <canvas id = "starProgress"></canvas>
-            </div>
-            <div class = "item-3">
                 <canvas id= "totalProgress"></canvas>
             </div>
-            <div class = "item-2">
+            <div direction = "column">
                 <canvas id = "weeklyProgress"></canvas>
             </div>
-        </div>
+        </Grid>
   );
 }
 /*end of function*/
