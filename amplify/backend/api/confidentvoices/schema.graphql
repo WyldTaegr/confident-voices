@@ -26,13 +26,14 @@ input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONL
 type Therapist @model {
   id: ID!
   parent: Boolean!
-  students: [Student] @hasMany
+  students: [Student] @manyToMany(relationName: "TherapistsStudents")
+  children: [Student] @manyToMany(relationName: "ParentsChildren")
 }
 
 type Student @model {
   id: ID!
-  therapist: Therapist @belongsTo
-  parents: [Therapist] @hasMany
+  therapists: [Therapist] @manyToMany(relationName: "TherapistsStudents")
+  parents: [Therapist] @manyToMany(relationName: "ParentsChildren")
   progress: [ExerciseProgress] @hasMany
 }
 
