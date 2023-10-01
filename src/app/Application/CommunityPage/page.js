@@ -14,7 +14,7 @@ const CommunityPage = () => {
       <h1> COMMUNITY PAGE</h1>
       <Button variation = "primary" onClick={()=> setAlert(!alert)}>
         <ImPlus />&nbsp;
-        <Link href="/PostCreationPage">
+        <Link href="/Application/PostCreationPage">
             <a className="text-white text-2xl font-bold">Post</a>
         </Link>
       </Button>
