@@ -4,14 +4,14 @@ import * as styles from "./../../styles/Advantages.module.css";
 import SingleAdvantage from "./SingleAdvantage";
 const advantageData = [
 	{
-		title: "Leading healthcare providers",
+		title: "ConfidentVoices",
 		image: images.leadingHealthProvider,
 		description:
-			"Trafalgar provides progressive, and affordable healthcare, accessible on mobile and online for everyone. To us, it’s not just work. We take pride in the solutions we deliver",
+			"Confident Voices offers an engaging and innovative web application, making speech therapy fun and accessible for all children, helping them overcome speech challenges and boosting their confidence for a brighter future.",
 		buttonText: "Learn More",
 	},
 	{
-		title: "Download our mobile apps",
+		title: "Download the Confident Voices mobile app",
 		image: images.downloadApp,
 		description:
 			"Our dedicated patient engagement app and web portal allow you to access information instantaneously (no tedeous form, long calls, or administrative hassle) and securely",

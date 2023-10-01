@@ -9,16 +9,17 @@ const Footer = () => {
 				<div className={`${styles.companyInfo}`}>
 					<div className={styles.branding}>
 						{/* logo */}
-						<div className={styles.logoFooter}>T</div>
+						<div className={styles.logoFooter}>CVs</div>
 						{/* Name */}
-						<h3>Trafalgar</h3>
+						<h3>Confident Voices</h3>
 					</div>
 					{/* description */}
 					<p className={`${styles.companyDes}`}>
-						Trafalgar provides progressive, and affordable
-						healthcare, accessible on mobile and online for everyone
+					Confident Voices offers an engaging and innovative web application, making speech 
+					therapy fun and accessible for all children, helping them overcome speech 
+					challenges and boosting their confidence for a brighter future.
 					</p>
-					<p>©Trafalgar PTY LTD 2020. All rights reserved</p>
+					<p>©Confident Voices -CSDS 395 2023. All rights reserved</p>
 				</div>
 				{/* Link Set 1 */}
 				<FooterLinkSet />
