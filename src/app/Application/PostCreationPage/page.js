@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, {useState} from 'react';
 import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+import {ImPlus} from 'react-icons/im';
 
 
 const PostCreationPage = () => {
