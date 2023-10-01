@@ -1,14 +1,13 @@
+// pages/index.js
 import React from 'react';
 import Link from 'next/link';
-
+//import Route from "react-router-dom";
+//import Button from 'react-bootstrap/Button'
 
 const FeedbackPage = () => {
   return (
     <div>
-      <h1> FEEDBACK PAGE</h1>
-      <button>
-        <Link href='/'> GO BACK HOME</Link>
-      </button>     
+      <h1> Feedback PAGE</h1>    
     </div>
   );
 };

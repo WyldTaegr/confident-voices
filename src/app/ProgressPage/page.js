@@ -1,17 +1,17 @@
-// pages/index.js
 import React from 'react';
 import Link from 'next/link';
-//import Route from "react-router-dom";
-//import Button from 'react-bootstrap/Button'
+import "./progress.css"
+import WeeklyBarChart from "../progressGraphs/weeklyBar";
 
 const ProgressPage = () => {
   return (
     <div>
-      <h1> PROGRESS PAGE</h1>
-      <button>
-        <Link href='/'>HOME</Link>
-      </button>     
+      <h1 class = "text-black text-2xl font-bold title"> Progress Page</h1> 
+      <WeeklyBarChart />
     </div>
+    
+		
+	
   );
 };
 
