@@ -1,0 +1,28 @@
+.container{
+	display: grid;
+	column-gap: 2%;
+	row-gap: 10%;
+	grid-template-rows: [r1] 25% [r1-2] 25% [row2];
+	grid-template-columns: [c1] 30% [c1-2] 50% [c2];
+}
+
+.item-1{
+	grid-column-start: c1;
+	grid-column-end: c1-2;
+	grid-row-start: r1;
+	grid-row-end: r1-2;
+}
+.item-2{
+	grid-column-start: c1-2;
+	grid-column-end: c2;
+	grid-row-start: r1;
+	grid-row-end: r1-2;
+}
+
+.item-3{
+	grid-column-start: c1;
+	grid-column-end: c1-2;
+	grid-row-start: r1-2;
+	grid-row-end: r2;
+}
+
