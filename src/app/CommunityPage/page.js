@@ -1,24 +1,41 @@
 'use client';
-import Link from 'next/link';
+
+//routing import
+import {useRouter} from 'next/navigation';
+
+//front-end imports
 import React, {useState} from 'react';
-import { Button, Alert } from '@aws-amplify/ui-react';
+import { Button, Heading, Text } from '@aws-amplify/ui-react';
 import {ImPlus} from 'react-icons/im';
 import '@aws-amplify/ui-react/styles.css';
 
+//backend imports
+import {addInformation, allPostInformation} from '../Database/postDB';
 
-const CommunityPage = () => {
-    const [alert, setAlert] = useState(false);
+//import * as queries from '../../graphql/queries';
+//import {listPostInfos} from '../../graphql/queries';
+
+
+
+const CommunityPage = (e) => {
+  const router = useRouter();
+  // get all previous post information
   
+  // puts information to backend dB
+  //addInformation(newPostInfo);
+  //var holdposts = allPostInformation();
+  //console.log(holdposts);
+  
+  //const allPostsInDB = API.graphql({listPostInfos});
+  // front-end
   return (
     <div>
-      <h1> COMMUNITY PAGE</h1>
-      <Button variation = "primary" onClick={()=> setAlert(!alert)}>
+      <Heading level={1} color= "blue"> Community Page</Heading>
+      <Button variation = "primary" onClick={()=> router.push('/PostCreationPage')}>
         <ImPlus />&nbsp;
-        <Link href="/PostCreationPage">
-            <a className="text-white text-2xl font-bold">Post</a>
-        </Link>
+        <Text color = "white">Post</Text>
       </Button>
-      {alert ? (<Alert variation="info" isDimissible={true} hasIcon={true}>Opening post creation form</Alert>): null}
+      
     </div>
   );
 };
