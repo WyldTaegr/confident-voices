@@ -6,6 +6,7 @@ import { View, Image, Text, Heading, Button, SelectField, CheckboxField } from '
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
+import '@aws-amplify/ui-react/styles.css';
 
 export default function LoginPage() {
   return (
