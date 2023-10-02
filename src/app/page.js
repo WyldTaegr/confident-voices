@@ -34,7 +34,7 @@ const HomePage = (props) => {
         {/* To do - Carousel */}
         <Testimonials testimonoal={data.testimonial} />
         {/* Articles */}
-        <Articles articles={data.articles} />
+        {/* <Articles articles={data.articles} /> */}
         {/* Footer */}
         <Footer />
     </div>
