@@ -12,12 +12,12 @@ const Hero = () => {
 			<div className={`${styles.heroInfo}`}>
 				{/* heading */}
 				<h1 className={styles.heroHeading}>
-					Virtual healthcare for you
+					Unlocking the Power of Confident Speech for Every Child
 				</h1>
 				{/* details */}
 				<p className={`${styles.heroDes} text-light-gray`}>
-					bhjdbvfalgar provides progressive, and affordable
-					healthcare, accessible on mobile and online for everyone
+					Join us in revolutionizing speech therapy for children and ensuring a 
+					brighter future for every young learner.
 				</p>
 
 				{/* Button - custom button */}
