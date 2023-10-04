@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div>
       Landing Page
-      <Link href="/LoginPage">
+      <Link href="/LoginPage" legacyBehavior>
       <Button>Sign in!</Button>
       </Link> 
     </div>

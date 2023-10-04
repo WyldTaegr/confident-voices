@@ -7,28 +7,38 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <Link href="/Application/UserProfilePage">
-            <a className="text-white text-2xl font-bold">Home</a>
+          <Link
+            href="/Application/UserProfilePage"
+            className="text-white text-2xl font-bold">
+            Home
           </Link>
           <ul className="flex space-x-4">
             <li>
-              <Link href="/Application/CommunityPage">
-                <a className="text-white hover:text-gray-300">Community</a>
+              <Link
+                href="/Application/CommunityPage"
+                className="text-white hover:text-gray-300">
+                Community
               </Link>
             </li>
             <li>
-              <Link href="/Application/ProgressPage">
-                <a className="text-white hover:text-gray-300">Progress</a>
+              <Link
+                href="/Application/ProgressPage"
+                className="text-white hover:text-gray-300">
+                Progress
               </Link>
             </li>
             <li>
-              <Link href="/Application/FeedbackPage">
-                <a className="text-white hover:text-gray-300">Feedback</a>
+              <Link
+                href="/Application/FeedbackPage"
+                className="text-white hover:text-gray-300">
+                Feedback
               </Link>
             </li>
             <li>
-              <Link href="/Application/InteractiveExercisesPage">
-                <a className="text-white hover:text-gray-300">Interactive Exercises</a>
+              <Link
+                href="/Application/InteractiveExercisesPage"
+                className="text-white hover:text-gray-300">
+                Interactive Exercises
               </Link>
             </li>
           </ul>
