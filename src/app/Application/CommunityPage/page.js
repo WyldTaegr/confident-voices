@@ -14,8 +14,10 @@ const CommunityPage = () => {
       <h1> COMMUNITY PAGE</h1>
       <Button variation = "primary" onClick={()=> setAlert(!alert)}>
         <ImPlus />&nbsp;
-        <Link href="/Application/PostCreationPage">
-            <a className="text-white text-2xl font-bold">Post</a>
+        <Link
+          href="/Application/PostCreationPage"
+          className="text-white text-2xl font-bold">
+            Post
         </Link>
       </Button>
       {alert ? (<Alert variation="info" isDimissible={true} hasIcon={true}>Opening post creation form</Alert>): null}
