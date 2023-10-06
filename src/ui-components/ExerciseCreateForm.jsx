@@ -10,7 +10,7 @@ import { Button, Flex, Grid } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createExercise } from "../graphql/mutations";
+import { createExercise } from "../../mutations";
 export default function ExerciseCreateForm(props) {
   const {
     clearOnSuccess = true,

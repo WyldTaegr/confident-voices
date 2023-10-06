@@ -10,8 +10,8 @@ import { Button, Flex, Grid } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getExercise } from "../graphql/queries";
-import { updateExercise } from "../graphql/mutations";
+import { getExercise } from "../../queries";
+import { updateExercise } from "../../mutations";
 export default function ExerciseUpdateForm(props) {
   const {
     id: idProp,
