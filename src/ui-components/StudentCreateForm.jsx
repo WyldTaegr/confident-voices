@@ -10,7 +10,7 @@ import { Button, Flex, Grid } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createStudent } from "../../mutations";
+import { createStudent } from "../graphql/mutations";
 export default function StudentCreateForm(props) {
   const {
     clearOnSuccess = true,

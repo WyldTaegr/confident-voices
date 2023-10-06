@@ -10,7 +10,7 @@ import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createQuestion } from "../../mutations";
+import { createQuestion } from "../graphql/mutations";
 export default function QuestionCreateForm(props) {
   const {
     clearOnSuccess = true,

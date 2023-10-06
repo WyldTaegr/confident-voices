@@ -10,7 +10,7 @@ import { Button, Flex, Grid, SwitchField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createTherapist } from "../../mutations";
+import { createTherapist } from "../graphql/mutations";
 export default function TherapistCreateForm(props) {
   const {
     clearOnSuccess = true,

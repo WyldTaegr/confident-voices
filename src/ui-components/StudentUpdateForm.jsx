@@ -10,8 +10,8 @@ import { Button, Flex, Grid } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getStudent } from "../../queries";
-import { updateStudent } from "../../mutations";
+import { getStudent } from "../graphql/queries";
+import { updateStudent } from "../graphql/mutations";
 export default function StudentUpdateForm(props) {
   const {
     id: idProp,

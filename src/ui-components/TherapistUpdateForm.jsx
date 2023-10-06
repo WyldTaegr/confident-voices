@@ -10,8 +10,8 @@ import { Button, Flex, Grid, SwitchField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getTherapist } from "../../queries";
-import { updateTherapist } from "../../mutations";
+import { getTherapist } from "../graphql/queries";
+import { updateTherapist } from "../graphql/mutations";
 export default function TherapistUpdateForm(props) {
   const {
     id: idProp,
