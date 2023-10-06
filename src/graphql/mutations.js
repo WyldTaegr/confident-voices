@@ -12,9 +12,22 @@ export const createTherapist = /* GraphQL */ `
       students {
         items {
           id
+          therapistId
+          studentId
           createdAt
           updatedAt
-          therapistStudentsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      children {
+        items {
+          id
+          therapistId
+          studentId
+          createdAt
+          updatedAt
           __typename
         }
         nextToken
@@ -22,7 +35,6 @@ export const createTherapist = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      studentParentsId
       __typename
     }
   }
@@ -38,9 +50,22 @@ export const updateTherapist = /* GraphQL */ `
       students {
         items {
           id
+          therapistId
+          studentId
           createdAt
           updatedAt
-          therapistStudentsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      children {
+        items {
+          id
+          therapistId
+          studentId
+          createdAt
+          updatedAt
           __typename
         }
         nextToken
@@ -48,7 +73,6 @@ export const updateTherapist = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      studentParentsId
       __typename
     }
   }
@@ -64,9 +88,22 @@ export const deleteTherapist = /* GraphQL */ `
       students {
         items {
           id
+          therapistId
+          studentId
           createdAt
           updatedAt
-          therapistStudentsId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      children {
+        items {
+          id
+          therapistId
+          studentId
+          createdAt
+          updatedAt
           __typename
         }
         nextToken
@@ -74,7 +111,6 @@ export const deleteTherapist = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      studentParentsId
       __typename
     }
   }
@@ -86,25 +122,25 @@ export const createStudent = /* GraphQL */ `
   ) {
     createStudent(input: $input, condition: $condition) {
       id
-      therapist {
-        id
-        parent
-        students {
-          nextToken
+      therapists {
+        items {
+          id
+          therapistId
+          studentId
+          createdAt
+          updatedAt
           __typename
         }
-        createdAt
-        updatedAt
-        studentParentsId
+        nextToken
         __typename
       }
       parents {
         items {
           id
-          parent
+          therapistId
+          studentId
           createdAt
           updatedAt
-          studentParentsId
           __typename
         }
         nextToken
@@ -123,7 +159,6 @@ export const createStudent = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      therapistStudentsId
       __typename
     }
   }
@@ -135,25 +170,25 @@ export const updateStudent = /* GraphQL */ `
   ) {
     updateStudent(input: $input, condition: $condition) {
       id
-      therapist {
-        id
-        parent
-        students {
-          nextToken
+      therapists {
+        items {
+          id
+          therapistId
+          studentId
+          createdAt
+          updatedAt
           __typename
         }
-        createdAt
-        updatedAt
-        studentParentsId
+        nextToken
         __typename
       }
       parents {
         items {
           id
-          parent
+          therapistId
+          studentId
           createdAt
           updatedAt
-          studentParentsId
           __typename
         }
         nextToken
@@ -172,7 +207,6 @@ export const updateStudent = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      therapistStudentsId
       __typename
     }
   }
@@ -184,25 +218,25 @@ export const deleteStudent = /* GraphQL */ `
   ) {
     deleteStudent(input: $input, condition: $condition) {
       id
-      therapist {
-        id
-        parent
-        students {
-          nextToken
+      therapists {
+        items {
+          id
+          therapistId
+          studentId
+          createdAt
+          updatedAt
           __typename
         }
-        createdAt
-        updatedAt
-        studentParentsId
+        nextToken
         __typename
       }
       parents {
         items {
           id
-          parent
+          therapistId
+          studentId
           createdAt
           updatedAt
-          studentParentsId
           __typename
         }
         nextToken
@@ -221,7 +255,6 @@ export const deleteStudent = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      therapistStudentsId
       __typename
     }
   }
@@ -349,12 +382,8 @@ export const createExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          studentParentsId
+        therapists {
+          nextToken
           __typename
         }
         parents {
@@ -367,7 +396,6 @@ export const createExerciseProgress = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        therapistStudentsId
         __typename
       }
       progress {
@@ -399,12 +427,8 @@ export const updateExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          studentParentsId
+        therapists {
+          nextToken
           __typename
         }
         parents {
@@ -417,7 +441,6 @@ export const updateExerciseProgress = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        therapistStudentsId
         __typename
       }
       progress {
@@ -449,12 +472,8 @@ export const deleteExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          studentParentsId
+        therapists {
+          nextToken
           __typename
         }
         parents {
@@ -467,7 +486,6 @@ export const deleteExerciseProgress = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        therapistStudentsId
         __typename
       }
       progress {
@@ -503,7 +521,6 @@ export const createQuestionProgress = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          therapistStudentsId
           __typename
         }
         progress {
@@ -544,7 +561,6 @@ export const updateQuestionProgress = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          therapistStudentsId
           __typename
         }
         progress {
@@ -585,7 +601,6 @@ export const deleteQuestionProgress = /* GraphQL */ `
           id
           createdAt
           updatedAt
-          therapistStudentsId
           __typename
         }
         progress {
@@ -609,6 +624,294 @@ export const deleteQuestionProgress = /* GraphQL */ `
       updatedAt
       exerciseProgressProgressId
       questionProgressQuestionId
+      __typename
+    }
+  }
+`;
+export const createTherapistsStudents = /* GraphQL */ `
+  mutation CreateTherapistsStudents(
+    $input: CreateTherapistsStudentsInput!
+    $condition: ModelTherapistsStudentsConditionInput
+  ) {
+    createTherapistsStudents(input: $input, condition: $condition) {
+      id
+      therapistId
+      studentId
+      therapist {
+        id
+        parent
+        students {
+          nextToken
+          __typename
+        }
+        children {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      student {
+        id
+        therapists {
+          nextToken
+          __typename
+        }
+        parents {
+          nextToken
+          __typename
+        }
+        progress {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateTherapistsStudents = /* GraphQL */ `
+  mutation UpdateTherapistsStudents(
+    $input: UpdateTherapistsStudentsInput!
+    $condition: ModelTherapistsStudentsConditionInput
+  ) {
+    updateTherapistsStudents(input: $input, condition: $condition) {
+      id
+      therapistId
+      studentId
+      therapist {
+        id
+        parent
+        students {
+          nextToken
+          __typename
+        }
+        children {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      student {
+        id
+        therapists {
+          nextToken
+          __typename
+        }
+        parents {
+          nextToken
+          __typename
+        }
+        progress {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteTherapistsStudents = /* GraphQL */ `
+  mutation DeleteTherapistsStudents(
+    $input: DeleteTherapistsStudentsInput!
+    $condition: ModelTherapistsStudentsConditionInput
+  ) {
+    deleteTherapistsStudents(input: $input, condition: $condition) {
+      id
+      therapistId
+      studentId
+      therapist {
+        id
+        parent
+        students {
+          nextToken
+          __typename
+        }
+        children {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      student {
+        id
+        therapists {
+          nextToken
+          __typename
+        }
+        parents {
+          nextToken
+          __typename
+        }
+        progress {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createParentsChildren = /* GraphQL */ `
+  mutation CreateParentsChildren(
+    $input: CreateParentsChildrenInput!
+    $condition: ModelParentsChildrenConditionInput
+  ) {
+    createParentsChildren(input: $input, condition: $condition) {
+      id
+      therapistId
+      studentId
+      therapist {
+        id
+        parent
+        students {
+          nextToken
+          __typename
+        }
+        children {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      student {
+        id
+        therapists {
+          nextToken
+          __typename
+        }
+        parents {
+          nextToken
+          __typename
+        }
+        progress {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateParentsChildren = /* GraphQL */ `
+  mutation UpdateParentsChildren(
+    $input: UpdateParentsChildrenInput!
+    $condition: ModelParentsChildrenConditionInput
+  ) {
+    updateParentsChildren(input: $input, condition: $condition) {
+      id
+      therapistId
+      studentId
+      therapist {
+        id
+        parent
+        students {
+          nextToken
+          __typename
+        }
+        children {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      student {
+        id
+        therapists {
+          nextToken
+          __typename
+        }
+        parents {
+          nextToken
+          __typename
+        }
+        progress {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteParentsChildren = /* GraphQL */ `
+  mutation DeleteParentsChildren(
+    $input: DeleteParentsChildrenInput!
+    $condition: ModelParentsChildrenConditionInput
+  ) {
+    deleteParentsChildren(input: $input, condition: $condition) {
+      id
+      therapistId
+      studentId
+      therapist {
+        id
+        parent
+        students {
+          nextToken
+          __typename
+        }
+        children {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      student {
+        id
+        therapists {
+          nextToken
+          __typename
+        }
+        parents {
+          nextToken
+          __typename
+        }
+        progress {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
       __typename
     }
   }
