@@ -12,9 +12,9 @@ const Services = ({ services }) => {
 				<SectionHeading headingTitle="Our Services" />
 				{/* Section Description */}
 				<p className={`${styles.servicesDes} text-light-gray`}>
-					We offer the best choices tailored for your child's speech development needs. 
+					We offer the best choices tailored for your childs speech development needs. 
 					Ensure they receive guidance from our highly skilled speech therapists. 
-					With Confident Voices, you can always consult to determine the right service to boost your child's 
+					With Confident Voices, you can always consult to determine the right service to boost your childs 
 					confidence and speech skills.
 				</p>
 				{/* Section List - we will map through array and render a card for each item */}
