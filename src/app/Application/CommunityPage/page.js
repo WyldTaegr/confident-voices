@@ -65,7 +65,7 @@ const CommunityPage = () => {
   return (
     <div>
       <Heading level={1} color= "blue"> Community Page</Heading>
-      <Button variation = "primary" onClick={()=> router.push('/PostCreationPage')}>
+      <Button variation = "primary" onClick={()=> router.push('/Application/PostCreationPage')}>
         <ImPlus />&nbsp;
         <Text color = "white">Post</Text>
       </Button>

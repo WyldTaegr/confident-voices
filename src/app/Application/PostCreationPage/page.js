@@ -7,8 +7,8 @@ import {useRouter} from 'next/navigation';
 import { Amplify, Auth } from 'aws-amplify';
 import React, {useState} from 'react';
 import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex } from '@aws-amplify/ui-react';
-import {ImPlus} from 'react-icons/im';
 import '@aws-amplify/ui-react/styles.css';
+import {ImPlus} from 'react-icons/im';
 
 
 // backend imports
@@ -97,7 +97,7 @@ const PostCreationPage = () => {
           */
          
           // go back to Community Page to see new post 
-          router.push("/CommunityPage");
+          router.push("/Application/CommunityPage");
       }
   };
   // front end 
