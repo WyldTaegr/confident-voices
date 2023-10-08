@@ -1,26 +1,84 @@
 'use client';
-import Link from 'next/link';
-import React, {useState} from 'react';
-import { Button, Alert } from '@aws-amplify/ui-react';
+
+//routing import
+import {useRouter} from 'next/navigation';
+
+//front-end imports
+import React, {useState, useEffect} from 'react';
+import { Button, Heading, Text, Card, Flex} from '@aws-amplify/ui-react';
 import {ImPlus} from 'react-icons/im';
 import '@aws-amplify/ui-react/styles.css';
 
+//backend imports
+import { Amplify, Auth } from 'aws-amplify';
+import awsExports from '@/aws-exports';
+Amplify.configure(awsExports);
+//import * as queries from '../../graphql/queries';
+//import {listPostInfos} from '../../graphql/queries';
+import {API} from 'aws-amplify';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
+import * as mutations from '../../../graphql/mutations';
+import * as queries from '../../../graphql/queries';
+
+
 
 const CommunityPage = () => {
-    const [alert, setAlert] = useState(false);
+  const router = useRouter();
+  //holds all post information
+  const [post, setPost] = useState([]);
+
+  //function to set all post information to post variable
+  const getAllPostInformation = async() => {
+    const holdPostsResponse =  await API.graphql({
+         query: queries.listPostInfos,
+         authMode: GRAPHQL_AUTH_MODE.API_KEY
+     });
+    setPost(holdPostsResponse.data.listPostInfos.items);
+    console.log(holdPostsResponse);
+  };
+
+  // get all previous post information
+  useEffect(() => {
+        getAllPostInformation();
+  }, []);
   
+
+  //function to delete data
+  async function delete_post(id){
+    const post_details = {
+        id: id
+    };
+    
+    const delete_post_data = await API.graphql({
+              query: mutations.deletePostInfo,
+              variables: {input: post_details},
+              authMode: GRAPHQL_AUTH_MODE.API_KEY
+     });
+     setPost(post.filter(x => x.id !== id));
+  }
+  
+  // front-end
   return (
     <div>
-      <h1> COMMUNITY PAGE</h1>
-      <Button variation = "primary" onClick={()=> setAlert(!alert)}>
+      <Heading level={1} color= "blue"> Community Page</Heading>
+      <Button variation = "primary" onClick={()=> router.push('/Application/PostCreationPage')}>
         <ImPlus />&nbsp;
-        <Link
-          href="/Application/PostCreationPage"
-          className="text-white text-2xl font-bold">
-            Post
-        </Link>
+        <Text color = "white">Post</Text>
       </Button>
-      {alert ? (<Alert variation="info" isDimissible={true} hasIcon={true}>Opening post creation form</Alert>): null}
+      <div>
+        {post.map(x => (
+            <Card variation = "elevated" key = {x.id}>
+                <Flex direction = "row" alignItems = "flex-start">
+                    <Flex direction = "column" gap="1rem">    
+                        <Heading level = {1}>{x.title}</Heading>
+                        <Text as = "span">{x.tags}</Text>
+                        <Text as = "span">{x.description}</Text>
+                    </Flex>
+                    <Button variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id)} >Delete</Button>
+                </Flex>
+            </Card>
+        ))}
+      </div>
     </div>
   );
 };
