@@ -11,15 +11,14 @@ import '@aws-amplify/ui-react/styles.css';
 
 //backend imports
 import { Amplify, Auth } from 'aws-amplify';
-import {addInformation, allPostInformation} from '../Database/postDB';
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 //import * as queries from '../../graphql/queries';
 //import {listPostInfos} from '../../graphql/queries';
 import {API} from 'aws-amplify';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
-import * as mutations from '../../graphql/mutations';
-import * as queries from '../../graphql/queries';
+import * as mutations from '../../graphql/mutations.js';
+import * as queries from '../../graphql/queries.js';
 
 
 
