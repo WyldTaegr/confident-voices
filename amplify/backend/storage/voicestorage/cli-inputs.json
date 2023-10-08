@@ -1,0 +1,14 @@
+{
+  "resourceName": "voicestorage",
+  "policyUUID": "0d13ce82",
+  "bucketName": "confidentvoices04360424cdd9474aafeebe4fe85af92e",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
