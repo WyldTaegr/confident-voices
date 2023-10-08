@@ -12,7 +12,7 @@ const AddQuestionsPage = () => {
 
   async function questionCreation(){
     const newQuestion = await API.graphql(
-      graphqlOperation(mutations.createQuestion, { input: "hello" })
+      graphqlOperation(mutations.createQuestion, { input: {description: "hello"} })
     );
   }
 
