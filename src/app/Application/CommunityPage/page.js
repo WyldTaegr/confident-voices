@@ -44,9 +44,9 @@ const CommunityPage = () => {
   
 
   //function to delete data
-  async function delete_post(ID){
+  async function delete_post(id){
     const post_details = {
-        id: ID.id
+        id: id
     };
     
     const delete_post_data = await API.graphql({
@@ -54,11 +54,8 @@ const CommunityPage = () => {
               variables: {input: post_details},
               authMode: GRAPHQL_AUTH_MODE.API_KEY
      });
-     setPost(post.filter(x => x.id !== ID.id));
+     setPost(post.filter(x => x.id !== id));
   }
-  const delete_button = (e) =>{
-        delete_post(e);
-    };
   
   // front-end
   return (
@@ -77,8 +74,7 @@ const CommunityPage = () => {
                         <Text as = "span">{x.tags}</Text>
                         <Text as = "span">{x.description}</Text>
                     </Flex>
-                    <Button variation = "primary" colorTheme = "error" onClick={delete_button} >delete mE</Button>
-                    <Button  variation = "primary" colorTheme = "success" onClick={delete_button} >update mE</Button>
+                    <Button variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id)} >Delete</Button>
                 </Flex>
             </Card>
         ))}
