@@ -23,7 +23,6 @@ const Advantages = () => {
 	return (
 		<section className={`${styles.advContainer} margin-on-side`}>
 			<SingleAdvantage data={advantageData[0]} />
-			<SingleAdvantage data={advantageData[1]} direction="rev" />
 		</section>
 	);
 };

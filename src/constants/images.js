@@ -1,5 +1,4 @@
-import logo from "../../public/images/logo.png";
-import heroImage from "../../public/images/hero.svg";
+import heroImage from "../../public/images/hero.jpg";
 import dots from "../../public/images/dot-pat.svg"
 import backOval from "../../public/images/back-oval.svg";
 
@@ -25,7 +24,6 @@ import article2 from "../../public/images/article-2.png";
 import article3 from "../../public/images/article-3.png";
 
 export default {
-	logo,
 	heroImage,
 	dots,
 	backOval,
