@@ -115,7 +115,6 @@ export const getQuestion = /* GraphQL */ `
   query GetQuestion($id: ID!) {
     getQuestion(id: $id) {
       id
-      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -132,7 +131,6 @@ export const listQuestions = /* GraphQL */ `
     listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -200,7 +198,6 @@ export const getQuestionProgress = /* GraphQL */ `
       }
       question {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -233,6 +230,40 @@ export const listQuestionProgresses = /* GraphQL */ `
         updatedAt
         exerciseProgressProgressId
         questionProgressQuestionId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getPostInfo = /* GraphQL */ `
+  query GetPostInfo($id: ID!) {
+    getPostInfo(id: $id) {
+      title
+      tags
+      description
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listPostInfos = /* GraphQL */ `
+  query ListPostInfos(
+    $filter: ModelPostInfoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        title
+        tags
+        description
+        id
+        createdAt
+        updatedAt
         __typename
       }
       nextToken

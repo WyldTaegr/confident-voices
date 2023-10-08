@@ -2,5 +2,11 @@
   "AppSyncApiName": "confidentvoices",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2023-09-30T02:50:53.747Z"
+  "AuthModeLastUpdated": "2023-09-30T02:50:53.747Z",
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authconfidentvoices",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

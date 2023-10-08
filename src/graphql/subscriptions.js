@@ -176,7 +176,6 @@ export const onCreateQuestion = /* GraphQL */ `
   subscription OnCreateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
     onCreateQuestion(filter: $filter) {
       id
-      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -188,7 +187,6 @@ export const onUpdateQuestion = /* GraphQL */ `
   subscription OnUpdateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
     onUpdateQuestion(filter: $filter) {
       id
-      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -200,7 +198,6 @@ export const onDeleteQuestion = /* GraphQL */ `
   subscription OnDeleteQuestion($filter: ModelSubscriptionQuestionFilterInput) {
     onDeleteQuestion(filter: $filter) {
       id
-      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -292,7 +289,6 @@ export const onCreateQuestionProgress = /* GraphQL */ `
       }
       question {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -322,7 +318,6 @@ export const onUpdateQuestionProgress = /* GraphQL */ `
       }
       question {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -352,7 +347,6 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
       }
       question {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -363,6 +357,45 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
       updatedAt
       exerciseProgressProgressId
       questionProgressQuestionId
+      __typename
+    }
+  }
+`;
+export const onCreatePostInfo = /* GraphQL */ `
+  subscription OnCreatePostInfo($filter: ModelSubscriptionPostInfoFilterInput) {
+    onCreatePostInfo(filter: $filter) {
+      title
+      tags
+      description
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdatePostInfo = /* GraphQL */ `
+  subscription OnUpdatePostInfo($filter: ModelSubscriptionPostInfoFilterInput) {
+    onUpdatePostInfo(filter: $filter) {
+      title
+      tags
+      description
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeletePostInfo = /* GraphQL */ `
+  subscription OnDeletePostInfo($filter: ModelSubscriptionPostInfoFilterInput) {
+    onDeletePostInfo(filter: $filter) {
+      title
+      tags
+      description
+      id
+      createdAt
+      updatedAt
       __typename
     }
   }

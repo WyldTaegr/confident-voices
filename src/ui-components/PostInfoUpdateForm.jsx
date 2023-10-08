@@ -6,16 +6,16 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid } from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getQuestion } from "../graphql/queries";
-import { updateQuestion } from "../graphql/mutations";
-export default function QuestionUpdateForm(props) {
+import { getPostInfo } from "../graphql/queries";
+import { updatePostInfo } from "../graphql/mutations";
+export default function PostInfoUpdateForm(props) {
   const {
     id: idProp,
-    question: questionModelProp,
+    postInfo: postInfoModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -24,31 +24,47 @@ export default function QuestionUpdateForm(props) {
     overrides,
     ...rest
   } = props;
-  const initialValues = {};
+  const initialValues = {
+    title: "",
+    tags: "",
+    description: "",
+  };
+  const [title, setTitle] = React.useState(initialValues.title);
+  const [tags, setTags] = React.useState(initialValues.tags);
+  const [description, setDescription] = React.useState(
+    initialValues.description
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = questionRecord
-      ? { ...initialValues, ...questionRecord }
+    const cleanValues = postInfoRecord
+      ? { ...initialValues, ...postInfoRecord }
       : initialValues;
+    setTitle(cleanValues.title);
+    setTags(cleanValues.tags);
+    setDescription(cleanValues.description);
     setErrors({});
   };
-  const [questionRecord, setQuestionRecord] = React.useState(questionModelProp);
+  const [postInfoRecord, setPostInfoRecord] = React.useState(postInfoModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await API.graphql({
-              query: getQuestion,
+              query: getPostInfo,
               variables: { id: idProp },
             })
-          )?.data?.getQuestion
-        : questionModelProp;
-      setQuestionRecord(record);
+          )?.data?.getPostInfo
+        : postInfoModelProp;
+      setPostInfoRecord(record);
     };
     queryData();
-  }, [idProp, questionModelProp]);
-  React.useEffect(resetStateValues, [questionRecord]);
-  const validations = {};
+  }, [idProp, postInfoModelProp]);
+  React.useEffect(resetStateValues, [postInfoRecord]);
+  const validations = {
+    title: [{ type: "Required" }],
+    tags: [{ type: "Required" }],
+    description: [{ type: "Required" }],
+  };
   const runValidationTasks = async (
     fieldName,
     currentValue,
@@ -74,7 +90,11 @@ export default function QuestionUpdateForm(props) {
       padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
-        let modelFields = {};
+        let modelFields = {
+          title,
+          tags,
+          description,
+        };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
@@ -104,10 +124,10 @@ export default function QuestionUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateQuestion,
+            query: updatePostInfo,
             variables: {
               input: {
-                id: questionRecord.id,
+                id: postInfoRecord.id,
                 ...modelFields,
               },
             },
@@ -122,9 +142,87 @@ export default function QuestionUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "QuestionUpdateForm")}
+      {...getOverrideProps(overrides, "PostInfoUpdateForm")}
       {...rest}
     >
+      <TextField
+        label="Title"
+        isRequired={true}
+        isReadOnly={false}
+        value={title}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title: value,
+              tags,
+              description,
+            };
+            const result = onChange(modelFields);
+            value = result?.title ?? value;
+          }
+          if (errors.title?.hasError) {
+            runValidationTasks("title", value);
+          }
+          setTitle(value);
+        }}
+        onBlur={() => runValidationTasks("title", title)}
+        errorMessage={errors.title?.errorMessage}
+        hasError={errors.title?.hasError}
+        {...getOverrideProps(overrides, "title")}
+      ></TextField>
+      <TextField
+        label="Tags"
+        isRequired={true}
+        isReadOnly={false}
+        value={tags}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              tags: value,
+              description,
+            };
+            const result = onChange(modelFields);
+            value = result?.tags ?? value;
+          }
+          if (errors.tags?.hasError) {
+            runValidationTasks("tags", value);
+          }
+          setTags(value);
+        }}
+        onBlur={() => runValidationTasks("tags", tags)}
+        errorMessage={errors.tags?.errorMessage}
+        hasError={errors.tags?.hasError}
+        {...getOverrideProps(overrides, "tags")}
+      ></TextField>
+      <TextField
+        label="Description"
+        isRequired={true}
+        isReadOnly={false}
+        value={description}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              tags,
+              description: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.description ?? value;
+          }
+          if (errors.description?.hasError) {
+            runValidationTasks("description", value);
+          }
+          setDescription(value);
+        }}
+        onBlur={() => runValidationTasks("description", description)}
+        errorMessage={errors.description?.errorMessage}
+        hasError={errors.description?.hasError}
+        {...getOverrideProps(overrides, "description")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -136,7 +234,7 @@ export default function QuestionUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || questionModelProp)}
+          isDisabled={!(idProp || postInfoModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -148,7 +246,7 @@ export default function QuestionUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || questionModelProp) ||
+              !(idProp || postInfoModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

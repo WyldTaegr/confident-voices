@@ -200,7 +200,6 @@ export const createQuestion = /* GraphQL */ `
   ) {
     createQuestion(input: $input, condition: $condition) {
       id
-      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -215,7 +214,6 @@ export const updateQuestion = /* GraphQL */ `
   ) {
     updateQuestion(input: $input, condition: $condition) {
       id
-      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -230,7 +228,6 @@ export const deleteQuestion = /* GraphQL */ `
   ) {
     deleteQuestion(input: $input, condition: $condition) {
       id
-      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -326,7 +323,6 @@ export const createQuestionProgress = /* GraphQL */ `
       }
       question {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -357,7 +353,6 @@ export const updateQuestionProgress = /* GraphQL */ `
       }
       question {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -388,7 +383,6 @@ export const deleteQuestionProgress = /* GraphQL */ `
       }
       question {
         id
-        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -399,6 +393,54 @@ export const deleteQuestionProgress = /* GraphQL */ `
       updatedAt
       exerciseProgressProgressId
       questionProgressQuestionId
+      __typename
+    }
+  }
+`;
+export const createPostInfo = /* GraphQL */ `
+  mutation CreatePostInfo(
+    $input: CreatePostInfoInput!
+    $condition: ModelPostInfoConditionInput
+  ) {
+    createPostInfo(input: $input, condition: $condition) {
+      title
+      tags
+      description
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updatePostInfo = /* GraphQL */ `
+  mutation UpdatePostInfo(
+    $input: UpdatePostInfoInput!
+    $condition: ModelPostInfoConditionInput
+  ) {
+    updatePostInfo(input: $input, condition: $condition) {
+      title
+      tags
+      description
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deletePostInfo = /* GraphQL */ `
+  mutation DeletePostInfo(
+    $input: DeletePostInfoInput!
+    $condition: ModelPostInfoConditionInput
+  ) {
+    deletePostInfo(input: $input, condition: $condition) {
+      title
+      tags
+      description
+      id
+      createdAt
+      updatedAt
       __typename
     }
   }

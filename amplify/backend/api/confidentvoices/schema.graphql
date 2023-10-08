@@ -19,7 +19,6 @@ type Exercise @model @auth(rules: [{allow: public}]) {
 
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
-  description: String!
 }
 
 type ExerciseProgress @model @auth(rules: [{allow: public}]) {
@@ -40,4 +39,9 @@ type Recording {
   region: String!
   key: String!
 }
- 
+
+type PostInfo @model @auth(rules: [{allow: public}]){
+  title: String!
+  tags: String!
+  description: String!
+}

@@ -6,6 +6,8 @@
 
 export { default as ExerciseCreateForm } from "./ExerciseCreateForm";
 export { default as ExerciseUpdateForm } from "./ExerciseUpdateForm";
+export { default as PostInfoCreateForm } from "./PostInfoCreateForm";
+export { default as PostInfoUpdateForm } from "./PostInfoUpdateForm";
 export { default as QuestionCreateForm } from "./QuestionCreateForm";
 export { default as QuestionUpdateForm } from "./QuestionUpdateForm";
 export { default as StudentCreateForm } from "./StudentCreateForm";

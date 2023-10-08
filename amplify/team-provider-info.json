@@ -14,9 +14,6 @@
     "categories": {
       "auth": {
         "confidentvoices": {}
-      },
-      "api": {
-        "confidentvoices": {}
       }
     }
   }
