@@ -11,10 +11,10 @@ const advantageData = [
 		buttonText: "Learn More",
 	},
 	{
-		title: "Download the Confident Voices mobile app",
+		title: "(Coming In The Upcoming Future!) A Confident Voices mobile app",
 		image: images.downloadApp,
 		description:
-			"Our dedicated patient engagement app and web portal allow you to access information instantaneously (no tedeous form, long calls, or administrative hassle) and securely",
+			"Our dedicated patient engagement app that we will build in the future will allow you to access information instantaneously (no tedeous form, long calls, or administrative hassle) and securely",
 		buttonText: "Download",
 	},
 ];
