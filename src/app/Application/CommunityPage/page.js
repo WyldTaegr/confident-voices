@@ -17,8 +17,8 @@ Amplify.configure(awsExports);
 //import {listPostInfos} from '../../graphql/queries';
 import {API} from 'aws-amplify';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
-import * as mutations from '../../graphql/mutations.js';
-import * as queries from '../../graphql/queries.js';
+import * as mutations from '../../../graphql/mutations';
+import * as queries from '../../../graphql/queries';
 
 
 
