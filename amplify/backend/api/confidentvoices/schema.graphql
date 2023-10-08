@@ -14,11 +14,13 @@ type Student @model @auth(rules: [{allow: public}]) {
 
 type Exercise @model @auth(rules: [{allow: public}]) {
   id: ID!
+  name: String!
   questions: [Question] @hasMany
 }
 
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
+  description: String!
 }
 
 type ExerciseProgress @model @auth(rules: [{allow: public}]) {
