@@ -7,26 +7,10 @@ export const getTherapist = /* GraphQL */ `
       id
       parent
       students {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          __typename
-        }
         nextToken
         __typename
       }
       children {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          __typename
-        }
         nextToken
         __typename
       }
@@ -46,14 +30,6 @@ export const listTherapists = /* GraphQL */ `
       items {
         id
         parent
-        students {
-          nextToken
-          __typename
-        }
-        children {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -68,37 +44,14 @@ export const getStudent = /* GraphQL */ `
     getStudent(id: $id) {
       id
       therapists {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          __typename
-        }
         nextToken
         __typename
       }
       parents {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          __typename
-        }
         nextToken
         __typename
       }
       progress {
-        items {
-          id
-          createdAt
-          updatedAt
-          studentProgressId
-          __typename
-        }
         nextToken
         __typename
       }
@@ -117,18 +70,6 @@ export const listStudents = /* GraphQL */ `
     listStudents(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        therapists {
-          nextToken
-          __typename
-        }
-        parents {
-          nextToken
-          __typename
-        }
-        progress {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -142,14 +83,8 @@ export const getExercise = /* GraphQL */ `
   query GetExercise($id: ID!) {
     getExercise(id: $id) {
       id
+      name
       questions {
-        items {
-          id
-          createdAt
-          updatedAt
-          exerciseQuestionsId
-          __typename
-        }
         nextToken
         __typename
       }
@@ -168,10 +103,7 @@ export const listExercises = /* GraphQL */ `
     listExercises(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        questions {
-          nextToken
-          __typename
-        }
+        name
         createdAt
         updatedAt
         __typename
@@ -185,6 +117,7 @@ export const getQuestion = /* GraphQL */ `
   query GetQuestion($id: ID!) {
     getQuestion(id: $id) {
       id
+      description
       createdAt
       updatedAt
       exerciseQuestionsId
@@ -201,6 +134,7 @@ export const listQuestions = /* GraphQL */ `
     listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -217,32 +151,11 @@ export const getExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        therapists {
-          nextToken
-          __typename
-        }
-        parents {
-          nextToken
-          __typename
-        }
-        progress {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         __typename
       }
       progress {
-        items {
-          id
-          completed
-          createdAt
-          updatedAt
-          exerciseProgressProgressId
-          questionProgressQuestionId
-          __typename
-        }
         nextToken
         __typename
       }
@@ -266,16 +179,6 @@ export const listExerciseProgresses = /* GraphQL */ `
     ) {
       items {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
-        progress {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         studentProgressId
@@ -292,16 +195,6 @@ export const getQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
-        progress {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         studentProgressId
@@ -309,6 +202,7 @@ export const getQuestionProgress = /* GraphQL */ `
       }
       question {
         id
+        description
         createdAt
         updatedAt
         exerciseQuestionsId
@@ -336,20 +230,6 @@ export const listQuestionProgresses = /* GraphQL */ `
     ) {
       items {
         id
-        exerciseProgress {
-          id
-          createdAt
-          updatedAt
-          studentProgressId
-          __typename
-        }
-        question {
-          id
-          createdAt
-          updatedAt
-          exerciseQuestionsId
-          __typename
-        }
         completed
         createdAt
         updatedAt
@@ -405,32 +285,12 @@ export const getTherapistsStudents = /* GraphQL */ `
       therapist {
         id
         parent
-        students {
-          nextToken
-          __typename
-        }
-        children {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         __typename
       }
       student {
         id
-        therapists {
-          nextToken
-          __typename
-        }
-        parents {
-          nextToken
-          __typename
-        }
-        progress {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -456,19 +316,6 @@ export const listTherapistsStudents = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -497,19 +344,6 @@ export const therapistsStudentsByTherapistId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -538,19 +372,6 @@ export const therapistsStudentsByStudentId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -569,32 +390,12 @@ export const getParentsChildren = /* GraphQL */ `
       therapist {
         id
         parent
-        students {
-          nextToken
-          __typename
-        }
-        children {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         __typename
       }
       student {
         id
-        therapists {
-          nextToken
-          __typename
-        }
-        parents {
-          nextToken
-          __typename
-        }
-        progress {
-          nextToken
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -616,19 +417,6 @@ export const listParentsChildren = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -657,19 +445,6 @@ export const parentsChildrenByTherapistId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -698,19 +473,6 @@ export const parentsChildrenByStudentId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename

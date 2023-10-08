@@ -20,6 +20,8 @@ const Level1Page = () => {
          * voice recording
          */
       }
+      <p>Questions:</p>
+      
     </div>
   );
 };

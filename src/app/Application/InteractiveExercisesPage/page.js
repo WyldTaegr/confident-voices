@@ -9,11 +9,11 @@ import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
 
-async function exerciseCreation(){
-  const newExercise = await API.graphql(
-    graphqlOperation(mutations.createExercise, { input: {} })
-  );
-}
+// async function exerciseCreation(){
+//   const newExercise = await API.graphql(
+//     graphqlOperation(mutations.createExercise, { input: {} })
+//   );
+// }
 
 const InteractiveExercisesPage = () => {
   return (
@@ -36,7 +36,7 @@ const InteractiveExercisesPage = () => {
               Advanced: Short description
         </Link>
       </div>
-      <Button onClick={exerciseCreation}>Click to add to Database</Button>
+      {/* <Button onClick={exerciseCreation}>Click to add to Database</Button> */}
     </div>
   );
 };
