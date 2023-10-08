@@ -9,7 +9,7 @@ const Footer = () => {
 				<div className={`${styles.companyInfo}`}>
 					<div className={styles.branding}>
 						{/* logo */}
-						<div className={styles.logoFooter}>CVs</div>
+						<div className={styles.logoFooter}>CoV</div>
 						{/* Name */}
 						<h3>Confident Voices</h3>
 					</div>
