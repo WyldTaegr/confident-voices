@@ -69,11 +69,12 @@ const PostCreationPage = () => {
           setErrorDesc(false);
           setAlertDesc(false);
       }
-      alert(hasErrorDesc);
-      alert(hasErrorTags);
-      alert(hasErrorTitle)
+      //alert(hasErrorDesc);
+      //alert(hasErrorTags);
+      //alert(hasErrorTitle)
       if((titleCheck == false) && (tagsCheck == false) && (descCheck == false)){
           alert("GREAT NO ERRORS");
+          alert(inputTitle);
           // holds new post info from user input
           
           const newPostInfo = {
