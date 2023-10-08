@@ -4,13 +4,17 @@ import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 
 // front-end imports
+import { Amplify, Auth } from 'aws-amplify';
 import React, {useState} from 'react';
 import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex } from '@aws-amplify/ui-react';
 import {ImPlus} from 'react-icons/im';
 import '@aws-amplify/ui-react/styles.css';
 
+
 // backend imports
 import {addInformation, allPostInformation} from '../Database/postDB';
+import awsExports from '@/aws-exports';
+Amplify.configure(awsExports);
 
 const PostCreationPage = () => {
     
