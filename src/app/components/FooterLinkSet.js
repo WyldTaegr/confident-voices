@@ -4,11 +4,12 @@ import * as styles from "../../styles/Footer.module.css";
 const FooterLinkSet = ({ linkSet }) => {
 	return (
 		<div className={`${styles.linkGroup}`}>
-			<h4>Heading</h4>
+			<h4> </h4>
 			<div>
 				<ul className={`${styles.footerLinks}`}>
-					{Array(4)
-						.fill("Link")
+					//made it 0 this was showing errors
+					{Array(0)
+						.fill("Click to go to top of Page")
 						.map((item, index) => {
 							return (
 								<li key={index}>
