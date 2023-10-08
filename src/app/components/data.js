@@ -21,7 +21,7 @@ const data = {
         {
             id: 4,
             picture: images.emergancyCare,
-            title: "Emergency Support",
+            title: "Support",
             description: "Get 24/7 immediate assistance for speech-related concerns, ensuring you and your family always have help when you need it.",
         },
         {
