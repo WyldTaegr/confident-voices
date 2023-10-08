@@ -1,34 +1,28 @@
-// logo
-const logo = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/logo.png");
-
-// hero image
-const heroImage = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/hero.svg");
-
-// dot pattern
-const dots = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/dot-pat.svg");
-const backOval = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/back-oval.svg");
+import logo from "../../public/images/logo.png";
+import heroImage from "../../public/images/hero.svg";
+import dots from "../../public/images/dot-pat.svg"
+import backOval from "../../public/images/back-oval.svg";
 
 // services image
-const searchDoctor = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/search-doc.svg");
-const onlinePharamacy = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/on-pharma.svg");
-const consultation = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/consult.svg");
-const detailsInfo = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/details-info.svg");
-const emergancyCare = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/eme-care.svg");
-const tracking = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/tracking.svg");
-
+import searchDoctor from  "../../public/images/search-doc.svg";
+import onlinePharamacy from "../../public/images/on-pharma.svg";
+import  consultation from "../../public/images/consult.svg";
+import  detailsInfo from "../../public/images/details-info.svg";
+import  emergancyCare from "../../public/images/eme-care.svg";
+import  tracking from "../../public/images/tracking.svg";
 // advantages
-const leadingHealthProvider = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/leading-health.svg");
-const downloadApp = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/down-app.svg");
+import leadingHealthProvider from "../../public/images/leading-health.svg";
+import downloadApp from "../../public/images/down-app.svg";
 
 // testimonial
-const testimonialAvatar = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/testimonial-avatar.png");
-const testimonialAvatar2 = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/testimonial-avatar2.png");
-const testimonialAvatar3 = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/testimonial-avatar3.png");
-const testimonialAvatar4 = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/testimonial-avatar4.png");
+import testimonialAvatar from "../../public/images/testimonial-avatar.png";
+import testimonialAvatar2 from "../../public/images/testimonial-avatar2.png";
+import testimonialAvatar3 from "../../public/images/testimonial-avatar3.png";
+import testimonialAvatar4 from "../../public/images/testimonial-avatar4.png";
 // articles
-const article1 = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/article-1.png");
-const article2 = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/article-2.png");
-const article3 = require("/Users/ishadas/Desktop/confident-voices/src/app/publcifold/impassets/images/article-3.png");
+import article1 from "../../public/images/article-1.png";
+import article2 from "../../public/images/article-2.png";
+import article3 from "../../public/images/article-3.png";
 
 export default {
 	logo,
