@@ -8,13 +8,14 @@ import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
-const AddQuestionsPage = () => {
+async function questionCreation(event){
+  event.preventDefault();
+  const newQuestion = await API.graphql(
+    graphqlOperation(mutations.createExercise, { input: {name: "hello"} })
+  );
+}
 
-  async function questionCreation(){
-    const newQuestion = await API.graphql(
-      graphqlOperation(mutations.createQuestion, { input: {description: "hello"} })
-    );
-  }
+const AddQuestionsPage = () => {
 
   const [inputValue, setInputValue] = useState('');
 

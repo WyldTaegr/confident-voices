@@ -180,9 +180,20 @@ export const onCreateQuestion = /* GraphQL */ `
     onCreateQuestion(filter: $filter) {
       id
       description
+      example {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
       createdAt
       updatedAt
       exerciseQuestionsId
+      questionExampleId
       __typename
     }
   }
@@ -192,9 +203,20 @@ export const onUpdateQuestion = /* GraphQL */ `
     onUpdateQuestion(filter: $filter) {
       id
       description
+      example {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
       createdAt
       updatedAt
       exerciseQuestionsId
+      questionExampleId
       __typename
     }
   }
@@ -204,9 +226,20 @@ export const onDeleteQuestion = /* GraphQL */ `
     onDeleteQuestion(filter: $filter) {
       id
       description
+      example {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
       createdAt
       updatedAt
       exerciseQuestionsId
+      questionExampleId
       __typename
     }
   }
@@ -299,9 +332,14 @@ export const onCreateQuestionProgress = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       completed
+      submissions {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       exerciseProgressProgressId
@@ -329,9 +367,14 @@ export const onUpdateQuestionProgress = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       completed
+      submissions {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       exerciseProgressProgressId
@@ -359,13 +402,66 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       completed
+      submissions {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       exerciseProgressProgressId
       questionProgressQuestionId
+      __typename
+    }
+  }
+`;
+export const onCreateRecording = /* GraphQL */ `
+  subscription OnCreateRecording(
+    $filter: ModelSubscriptionRecordingFilterInput
+  ) {
+    onCreateRecording(filter: $filter) {
+      bucket
+      region
+      key
+      id
+      createdAt
+      updatedAt
+      questionProgressSubmissionsId
+      __typename
+    }
+  }
+`;
+export const onUpdateRecording = /* GraphQL */ `
+  subscription OnUpdateRecording(
+    $filter: ModelSubscriptionRecordingFilterInput
+  ) {
+    onUpdateRecording(filter: $filter) {
+      bucket
+      region
+      key
+      id
+      createdAt
+      updatedAt
+      questionProgressSubmissionsId
+      __typename
+    }
+  }
+`;
+export const onDeleteRecording = /* GraphQL */ `
+  subscription OnDeleteRecording(
+    $filter: ModelSubscriptionRecordingFilterInput
+  ) {
+    onDeleteRecording(filter: $filter) {
+      bucket
+      region
+      key
+      id
+      createdAt
+      updatedAt
+      questionProgressSubmissionsId
       __typename
     }
   }
