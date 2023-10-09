@@ -8,10 +8,10 @@ import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
-async function questionCreation(event){
+async function questionCreation(event, inputValue){
   event.preventDefault();
   const newQuestion = await API.graphql(
-    graphqlOperation(mutations.createExercise, { input: {name: "hello"} })
+    graphqlOperation(mutations.createQuestion, { input: {description: inputValue} })
   );
 }
 
@@ -25,7 +25,7 @@ const AddQuestionsPage = () => {
 
   return (
     <div>
-      <form onSubmit={questionCreation}>
+      <form onSubmit={(e) => questionCreation(e, inputValue)}>
         <input
           type="text"
           value={inputValue}
