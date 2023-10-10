@@ -1,4 +1,6 @@
 'use client'
+/*We would want this page to be the one where the therapist chooses the exercise*/
+/*The therapist can add questions to an exercise, or create a new exercise and add questions to that one*/
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Amplify } from 'aws-amplify';
