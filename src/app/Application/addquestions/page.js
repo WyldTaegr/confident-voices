@@ -5,6 +5,7 @@ import React, { useState , useEffect} from 'react';
 import Link from 'next/link';
 import { Amplify } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
+import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
 import { Button } from '@aws-amplify/ui-react';
@@ -21,7 +22,7 @@ async function questionCreation(event, inputValue){
 }
 
 const AddQuestionsPage = () => {
-
+  const router = useRouter();
   const [exercises, setExercises] = useState([]);
 
   const fetchExercises = async () => {
@@ -43,13 +44,17 @@ const AddQuestionsPage = () => {
     setInputValue(event.target.value);
   };
 
+  function pushTo(e, name){
+    router.push(`/Application/addquestions/${name}`)    
+  }
+
   return (
     <div>
       <p>Please select the exercise you want to add a question to:</p>
       <ul>
         {exercises.map(exercise => (
           <li key={exercise.id}>
-            <h2>{exercise.name}</h2>
+            <h2 onClick={(e) => pushTo(e, exercise.name)}>{exercise.name}</h2>
           </li>
         ))}
       </ul>
