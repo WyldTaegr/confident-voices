@@ -14,7 +14,7 @@ type Student @model @auth(rules: [{allow: public}]) {
 
 type Exercise @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String!
+  name: String
   questions: [Question] @hasMany
 }
 

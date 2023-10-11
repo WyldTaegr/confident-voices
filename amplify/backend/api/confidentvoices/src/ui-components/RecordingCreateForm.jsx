@@ -10,8 +10,8 @@ import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createPostInfo } from "../graphql/mutations";
-export default function PostInfoCreateForm(props) {
+import { createRecording } from "../graphql/mutations";
+export default function RecordingCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -23,26 +23,24 @@ export default function PostInfoCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    title: "",
-    tags: "",
-    description: "",
+    bucket: "",
+    region: "",
+    key: "",
   };
-  const [title, setTitle] = React.useState(initialValues.title);
-  const [tags, setTags] = React.useState(initialValues.tags);
-  const [description, setDescription] = React.useState(
-    initialValues.description
-  );
+  const [bucket, setBucket] = React.useState(initialValues.bucket);
+  const [region, setRegion] = React.useState(initialValues.region);
+  const [key, setKey] = React.useState(initialValues.key);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setTitle(initialValues.title);
-    setTags(initialValues.tags);
-    setDescription(initialValues.description);
+    setBucket(initialValues.bucket);
+    setRegion(initialValues.region);
+    setKey(initialValues.key);
     setErrors({});
   };
   const validations = {
-    title: [{ type: "Required" }],
-    tags: [{ type: "Required" }],
-    description: [{ type: "Required" }],
+    bucket: [{ type: "Required" }],
+    region: [{ type: "Required" }],
+    key: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -70,9 +68,9 @@ export default function PostInfoCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          title,
-          tags,
-          description,
+          bucket,
+          region,
+          key,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -103,7 +101,7 @@ export default function PostInfoCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createPostInfo,
+            query: createRecording,
             variables: {
               input: {
                 ...modelFields,
@@ -123,86 +121,86 @@ export default function PostInfoCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostInfoCreateForm")}
+      {...getOverrideProps(overrides, "RecordingCreateForm")}
       {...rest}
     >
       <TextField
-        label="Title"
+        label="Bucket"
         isRequired={true}
         isReadOnly={false}
-        value={title}
+        value={bucket}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title: value,
-              tags,
-              description,
+              bucket: value,
+              region,
+              key,
             };
             const result = onChange(modelFields);
-            value = result?.title ?? value;
+            value = result?.bucket ?? value;
           }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
+          if (errors.bucket?.hasError) {
+            runValidationTasks("bucket", value);
           }
-          setTitle(value);
+          setBucket(value);
         }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
+        onBlur={() => runValidationTasks("bucket", bucket)}
+        errorMessage={errors.bucket?.errorMessage}
+        hasError={errors.bucket?.hasError}
+        {...getOverrideProps(overrides, "bucket")}
       ></TextField>
       <TextField
-        label="Tags"
+        label="Region"
         isRequired={true}
         isReadOnly={false}
-        value={tags}
+        value={region}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              tags: value,
-              description,
+              bucket,
+              region: value,
+              key,
             };
             const result = onChange(modelFields);
-            value = result?.tags ?? value;
+            value = result?.region ?? value;
           }
-          if (errors.tags?.hasError) {
-            runValidationTasks("tags", value);
+          if (errors.region?.hasError) {
+            runValidationTasks("region", value);
           }
-          setTags(value);
+          setRegion(value);
         }}
-        onBlur={() => runValidationTasks("tags", tags)}
-        errorMessage={errors.tags?.errorMessage}
-        hasError={errors.tags?.hasError}
-        {...getOverrideProps(overrides, "tags")}
+        onBlur={() => runValidationTasks("region", region)}
+        errorMessage={errors.region?.errorMessage}
+        hasError={errors.region?.hasError}
+        {...getOverrideProps(overrides, "region")}
       ></TextField>
       <TextField
-        label="Description"
+        label="Key"
         isRequired={true}
         isReadOnly={false}
-        value={description}
+        value={key}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              tags,
-              description: value,
+              bucket,
+              region,
+              key: value,
             };
             const result = onChange(modelFields);
-            value = result?.description ?? value;
+            value = result?.key ?? value;
           }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
+          if (errors.key?.hasError) {
+            runValidationTasks("key", value);
           }
-          setDescription(value);
+          setKey(value);
         }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
+        onBlur={() => runValidationTasks("key", key)}
+        errorMessage={errors.key?.errorMessage}
+        hasError={errors.key?.hasError}
+        {...getOverrideProps(overrides, "key")}
       ></TextField>
       <Flex
         justifyContent="space-between"
