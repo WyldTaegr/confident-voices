@@ -43,7 +43,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/Application/AddQuestionsPage"
+                href="/Application/addquestions"
                 className="text-white hover:text-gray-300">
                 Exercise Creation
               </Link>
