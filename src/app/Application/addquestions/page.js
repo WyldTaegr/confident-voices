@@ -5,6 +5,7 @@ import React, { useState , useEffect} from 'react';
 import Link from 'next/link';
 import { Amplify } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
+import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
 import { Button } from '@aws-amplify/ui-react';
@@ -12,7 +13,11 @@ import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
 
-
+/**
+ * Method to create a question
+ * @param {*} event the event context from the click
+ * @param {*} inputValue the question to be created
+ */
 async function questionCreation(event, inputValue){
   event.preventDefault();
   const newQuestion = await API.graphql(
@@ -21,9 +26,10 @@ async function questionCreation(event, inputValue){
 }
 
 const AddQuestionsPage = () => {
-
+  const router = useRouter();
   const [exercises, setExercises] = useState([]);
 
+  //Getting all the current exercises from graphQL
   const fetchExercises = async () => {
     try {
       const exerciseData = await API.graphql(graphqlOperation(queries.listExercises));
@@ -37,11 +43,22 @@ const AddQuestionsPage = () => {
     fetchExercises();
   }, []);
 
+  //Input value for the question
   const [inputValue, setInputValue] = useState('');
 
+  //Function to handle input to the question field
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
+
+  /**
+   * Function to redirect to the required exercise page
+   * @param {*} e The event context
+   * @param {*} name The name of the exercise to redirect to
+   */
+  function pushTo(e, name){
+    router.push(`/Application/addquestions/${name}`)    
+  }
 
   return (
     <div>
@@ -49,7 +66,7 @@ const AddQuestionsPage = () => {
       <ul>
         {exercises.map(exercise => (
           <li key={exercise.id}>
-            <h2>{exercise.name}</h2>
+            <h2 onClick={(e) => pushTo(e, exercise.name)}>{exercise.name}</h2>
           </li>
         ))}
       </ul>

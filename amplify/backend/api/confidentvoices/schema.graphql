@@ -20,7 +20,7 @@ type Exercise @model @auth(rules: [{allow: public}]) {
 
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
-  description: String!
+  description: String
   example: Recording @hasOne
 }
 

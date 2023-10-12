@@ -91,7 +91,7 @@ export default function TherapistCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createTherapist,
+            query: createTherapist.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
