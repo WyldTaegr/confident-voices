@@ -91,7 +91,7 @@ export default function ExerciseCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createExercise,
+            query: createExercise.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,

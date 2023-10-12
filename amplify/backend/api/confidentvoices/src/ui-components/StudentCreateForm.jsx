@@ -83,7 +83,7 @@ export default function StudentCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createStudent,
+            query: createStudent.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,

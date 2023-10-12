@@ -13,7 +13,11 @@ import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
 
-
+/**
+ * Method to create a question
+ * @param {*} event the event context from the click
+ * @param {*} inputValue the question to be created
+ */
 async function questionCreation(event, inputValue){
   event.preventDefault();
   const newQuestion = await API.graphql(
@@ -25,6 +29,7 @@ const AddQuestionsPage = () => {
   const router = useRouter();
   const [exercises, setExercises] = useState([]);
 
+  //Getting all the current exercises from graphQL
   const fetchExercises = async () => {
     try {
       const exerciseData = await API.graphql(graphqlOperation(queries.listExercises));
@@ -38,12 +43,19 @@ const AddQuestionsPage = () => {
     fetchExercises();
   }, []);
 
+  //Input value for the question
   const [inputValue, setInputValue] = useState('');
 
+  //Function to handle input to the question field
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
+  /**
+   * Function to redirect to the required exercise page
+   * @param {*} e The event context
+   * @param {*} name The name of the exercise to redirect to
+   */
   function pushTo(e, name){
     router.push(`/Application/addquestions/${name}`)    
   }

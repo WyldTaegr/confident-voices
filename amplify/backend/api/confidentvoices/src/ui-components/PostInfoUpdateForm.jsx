@@ -50,7 +50,7 @@ export default function PostInfoUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getPostInfo,
+              query: getPostInfo.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getPostInfo
@@ -124,7 +124,7 @@ export default function PostInfoUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updatePostInfo,
+            query: updatePostInfo.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: postInfoRecord.id,

@@ -42,7 +42,7 @@ export default function ExerciseUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getExercise,
+              query: getExercise.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getExercise
@@ -112,7 +112,7 @@ export default function ExerciseUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateExercise,
+            query: updateExercise.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: exerciseRecord.id,

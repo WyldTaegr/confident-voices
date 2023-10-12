@@ -44,7 +44,7 @@ export default function QuestionUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getQuestion,
+              query: getQuestion.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getQuestion
@@ -55,7 +55,7 @@ export default function QuestionUpdateForm(props) {
   }, [idProp, questionModelProp]);
   React.useEffect(resetStateValues, [questionRecord]);
   const validations = {
-    description: [{ type: "Required" }],
+    description: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -83,7 +83,7 @@ export default function QuestionUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          description,
+          description: description ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -114,7 +114,7 @@ export default function QuestionUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateQuestion,
+            query: updateQuestion.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: questionRecord.id,
@@ -137,7 +137,7 @@ export default function QuestionUpdateForm(props) {
     >
       <TextField
         label="Description"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={description}
         onChange={(e) => {
