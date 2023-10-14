@@ -6,7 +6,6 @@ import { Amplify } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
-import * as queries from '@/graphql/queries';
 import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
@@ -20,22 +19,10 @@ const Question = ({ params }) => {
   async function questionCreation(event, inputValue){
     event.preventDefault();
     const newQuestion = await API.graphql(
-      graphqlOperation(mutations.createQuestion, { input: {description: inputValue} })
-    );
-    const newQuestionId = newQuestion.data.createQuestion.id;
-    const exercise = await API.graphql(
-      graphqlOperation(queries.getExercise, { id: params.slug })
-    );
-    const currentQuestionIds = exercise.data.getExercise.questions.items.map(q => q.id);
-
-      // Then, update the Exercise with the new question ID
-    await API.graphql(
-      graphqlOperation(mutations.updateExercise, {
-        input: {
-          id: params.slug,
-          questions: [...currentQuestionIds, newQuestionId] // assumes a simple array of IDs
-        }
-      })
+      graphqlOperation(mutations.createQuestion, { input: {
+        description: inputValue,
+        exerciseQuestionsId: params.slug
+      } })
     );
   }
 const router = useRouter();
