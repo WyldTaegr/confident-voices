@@ -17,11 +17,17 @@ const SlugmaPage = ({params}) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const result = await API.graphql(
-          graphqlOperation(queries.getExercise, { id: params.slugma })
+        // Fetch all questions
+        const allQuestionsData = await API.graphql(
+          graphqlOperation(queries.listQuestions)
         );
-        console.log(result.data.getExercise);
-        setQuestions(result.data.getExercise.questions.items);
+        
+        // Filter questions related to the given exerciseId
+        const relatedQuestions = allQuestionsData.data.listQuestions.items.filter(
+          (question) => question.exerciseQuestionsId === params.slugma
+        );
+        
+        setQuestions(relatedQuestions);
       } catch (error) {
         console.error("Error fetching questions: ", error);
       }
