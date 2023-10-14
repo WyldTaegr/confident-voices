@@ -36,8 +36,8 @@ const AddQuestionsPage = () => {
    * @param {*} e The event context
    * @param {*} name The name of the exercise to redirect to
    */
-  function pushTo(e, name){
-    router.push(`/Application/addquestions/${name}`)    
+  function pushTo(e, id){
+    router.push(`/Application/addquestions/${id}`)    
   }
 
   return (
@@ -46,7 +46,7 @@ const AddQuestionsPage = () => {
       <ul>
         {exercises.map(exercise => (
           <li key={exercise.id}>
-            <h2 onClick={(e) => pushTo(e, exercise.name)}>{exercise.name}</h2>
+            <h2 onClick={(e) => pushTo(e, exercise.id)}>{exercise.name}</h2>
           </li>
         ))}
       </ul>

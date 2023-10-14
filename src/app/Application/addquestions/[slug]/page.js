@@ -12,19 +12,32 @@ import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
 
-
-async function questionCreation(event, inputValue){
-  event.preventDefault();
-  const newQuestion = await API.graphql(
-    graphqlOperation(mutations.createQuestion, { input: {description: inputValue} })
-  );
-}
-
 /**
  * Method to add a question to the set of questions already present in an exercise
  * @param {*} param0 
  */
 const Question = ({ params }) => {
+  async function questionCreation(event, inputValue){
+    event.preventDefault();
+    const newQuestion = await API.graphql(
+      graphqlOperation(mutations.createQuestion, { input: {description: inputValue} })
+    );
+    const newQuestionId = newQuestion.data.createQuestion.id;
+    const exercise = await API.graphql(
+      graphqlOperation(queries.getExercise, { id: params.slug })
+    );
+    const currentQuestionIds = exercise.data.getExercise.questions.items.map(q => q.id);
+
+      // Then, update the Exercise with the new question ID
+    await API.graphql(
+      graphqlOperation(mutations.updateExercise, {
+        input: {
+          id: params.slug,
+          questions: [...currentQuestionIds, newQuestionId] // assumes a simple array of IDs
+        }
+      })
+    );
+  }
 const router = useRouter();
 const [inputValue, setInputValue] = useState('');
 
@@ -37,7 +50,7 @@ const [inputValue, setInputValue] = useState('');
 
   return (
     <div>
-     <p>Post: {params.slug}</p>  
+     <p>Exercise: {params.slug}</p> 
      <form onSubmit={(e) => questionCreation(e, inputValue)}>
         <input
           type="text"
@@ -45,7 +58,7 @@ const [inputValue, setInputValue] = useState('');
           onChange={handleInputChange}
           placeholder="Enter something"
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Add Question</button>
       </form>
     </div>
     
