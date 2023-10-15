@@ -14,13 +14,14 @@ type Student @model @auth(rules: [{allow: public}]) {
 
 type Exercise @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String!
+  name: String
   questions: [Question] @hasMany
 }
 
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
-  description: String!
+  description: String
+  example: Recording @hasOne
 }
 
 type ExerciseProgress @model @auth(rules: [{allow: public}]) {
@@ -34,9 +35,10 @@ type QuestionProgress @model @auth(rules: [{allow: public}]) {
   exerciseProgress: ExerciseProgress! @belongsTo
   question: Question! @hasOne
   completed: Boolean!
+  submissions: [Recording] @hasMany
 }
 
-type Recording {
+type Recording @model @auth(rules: [{allow: public}]) {
   bucket: String!
   region: String!
   key: String!

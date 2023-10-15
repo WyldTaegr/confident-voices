@@ -6,7 +6,7 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid } from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
@@ -24,12 +24,18 @@ export default function QuestionUpdateForm(props) {
     overrides,
     ...rest
   } = props;
-  const initialValues = {};
+  const initialValues = {
+    description: "",
+  };
+  const [description, setDescription] = React.useState(
+    initialValues.description
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = questionRecord
       ? { ...initialValues, ...questionRecord }
       : initialValues;
+    setDescription(cleanValues.description);
     setErrors({});
   };
   const [questionRecord, setQuestionRecord] = React.useState(questionModelProp);
@@ -38,7 +44,7 @@ export default function QuestionUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getQuestion,
+              query: getQuestion.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getQuestion
@@ -48,7 +54,9 @@ export default function QuestionUpdateForm(props) {
     queryData();
   }, [idProp, questionModelProp]);
   React.useEffect(resetStateValues, [questionRecord]);
-  const validations = {};
+  const validations = {
+    description: [],
+  };
   const runValidationTasks = async (
     fieldName,
     currentValue,
@@ -74,7 +82,9 @@ export default function QuestionUpdateForm(props) {
       padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
-        let modelFields = {};
+        let modelFields = {
+          description: description ?? null,
+        };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
@@ -104,7 +114,7 @@ export default function QuestionUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateQuestion,
+            query: updateQuestion.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: questionRecord.id,
@@ -125,6 +135,30 @@ export default function QuestionUpdateForm(props) {
       {...getOverrideProps(overrides, "QuestionUpdateForm")}
       {...rest}
     >
+      <TextField
+        label="Description"
+        isRequired={false}
+        isReadOnly={false}
+        value={description}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              description: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.description ?? value;
+          }
+          if (errors.description?.hasError) {
+            runValidationTasks("description", value);
+          }
+          setDescription(value);
+        }}
+        onBlur={() => runValidationTasks("description", description)}
+        errorMessage={errors.description?.errorMessage}
+        hasError={errors.description?.hasError}
+        {...getOverrideProps(overrides, "description")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

@@ -204,9 +204,20 @@ export const createQuestion = /* GraphQL */ `
     createQuestion(input: $input, condition: $condition) {
       id
       description
+      example {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
       createdAt
       updatedAt
       exerciseQuestionsId
+      questionExampleId
       __typename
     }
   }
@@ -219,9 +230,20 @@ export const updateQuestion = /* GraphQL */ `
     updateQuestion(input: $input, condition: $condition) {
       id
       description
+      example {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
       createdAt
       updatedAt
       exerciseQuestionsId
+      questionExampleId
       __typename
     }
   }
@@ -234,9 +256,20 @@ export const deleteQuestion = /* GraphQL */ `
     deleteQuestion(input: $input, condition: $condition) {
       id
       description
+      example {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
       createdAt
       updatedAt
       exerciseQuestionsId
+      questionExampleId
       __typename
     }
   }
@@ -333,9 +366,14 @@ export const createQuestionProgress = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       completed
+      submissions {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       exerciseProgressProgressId
@@ -364,9 +402,14 @@ export const updateQuestionProgress = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       completed
+      submissions {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       exerciseProgressProgressId
@@ -395,13 +438,69 @@ export const deleteQuestionProgress = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       completed
+      submissions {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       exerciseProgressProgressId
       questionProgressQuestionId
+      __typename
+    }
+  }
+`;
+export const createRecording = /* GraphQL */ `
+  mutation CreateRecording(
+    $input: CreateRecordingInput!
+    $condition: ModelRecordingConditionInput
+  ) {
+    createRecording(input: $input, condition: $condition) {
+      bucket
+      region
+      key
+      id
+      createdAt
+      updatedAt
+      questionProgressSubmissionsId
+      __typename
+    }
+  }
+`;
+export const updateRecording = /* GraphQL */ `
+  mutation UpdateRecording(
+    $input: UpdateRecordingInput!
+    $condition: ModelRecordingConditionInput
+  ) {
+    updateRecording(input: $input, condition: $condition) {
+      bucket
+      region
+      key
+      id
+      createdAt
+      updatedAt
+      questionProgressSubmissionsId
+      __typename
+    }
+  }
+`;
+export const deleteRecording = /* GraphQL */ `
+  mutation DeleteRecording(
+    $input: DeleteRecordingInput!
+    $condition: ModelRecordingConditionInput
+  ) {
+    deleteRecording(input: $input, condition: $condition) {
+      bucket
+      region
+      key
+      id
+      createdAt
+      updatedAt
+      questionProgressSubmissionsId
       __typename
     }
   }

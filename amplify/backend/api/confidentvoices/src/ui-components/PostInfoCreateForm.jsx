@@ -6,14 +6,7 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  Button,
-  Flex,
-  Grid,
-  TextAreaField,
-  TextField,
-  useTheme,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
@@ -29,7 +22,6 @@ export default function PostInfoCreateForm(props) {
     overrides,
     ...rest
   } = props;
-  const { tokens } = useTheme();
   const initialValues = {
     title: "",
     tags: "",
@@ -72,9 +64,9 @@ export default function PostInfoCreateForm(props) {
   return (
     <Grid
       as="form"
-      rowGap={tokens.space.medium.value}
+      rowGap="15px"
       columnGap="15px"
-      padding={tokens.space.large.value}
+      padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
@@ -111,7 +103,7 @@ export default function PostInfoCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createPostInfo,
+            query: createPostInfo.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -135,16 +127,9 @@ export default function PostInfoCreateForm(props) {
       {...rest}
     >
       <TextField
-        label={
-          <span style={{ display: "inline-flex" }}>
-            <span>Title</span>
-            <span style={{ color: "red" }}>*</span>
-          </span>
-        }
-        descriptiveText=""
+        label="Title"
         isRequired={true}
         isReadOnly={false}
-        placeholder="add a title..."
         value={title}
         onChange={(e) => {
           let { value } = e.target;
@@ -168,15 +153,9 @@ export default function PostInfoCreateForm(props) {
         {...getOverrideProps(overrides, "title")}
       ></TextField>
       <TextField
-        label={
-          <span style={{ display: "inline-flex" }}>
-            <span>Tags</span>
-            <span style={{ color: "red" }}>*</span>
-          </span>
-        }
+        label="Tags"
         isRequired={true}
         isReadOnly={false}
-        placeholder="add tag(s).."
         value={tags}
         onChange={(e) => {
           let { value } = e.target;
@@ -199,16 +178,11 @@ export default function PostInfoCreateForm(props) {
         hasError={errors.tags?.hasError}
         {...getOverrideProps(overrides, "tags")}
       ></TextField>
-      <TextAreaField
-        label={
-          <span style={{ display: "inline-flex" }}>
-            <span>Description</span>
-            <span style={{ color: "red" }}>*</span>
-          </span>
-        }
+      <TextField
+        label="Description"
         isRequired={true}
         isReadOnly={false}
-        placeholder="add a description ..."
+        value={description}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -229,7 +203,7 @@ export default function PostInfoCreateForm(props) {
         errorMessage={errors.description?.errorMessage}
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
-      ></TextAreaField>
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

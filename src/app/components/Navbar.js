@@ -41,6 +41,13 @@ const Navbar = () => {
                 Interactive Exercises
               </Link>
             </li>
+            <li>
+              <Link
+                href="/Application/addquestions"
+                className="text-white hover:text-gray-300">
+                Exercise Creation
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

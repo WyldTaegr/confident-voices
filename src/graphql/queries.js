@@ -118,9 +118,20 @@ export const getQuestion = /* GraphQL */ `
     getQuestion(id: $id) {
       id
       description
+      example {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
       createdAt
       updatedAt
       exerciseQuestionsId
+      questionExampleId
       __typename
     }
   }
@@ -138,6 +149,7 @@ export const listQuestions = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       nextToken
@@ -206,9 +218,14 @@ export const getQuestionProgress = /* GraphQL */ `
         createdAt
         updatedAt
         exerciseQuestionsId
+        questionExampleId
         __typename
       }
       completed
+      submissions {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       exerciseProgressProgressId
@@ -235,6 +252,42 @@ export const listQuestionProgresses = /* GraphQL */ `
         updatedAt
         exerciseProgressProgressId
         questionProgressQuestionId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getRecording = /* GraphQL */ `
+  query GetRecording($id: ID!) {
+    getRecording(id: $id) {
+      bucket
+      region
+      key
+      id
+      createdAt
+      updatedAt
+      questionProgressSubmissionsId
+      __typename
+    }
+  }
+`;
+export const listRecordings = /* GraphQL */ `
+  query ListRecordings(
+    $filter: ModelRecordingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRecordings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
         __typename
       }
       nextToken

@@ -10,10 +10,12 @@ import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createQuestion } from "../graphql/mutations";
-export default function QuestionCreateForm(props) {
+import { getRecording } from "../graphql/queries";
+import { updateRecording } from "../graphql/mutations";
+export default function RecordingUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id: idProp,
+    recording: recordingModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -23,18 +25,44 @@ export default function QuestionCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    description: "",
+    bucket: "",
+    region: "",
+    key: "",
   };
-  const [description, setDescription] = React.useState(
-    initialValues.description
-  );
+  const [bucket, setBucket] = React.useState(initialValues.bucket);
+  const [region, setRegion] = React.useState(initialValues.region);
+  const [key, setKey] = React.useState(initialValues.key);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setDescription(initialValues.description);
+    const cleanValues = recordingRecord
+      ? { ...initialValues, ...recordingRecord }
+      : initialValues;
+    setBucket(cleanValues.bucket);
+    setRegion(cleanValues.region);
+    setKey(cleanValues.key);
     setErrors({});
   };
+  const [recordingRecord, setRecordingRecord] =
+    React.useState(recordingModelProp);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = idProp
+        ? (
+            await API.graphql({
+              query: getRecording,
+              variables: { id: idProp },
+            })
+          )?.data?.getRecording
+        : recordingModelProp;
+      setRecordingRecord(record);
+    };
+    queryData();
+  }, [idProp, recordingModelProp]);
+  React.useEffect(resetStateValues, [recordingRecord]);
   const validations = {
-    description: [],
+    bucket: [{ type: "Required" }],
+    region: [{ type: "Required" }],
+    key: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -62,7 +90,9 @@ export default function QuestionCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          description,
+          bucket,
+          region,
+          key,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -93,18 +123,16 @@ export default function QuestionCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createQuestion.replaceAll("__typename", ""),
+            query: updateRecording,
             variables: {
               input: {
+                id: recordingRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -113,45 +141,100 @@ export default function QuestionCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "QuestionCreateForm")}
+      {...getOverrideProps(overrides, "RecordingUpdateForm")}
       {...rest}
     >
       <TextField
-        label="Description"
-        isRequired={false}
+        label="Bucket"
+        isRequired={true}
         isReadOnly={false}
-        value={description}
+        value={bucket}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              description: value,
+              bucket: value,
+              region,
+              key,
             };
             const result = onChange(modelFields);
-            value = result?.description ?? value;
+            value = result?.bucket ?? value;
           }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
+          if (errors.bucket?.hasError) {
+            runValidationTasks("bucket", value);
           }
-          setDescription(value);
+          setBucket(value);
         }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
+        onBlur={() => runValidationTasks("bucket", bucket)}
+        errorMessage={errors.bucket?.errorMessage}
+        hasError={errors.bucket?.hasError}
+        {...getOverrideProps(overrides, "bucket")}
+      ></TextField>
+      <TextField
+        label="Region"
+        isRequired={true}
+        isReadOnly={false}
+        value={region}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              bucket,
+              region: value,
+              key,
+            };
+            const result = onChange(modelFields);
+            value = result?.region ?? value;
+          }
+          if (errors.region?.hasError) {
+            runValidationTasks("region", value);
+          }
+          setRegion(value);
+        }}
+        onBlur={() => runValidationTasks("region", region)}
+        errorMessage={errors.region?.errorMessage}
+        hasError={errors.region?.hasError}
+        {...getOverrideProps(overrides, "region")}
+      ></TextField>
+      <TextField
+        label="Key"
+        isRequired={true}
+        isReadOnly={false}
+        value={key}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              bucket,
+              region,
+              key: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.key ?? value;
+          }
+          if (errors.key?.hasError) {
+            runValidationTasks("key", value);
+          }
+          setKey(value);
+        }}
+        onBlur={() => runValidationTasks("key", key)}
+        errorMessage={errors.key?.errorMessage}
+        hasError={errors.key?.hasError}
+        {...getOverrideProps(overrides, "key")}
       ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, "ClearButton")}
+          isDisabled={!(idProp || recordingModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -161,7 +244,10 @@ export default function QuestionCreateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || recordingModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
