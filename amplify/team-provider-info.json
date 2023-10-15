@@ -22,7 +22,18 @@
         "voicestorage": {}
       },
       "function": {
-        "confidentVoicesSignUp": {}
+        "confidentVoicesSignUp": {
+          "deploymentBucketName": "amplify-amplify656a80bb87184-staging-195923-deployment",
+          "s3Key": "amplify-builds/confidentVoicesSignUp-43373645524d66494874-build.zip"
+        },
+        "confidentvoicesCustomMessage": {
+          "REDIRECTURL": "",
+          "EMAILSUBJECT": "",
+          "EMAILMESSAGE": ""
+        },
+        "confidentvoicesPostConfirmation": {
+          "GROUP": ""
+        }
       }
     }
   }

@@ -70,11 +70,54 @@
       "service": "Cognito"
     }
   },
-  "function": {
-    "confidentVoicesSignUp": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+  "parameters": {
+    "AMPLIFY_function_confidentVoicesSignUp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentVoicesSignUp"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentVoicesSignUp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentVoicesSignUp"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesCustomMessage_EMAILMESSAGE": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesCustomMessage_EMAILSUBJECT": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesCustomMessage_REDIRECTURL": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesPostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesPostConfirmation"
+        }
+      ]
     }
   },
   "storage": {
