@@ -2,9 +2,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Amplify } from 'aws-amplify';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
-import * as mutations from '@/graphql/mutations';
-import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
@@ -16,27 +17,43 @@ Amplify.configure(awsExports);
 // }
 
 const InteractiveExercisesPage = () => {
+
+  const router = useRouter();
+  const [exercises, setExercises] = useState([]);
+
+  const fetchExercises = async () => {
+    try {
+      const exerciseData = await API.graphql(graphqlOperation(queries.listExercises));
+      setExercises(exerciseData.data.listExercises.items);
+    } catch (err) {
+      console.error("Error fetching exercises:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchExercises();
+  }, []);
+
+   /**
+   * Function to redirect to the required exercise page
+   * @param {*} e The event context
+   * @param {*} name The name of the exercise to redirect to
+   */
+   function pushTo(e, id){
+    router.push(`/Application/InteractiveExercisesPage/${id}`)    
+  }
+
   return (
+
     <div>
       <h1>Interactive Exercises</h1>
-      <div>
-        <h3> 
-          <Link href="/Application/InteractiveExercisesPage/Level1">
-            Beginner: Short description
-          </Link>
-        </h3>  
-      </div> 
-      <div>
-        <Link href="/Application/InteractiveExercisesPage/Level2">
-              Intermediate: Short description
-        </Link>
-      </div>
-      <div>
-        <Link href="/Application/InteractiveExercisesPage/Level3">
-              Advanced: Short description
-        </Link>
-      </div>
-      {/* <Button onClick={exerciseCreation}>Click to add to Database</Button> */}
+      <ul>
+        {exercises.map(exercise => (
+          <li key={exercise.id}>
+            <h2 onClick={(e) => pushTo(e, exercise.id)}>{exercise.name}</h2>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
