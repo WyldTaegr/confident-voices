@@ -71,26 +71,8 @@
     }
   },
   "function": {
-    "confidentvoicesPreSignUp": {
+    "confidentVoicesSignUp": {
       "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "confidentvoices"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "confidentvoices"
-        }
-      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }

@@ -22,7 +22,7 @@
         "voicestorage": {}
       },
       "function": {
-        "confidentvoicesPreSignUp": {}
+        "confidentVoicesSignUp": {}
       }
     }
   }
