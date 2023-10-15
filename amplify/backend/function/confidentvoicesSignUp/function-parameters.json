@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "api": {
+      "confidentvoices": [
+        "Mutation"
+      ]
+    },
+    "auth": {
+      "confidentvoices": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

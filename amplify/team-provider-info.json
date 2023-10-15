@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-amplify656a80bb87184-staging-195923-unauthRole",
       "StackName": "amplify-amplify656a80bb87184-staging-195923",
       "StackId": "arn:aws:cloudformation:us-east-1:685651992353:stack/amplify-amplify656a80bb87184-staging-195923/df0d5d00-51a6-11ee-9ae4-0ad31c8f83d1",
-      "AmplifyAppId": "df63loc7p1x5m"
+      "AmplifyAppId": "df63loc7p1x5m",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-amplify656a80bb87184-staging-195923-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
@@ -31,8 +32,14 @@
           "EMAILSUBJECT": "",
           "EMAILMESSAGE": ""
         },
+        "confidentvoicesSignUp": {
+          "deploymentBucketName": "amplify-amplify656a80bb87184-staging-195923-deployment",
+          "s3Key": "amplify-builds/confidentvoicesSignUp-6a564643334c54555231-build.zip"
+        },
         "confidentvoicesPostConfirmation": {
-          "GROUP": ""
+          "GROUP": "TEST",
+          "deploymentBucketName": "amplify-amplify656a80bb87184-staging-195923-deployment",
+          "s3Key": "amplify-builds/confidentvoicesPostConfirmation-725641756f7271796736-build.zip"
         }
       }
     }

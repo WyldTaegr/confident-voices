@@ -39,7 +39,17 @@
   "auth": {
     "confidentvoices": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "confidentvoicesPostConfirmation",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -68,6 +78,36 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "confidentvoicesPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "confidentvoicesSignUp": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "confidentvoices"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "confidentvoices"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -116,6 +156,38 @@
         {
           "category": "function",
           "resourceName": "confidentvoicesPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesSignUp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesSignUp"
+        }
+      ]
+    },
+    "AMPLIFY_function_confidentvoicesSignUp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "confidentvoicesSignUp"
         }
       ]
     }
