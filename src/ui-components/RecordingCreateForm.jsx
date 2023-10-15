@@ -101,7 +101,7 @@ export default function RecordingCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createRecording,
+            query: createRecording.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,

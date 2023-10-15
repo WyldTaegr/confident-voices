@@ -43,7 +43,7 @@ export default function TherapistUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getTherapist,
+              query: getTherapist.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getTherapist
@@ -113,7 +113,7 @@ export default function TherapistUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateTherapist,
+            query: updateTherapist.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: therapistRecord.id,

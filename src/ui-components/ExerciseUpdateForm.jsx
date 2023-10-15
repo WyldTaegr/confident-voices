@@ -42,7 +42,7 @@ export default function ExerciseUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getExercise,
+              query: getExercise.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getExercise
@@ -53,7 +53,7 @@ export default function ExerciseUpdateForm(props) {
   }, [idProp, exerciseModelProp]);
   React.useEffect(resetStateValues, [exerciseRecord]);
   const validations = {
-    name: [{ type: "Required" }],
+    name: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -81,7 +81,7 @@ export default function ExerciseUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
+          name: name ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -112,7 +112,7 @@ export default function ExerciseUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateExercise,
+            query: updateExercise.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: exerciseRecord.id,
@@ -135,7 +135,7 @@ export default function ExerciseUpdateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {

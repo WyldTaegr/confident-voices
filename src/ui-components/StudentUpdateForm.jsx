@@ -38,7 +38,7 @@ export default function StudentUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getStudent,
+              query: getStudent.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getStudent
@@ -104,7 +104,7 @@ export default function StudentUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateStudent,
+            query: updateStudent.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: studentRecord.id,

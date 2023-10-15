@@ -49,7 +49,7 @@ export default function RecordingUpdateForm(props) {
       const record = idProp
         ? (
             await API.graphql({
-              query: getRecording,
+              query: getRecording.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
           )?.data?.getRecording
@@ -123,7 +123,7 @@ export default function RecordingUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updateRecording,
+            query: updateRecording.replaceAll("__typename", ""),
             variables: {
               input: {
                 id: recordingRecord.id,

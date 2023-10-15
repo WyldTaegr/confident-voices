@@ -20,6 +20,9 @@
       },
       "storage": {
         "voicestorage": {}
+      },
+      "function": {
+        "confidentvoicesPreSignUp": {}
       }
     }
   }

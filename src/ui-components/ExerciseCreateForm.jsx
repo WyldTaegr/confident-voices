@@ -32,7 +32,7 @@ export default function ExerciseCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    name: [{ type: "Required" }],
+    name: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -91,7 +91,7 @@ export default function ExerciseCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createExercise,
+            query: createExercise.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -116,7 +116,7 @@ export default function ExerciseCreateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {

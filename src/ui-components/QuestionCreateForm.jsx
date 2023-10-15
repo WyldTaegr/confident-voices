@@ -34,7 +34,7 @@ export default function QuestionCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    description: [{ type: "Required" }],
+    description: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -93,7 +93,7 @@ export default function QuestionCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createQuestion,
+            query: createQuestion.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -118,7 +118,7 @@ export default function QuestionCreateForm(props) {
     >
       <TextField
         label="Description"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={description}
         onChange={(e) => {
