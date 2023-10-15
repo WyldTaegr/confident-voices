@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 
 //front-end imports
 import React, {useState, useEffect} from 'react';
-import { Button, Heading, Text, Card, Flex} from '@aws-amplify/ui-react';
+import { Button, Heading, Text, Card, Flex, Grid, Collection, Badge} from '@aws-amplify/ui-react';
 import {ImPlus} from 'react-icons/im';
 import '@aws-amplify/ui-react/styles.css';
 
@@ -60,25 +60,46 @@ const CommunityPage = () => {
   // front-end
   return (
     <div>
+    <Flex direction = "column" alignItems = "space-between" basis = "100%">
+    <Flex direction = "row" justifyContent="space-between" basis = "100%">
       <Heading level={1} color= "blue"> Community Page</Heading>
       <Button variation = "primary" onClick={()=> router.push('/Application/PostCreationPage')}>
         <ImPlus />&nbsp;
         <Text color = "white">Post</Text>
       </Button>
+    </Flex>
+    <Flex direction="column" grow = "4" basis= "100%" justifyContent = "flex-end">
       <div>
-        {post.map(x => (
-            <Card variation = "elevated" key = {x.id}>
-                <Flex direction = "row" alignItems = "flex-start">
-                    <Flex direction = "column" gap="1rem">    
+        <Collection
+        type = "list"
+        items = {post}
+        direction = "row"
+        justify-content = "space-between"
+        wrap = "wrap"
+        isSearchable
+        searchPlaceholder = "Type to search by title..."
+        searchFilter= {(p, keyword) => ((p).title.toLowerCase().startsWith(keyword.toLowerCase()))} 
+        isPaginated
+        itemsPerPage={8}>
+        {((x, index) => (
+            <Card variation = "elevated" borderRadius="0.5rem" boxShadow="rgba(13, 26, 38, 0.25) 0px 4px 12px 0px" maxWidth="20rem" key = {x.id}>
+                <Flex direction = "row">
+                    <Flex direction = "column" basis = "100%" gap="1rem">    
                         <Heading level = {1}>{x.title}</Heading>
-                        <Text as = "span">{x.tags}</Text>
+                        <Badge variation = "info">{x.tags}</Badge>
                         <Text as = "span">{x.description}</Text>
+                        <Flex direction = "row" basis = "100%" alignSelf = "flex-end">
+                            <Button variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id)} >Delete</Button>
+                        </Flex>
                     </Flex>
-                    <Button variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id)} >Delete</Button>
+                    
                 </Flex>
             </Card>
         ))}
+        </Collection>
       </div>
+      </Flex>
+      </Flex>
     </div>
   );
 };
