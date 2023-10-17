@@ -55,3 +55,6 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# we don't use the ui-components folder, this will automatically be updated on amplify pulls
+src/ui-components/
