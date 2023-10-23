@@ -31,6 +31,11 @@ const AddQuestionsPage = () => {
     fetchExercises();
   }, []);
 
+  function handleAddExercise(e){
+    e.preventDefault();
+    router.push('/Application/addquestions/addexercise');
+  }
+
   /**
    * Function to redirect to the required exercise page
    * @param {*} e The event context
@@ -42,6 +47,9 @@ const AddQuestionsPage = () => {
 
   return (
     <div>
+      <p>Do you want to Add an exercise or add a question to an existing exercise?</p>
+      <Button onClick={handleAddExercise}>Add exercise</Button>
+      <Button>Add question to existing exercise</Button>
       <p>Please select the exercise you want to add a question to:</p>
       <ul>
         {exercises.map(exercise => (
