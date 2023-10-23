@@ -3,4 +3,5 @@
 
 # Amplify CLI always pulls with LF line endings
 amplify/** text eol=lf
+src/graphql/* text eol=lf
 src/ui-components/* text eol=lf
