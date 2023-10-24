@@ -1,5 +1,25 @@
+enum AccountType {
+  None
+  Therapist
+  Student
+}
+
+type User @model @auth(rules: [
+  { allow: owner }
+  { allow: public, operations: [read] }
+  { allow: private, operations: [create, read, update, delete] }
+]) {
+  id: ID!
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  picture: S3Object @hasOne
+  active: AccountType!
+  therapist: Therapist @hasOne
+  student: Student @hasOne
+}
+
 type Therapist @model @auth(rules: [{allow: public}]) {
   id: ID!
+  user: User @belongsTo
   parent: Boolean!
   students: [Student] @manyToMany(relationName: "TherapistsStudents")
   children: [Student] @manyToMany(relationName: "ParentsChildren")
@@ -7,6 +27,7 @@ type Therapist @model @auth(rules: [{allow: public}]) {
 
 type Student @model @auth(rules: [{allow: public}]) {
   id: ID!
+  user: User @belongsTo
   therapists: [Therapist] @manyToMany(relationName: "TherapistsStudents")
   parents: [Therapist] @manyToMany(relationName: "ParentsChildren")
   progress: [ExerciseProgress] @hasMany
@@ -21,7 +42,7 @@ type Exercise @model @auth(rules: [{allow: public}]) {
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
   description: String
-  example: Recording @hasOne
+  example: S3Object @hasOne
 }
 
 type ExerciseProgress @model @auth(rules: [{allow: public}]) {
@@ -35,10 +56,10 @@ type QuestionProgress @model @auth(rules: [{allow: public}]) {
   exerciseProgress: ExerciseProgress! @belongsTo
   question: Question! @hasOne
   completed: Boolean!
-  submissions: [Recording] @hasMany
+  submissions: [S3Object] @hasMany
 }
 
-type Recording @model @auth(rules: [{allow: public}]) {
+type S3Object @model @auth(rules: [{allow: public}]) {
   bucket: String!
   region: String!
   key: String!

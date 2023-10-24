@@ -1,6 +1,135 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      owner
+      picture {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
+      active
+      therapist {
+        id
+        parent
+        createdAt
+        updatedAt
+        therapistUserId
+        __typename
+      }
+      student {
+        id
+        createdAt
+        updatedAt
+        studentUserId
+        __typename
+      }
+      createdAt
+      updatedAt
+      userPictureId
+      userTherapistId
+      userStudentId
+      __typename
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      owner
+      picture {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
+      active
+      therapist {
+        id
+        parent
+        createdAt
+        updatedAt
+        therapistUserId
+        __typename
+      }
+      student {
+        id
+        createdAt
+        updatedAt
+        studentUserId
+        __typename
+      }
+      createdAt
+      updatedAt
+      userPictureId
+      userTherapistId
+      userStudentId
+      __typename
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      owner
+      picture {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
+      active
+      therapist {
+        id
+        parent
+        createdAt
+        updatedAt
+        therapistUserId
+        __typename
+      }
+      student {
+        id
+        createdAt
+        updatedAt
+        studentUserId
+        __typename
+      }
+      createdAt
+      updatedAt
+      userPictureId
+      userTherapistId
+      userStudentId
+      __typename
+    }
+  }
+`;
 export const createTherapist = /* GraphQL */ `
   mutation CreateTherapist(
     $input: CreateTherapistInput!
@@ -8,6 +137,17 @@ export const createTherapist = /* GraphQL */ `
   ) {
     createTherapist(input: $input, condition: $condition) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       parent
       students {
         nextToken
@@ -19,6 +159,7 @@ export const createTherapist = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      therapistUserId
       __typename
     }
   }
@@ -30,6 +171,17 @@ export const updateTherapist = /* GraphQL */ `
   ) {
     updateTherapist(input: $input, condition: $condition) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       parent
       students {
         nextToken
@@ -41,6 +193,7 @@ export const updateTherapist = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      therapistUserId
       __typename
     }
   }
@@ -52,6 +205,17 @@ export const deleteTherapist = /* GraphQL */ `
   ) {
     deleteTherapist(input: $input, condition: $condition) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       parent
       students {
         nextToken
@@ -63,6 +227,7 @@ export const deleteTherapist = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      therapistUserId
       __typename
     }
   }
@@ -74,6 +239,17 @@ export const createStudent = /* GraphQL */ `
   ) {
     createStudent(input: $input, condition: $condition) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       therapists {
         nextToken
         __typename
@@ -88,6 +264,7 @@ export const createStudent = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      studentUserId
       __typename
     }
   }
@@ -99,6 +276,17 @@ export const updateStudent = /* GraphQL */ `
   ) {
     updateStudent(input: $input, condition: $condition) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       therapists {
         nextToken
         __typename
@@ -113,6 +301,7 @@ export const updateStudent = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      studentUserId
       __typename
     }
   }
@@ -124,6 +313,17 @@ export const deleteStudent = /* GraphQL */ `
   ) {
     deleteStudent(input: $input, condition: $condition) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       therapists {
         nextToken
         __typename
@@ -138,6 +338,7 @@ export const deleteStudent = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      studentUserId
       __typename
     }
   }
@@ -285,6 +486,7 @@ export const createExerciseProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       progress {
@@ -309,6 +511,7 @@ export const updateExerciseProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       progress {
@@ -333,6 +536,7 @@ export const deleteExerciseProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       progress {
@@ -454,12 +658,12 @@ export const deleteQuestionProgress = /* GraphQL */ `
     }
   }
 `;
-export const createRecording = /* GraphQL */ `
-  mutation CreateRecording(
-    $input: CreateRecordingInput!
-    $condition: ModelRecordingConditionInput
+export const createS3Object = /* GraphQL */ `
+  mutation CreateS3Object(
+    $input: CreateS3ObjectInput!
+    $condition: ModelS3ObjectConditionInput
   ) {
-    createRecording(input: $input, condition: $condition) {
+    createS3Object(input: $input, condition: $condition) {
       bucket
       region
       key
@@ -471,12 +675,12 @@ export const createRecording = /* GraphQL */ `
     }
   }
 `;
-export const updateRecording = /* GraphQL */ `
-  mutation UpdateRecording(
-    $input: UpdateRecordingInput!
-    $condition: ModelRecordingConditionInput
+export const updateS3Object = /* GraphQL */ `
+  mutation UpdateS3Object(
+    $input: UpdateS3ObjectInput!
+    $condition: ModelS3ObjectConditionInput
   ) {
-    updateRecording(input: $input, condition: $condition) {
+    updateS3Object(input: $input, condition: $condition) {
       bucket
       region
       key
@@ -488,12 +692,12 @@ export const updateRecording = /* GraphQL */ `
     }
   }
 `;
-export const deleteRecording = /* GraphQL */ `
-  mutation DeleteRecording(
-    $input: DeleteRecordingInput!
-    $condition: ModelRecordingConditionInput
+export const deleteS3Object = /* GraphQL */ `
+  mutation DeleteS3Object(
+    $input: DeleteS3ObjectInput!
+    $condition: ModelS3ObjectConditionInput
   ) {
-    deleteRecording(input: $input, condition: $condition) {
+    deleteS3Object(input: $input, condition: $condition) {
       bucket
       region
       key
@@ -567,12 +771,14 @@ export const createTherapistsStudents = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
@@ -595,12 +801,14 @@ export const updateTherapistsStudents = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
@@ -623,12 +831,14 @@ export const deleteTherapistsStudents = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
@@ -651,12 +861,14 @@ export const createParentsChildren = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
@@ -679,12 +891,14 @@ export const updateParentsChildren = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
@@ -707,12 +921,14 @@ export const deleteParentsChildren = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
