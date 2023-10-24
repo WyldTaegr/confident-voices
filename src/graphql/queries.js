@@ -1,10 +1,84 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      owner
+      picture {
+        bucket
+        region
+        key
+        id
+        createdAt
+        updatedAt
+        questionProgressSubmissionsId
+        __typename
+      }
+      active
+      therapist {
+        id
+        parent
+        createdAt
+        updatedAt
+        therapistUserId
+        __typename
+      }
+      student {
+        id
+        createdAt
+        updatedAt
+        studentUserId
+        __typename
+      }
+      createdAt
+      updatedAt
+      userPictureId
+      userTherapistId
+      userStudentId
+      __typename
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
 export const getTherapist = /* GraphQL */ `
   query GetTherapist($id: ID!) {
     getTherapist(id: $id) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       parent
       students {
         nextToken
@@ -16,6 +90,7 @@ export const getTherapist = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      therapistUserId
       __typename
     }
   }
@@ -32,6 +107,7 @@ export const listTherapists = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       nextToken
@@ -43,6 +119,17 @@ export const getStudent = /* GraphQL */ `
   query GetStudent($id: ID!) {
     getStudent(id: $id) {
       id
+      user {
+        id
+        owner
+        active
+        createdAt
+        updatedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       therapists {
         nextToken
         __typename
@@ -57,6 +144,7 @@ export const getStudent = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      studentUserId
       __typename
     }
   }
@@ -72,6 +160,7 @@ export const listStudents = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       nextToken
@@ -165,6 +254,7 @@ export const getExerciseProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       progress {
@@ -259,9 +349,9 @@ export const listQuestionProgresses = /* GraphQL */ `
     }
   }
 `;
-export const getRecording = /* GraphQL */ `
-  query GetRecording($id: ID!) {
-    getRecording(id: $id) {
+export const getS3Object = /* GraphQL */ `
+  query GetS3Object($id: ID!) {
+    getS3Object(id: $id) {
       bucket
       region
       key
@@ -273,13 +363,13 @@ export const getRecording = /* GraphQL */ `
     }
   }
 `;
-export const listRecordings = /* GraphQL */ `
-  query ListRecordings(
-    $filter: ModelRecordingFilterInput
+export const listS3Objects = /* GraphQL */ `
+  query ListS3Objects(
+    $filter: ModelS3ObjectFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listRecordings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listS3Objects(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         bucket
         region
@@ -340,12 +430,14 @@ export const getTherapistsStudents = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
@@ -445,12 +537,14 @@ export const getParentsChildren = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        studentUserId
         __typename
       }
       createdAt
