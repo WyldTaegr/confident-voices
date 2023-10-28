@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
+import AudioRecording from '@/app/components/AudioRecording';
 Amplify.configure(awsExports);
 
 const SlugmaPage = ({params}) => {
@@ -41,7 +42,10 @@ const SlugmaPage = ({params}) => {
       <p>Questions:</p>
       <ul>
         {questions.map((question) => (
-          <li key={question.id}>{question.description}</li>
+          <li key={question.id}>
+            {question.description}
+            <AudioRecording></AudioRecording>
+          </li>
         ))}
       </ul>
     </div>
