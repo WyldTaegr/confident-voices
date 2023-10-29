@@ -9,10 +9,6 @@ import { Button, Heading, Text, Card, Flex} from '@aws-amplify/ui-react';
 import {ImPlus} from 'react-icons/im';
 import '@aws-amplify/ui-react/styles.css';
 
-//backend imports
-import { Amplify, Auth } from 'aws-amplify';
-import awsExports from '@/aws-exports';
-Amplify.configure(awsExports);
 //import * as queries from '../../graphql/queries';
 //import {listPostInfos} from '../../graphql/queries';
 import {API} from 'aws-amplify';

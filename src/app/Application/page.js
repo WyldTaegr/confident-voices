@@ -1,15 +1,19 @@
 // pages/index.js
 import React from 'react';
+import { API } from 'aws-amplify';
+import * as queries from '@/graphql/queries';
 
-import Link from 'next/link';
+export default async function ApplicationPage() {
+  let output = ""
+  const users = await API.graphql({query: queries.listExercises});
+  output += JSON.stringify(users, null, 4);
 
-const ApplicationPage = () => {
+  
   return (
-    <div>
+    <div className="text-black">
       ApplicationPage
+      <h1>Users</h1>
+      <p>{output}</p>
     </div>
   );
 };
-
-
-export default ApplicationPage;

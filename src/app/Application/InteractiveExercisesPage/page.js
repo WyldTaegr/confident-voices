@@ -1,13 +1,10 @@
 'use client'
 import React from 'react';
 import Link from 'next/link';
-import { Amplify } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
-import awsExports from '@/aws-exports';
-Amplify.configure(awsExports);
 
 
 // async function exerciseCreation(){

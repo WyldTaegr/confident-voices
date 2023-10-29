@@ -9,8 +9,6 @@ import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
 import { Button } from '@aws-amplify/ui-react';
-import awsExports from '@/aws-exports';
-Amplify.configure(awsExports);
 
 
 const AddQuestionsPage = () => {

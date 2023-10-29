@@ -5,12 +5,10 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
-      owner
       picture {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -37,6 +35,7 @@ export const getUser = /* GraphQL */ `
       userPictureId
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -50,13 +49,13 @@ export const listUsers = /* GraphQL */ `
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       nextToken
@@ -70,13 +69,13 @@ export const getTherapist = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -121,13 +120,13 @@ export const getStudent = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {
@@ -208,10 +207,9 @@ export const getQuestion = /* GraphQL */ `
       id
       description
       example {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -352,10 +350,9 @@ export const listQuestionProgresses = /* GraphQL */ `
 export const getS3Object = /* GraphQL */ `
   query GetS3Object($id: ID!) {
     getS3Object(id: $id) {
-      bucket
-      region
-      key
       id
+      name
+      key
       createdAt
       updatedAt
       questionProgressSubmissionsId
@@ -371,10 +368,9 @@ export const listS3Objects = /* GraphQL */ `
   ) {
     listS3Objects(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
