@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Button from "./Button";
-import * as styles from "../../styles/SingleAdvantage.module.css";
+import * as styles from "@/styles/SingleAdvantage.module.css";
 const SingleAdvantage = ({ data, direction }) => {
 	return (
 		<div className={`row aside ${direction}`} style={{ margin: "5rem 0" }}>

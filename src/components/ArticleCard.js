@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import * as styles from "./../../styles/ArticleCard.module.css";
+import * as styles from "@/styles/ArticleCard.module.css";
 const ArticleCard = ({ data }) => {
 	return (
 		<div className={styles.cardContainer}>

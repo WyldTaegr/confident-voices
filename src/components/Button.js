@@ -1,5 +1,5 @@
 import React from "react";
-import * as styles from "../../styles/Button.module.css";
+import * as styles from "@/styles/Button.module.css";
 const Button = ({ fill = "outline", extraStyles, text }) => {
 	const textStyle = fill === "outline" ? "text-blue" : "text-white";
 	const background =

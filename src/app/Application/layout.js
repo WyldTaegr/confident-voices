@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '@/components/Navbar';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { Amplify } from 'aws-amplify';
