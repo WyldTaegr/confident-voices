@@ -8,12 +8,10 @@ export const onCreateUser = /* GraphQL */ `
   ) {
     onCreateUser(filter: $filter, owner: $owner) {
       id
-      owner
       picture {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -40,6 +38,7 @@ export const onCreateUser = /* GraphQL */ `
       userPictureId
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -51,12 +50,10 @@ export const onUpdateUser = /* GraphQL */ `
   ) {
     onUpdateUser(filter: $filter, owner: $owner) {
       id
-      owner
       picture {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -83,6 +80,7 @@ export const onUpdateUser = /* GraphQL */ `
       userPictureId
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -94,12 +92,10 @@ export const onDeleteUser = /* GraphQL */ `
   ) {
     onDeleteUser(filter: $filter, owner: $owner) {
       id
-      owner
       picture {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -126,6 +122,7 @@ export const onDeleteUser = /* GraphQL */ `
       userPictureId
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -138,13 +135,13 @@ export const onCreateTherapist = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -171,13 +168,13 @@ export const onUpdateTherapist = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -204,13 +201,13 @@ export const onDeleteTherapist = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -235,13 +232,13 @@ export const onCreateStudent = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {
@@ -269,13 +266,13 @@ export const onUpdateStudent = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {
@@ -303,13 +300,13 @@ export const onDeleteStudent = /* GraphQL */ `
       id
       user {
         id
-        owner
         active
         createdAt
         updatedAt
         userPictureId
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {
@@ -382,10 +379,9 @@ export const onCreateQuestion = /* GraphQL */ `
       id
       description
       example {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -405,10 +401,9 @@ export const onUpdateQuestion = /* GraphQL */ `
       id
       description
       example {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -428,10 +423,9 @@ export const onDeleteQuestion = /* GraphQL */ `
       id
       description
       example {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
         questionProgressSubmissionsId
@@ -625,10 +619,9 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
 export const onCreateS3Object = /* GraphQL */ `
   subscription OnCreateS3Object($filter: ModelSubscriptionS3ObjectFilterInput) {
     onCreateS3Object(filter: $filter) {
-      bucket
-      region
-      key
       id
+      name
+      key
       createdAt
       updatedAt
       questionProgressSubmissionsId
@@ -639,10 +632,9 @@ export const onCreateS3Object = /* GraphQL */ `
 export const onUpdateS3Object = /* GraphQL */ `
   subscription OnUpdateS3Object($filter: ModelSubscriptionS3ObjectFilterInput) {
     onUpdateS3Object(filter: $filter) {
-      bucket
-      region
-      key
       id
+      name
+      key
       createdAt
       updatedAt
       questionProgressSubmissionsId
@@ -653,10 +645,9 @@ export const onUpdateS3Object = /* GraphQL */ `
 export const onDeleteS3Object = /* GraphQL */ `
   subscription OnDeleteS3Object($filter: ModelSubscriptionS3ObjectFilterInput) {
     onDeleteS3Object(filter: $filter) {
-      bucket
-      region
-      key
       id
+      name
+      key
       createdAt
       updatedAt
       questionProgressSubmissionsId

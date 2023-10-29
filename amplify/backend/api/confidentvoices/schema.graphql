@@ -5,12 +5,11 @@ enum AccountType {
 }
 
 type User @model @auth(rules: [
-  { allow: owner }
+  { allow: owner, ownerField: "owner" }
   { allow: public, operations: [read] }
   { allow: private, operations: [create, read, update, delete] }
 ]) {
   id: ID!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
   picture: S3Object @hasOne
   active: AccountType!
   therapist: Therapist @hasOne
@@ -60,9 +59,9 @@ type QuestionProgress @model @auth(rules: [{allow: public}]) {
 }
 
 type S3Object @model @auth(rules: [{allow: public}]) {
-  bucket: String!
-  region: String!
-  key: String!
+  id: ID!
+  name: String!
+  key: String
 }
 
 type PostInfo @model @auth(rules: [{allow: public}]){
