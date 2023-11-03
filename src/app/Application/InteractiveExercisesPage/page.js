@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
+import Videofeed from '@/app/components/Videofeed';
 Amplify.configure(awsExports);
 
 
@@ -47,6 +48,7 @@ const InteractiveExercisesPage = () => {
 
     <div>
       <h1>Interactive Exercises</h1>
+      <Videofeed></Videofeed>
       <ul>
         {exercises.map(exercise => (
           <li key={exercise.id}>

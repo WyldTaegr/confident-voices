@@ -9,6 +9,7 @@ import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
 import AudioRecording from '@/app/components/AudioRecording';
+import Videofeed from '@/app/components/Videofeed';
 Amplify.configure(awsExports);
 
 const SlugmaPage = ({params}) => {
