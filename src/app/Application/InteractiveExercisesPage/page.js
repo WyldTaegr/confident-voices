@@ -8,6 +8,7 @@ import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
 import Videofeed from '@/app/components/Videofeed';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 Amplify.configure(awsExports);
 
 
@@ -24,7 +25,10 @@ const InteractiveExercisesPage = () => {
 
   const fetchExercises = async () => {
     try {
-      const exerciseData = await API.graphql(graphqlOperation(queries.listExercises));
+      const exerciseData = await API.graphql({
+        query: queries.listExercises,
+        authMode: GRAPHQL_AUTH_MODE.API_KEY
+      });
       setExercises(exerciseData.data.listExercises.items);
     } catch (err) {
       console.error("Error fetching exercises:", err);

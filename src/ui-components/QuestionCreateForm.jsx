@@ -7,10 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { fetchByPath, validateField } from "./utils";
-import { API } from "aws-amplify";
-import { createQuestion } from "../graphql/mutations";
+import { Question } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
 export default function QuestionCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -34,7 +33,7 @@ export default function QuestionCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    description: [{ type: "Required" }],
+    description: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -92,14 +91,7 @@ export default function QuestionCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
-            query: createQuestion,
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(new Question(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -108,8 +100,7 @@ export default function QuestionCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
@@ -118,7 +109,7 @@ export default function QuestionCreateForm(props) {
     >
       <TextField
         label="Description"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={description}
         onChange={(e) => {

@@ -6,12 +6,11 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, SwitchField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { fetchByPath, validateField } from "./utils";
-import { API } from "aws-amplify";
-import { createTherapist } from "../graphql/mutations";
-export default function TherapistCreateForm(props) {
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { User } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
+export default function UserCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -23,16 +22,16 @@ export default function TherapistCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    parent: false,
+    active: "",
   };
-  const [parent, setParent] = React.useState(initialValues.parent);
+  const [active, setActive] = React.useState(initialValues.active);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setParent(initialValues.parent);
+    setActive(initialValues.active);
     setErrors({});
   };
   const validations = {
-    parent: [{ type: "Required" }],
+    active: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -60,7 +59,7 @@ export default function TherapistCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          parent,
+          active,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -90,14 +89,7 @@ export default function TherapistCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
-            query: createTherapist.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(new User(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -106,38 +98,37 @@ export default function TherapistCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
-      {...getOverrideProps(overrides, "TherapistCreateForm")}
+      {...getOverrideProps(overrides, "UserCreateForm")}
       {...rest}
     >
-      <SwitchField
-        label="Parent"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={parent}
+      <TextField
+        label="Active"
+        isRequired={true}
+        isReadOnly={false}
+        value={active}
         onChange={(e) => {
-          let value = e.target.checked;
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              parent: value,
+              active: value,
             };
             const result = onChange(modelFields);
-            value = result?.parent ?? value;
+            value = result?.active ?? value;
           }
-          if (errors.parent?.hasError) {
-            runValidationTasks("parent", value);
+          if (errors.active?.hasError) {
+            runValidationTasks("active", value);
           }
-          setParent(value);
+          setActive(value);
         }}
-        onBlur={() => runValidationTasks("parent", parent)}
-        errorMessage={errors.parent?.errorMessage}
-        hasError={errors.parent?.hasError}
-        {...getOverrideProps(overrides, "parent")}
-      ></SwitchField>
+        onBlur={() => runValidationTasks("active", active)}
+        errorMessage={errors.active?.errorMessage}
+        hasError={errors.active?.hasError}
+        {...getOverrideProps(overrides, "active")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

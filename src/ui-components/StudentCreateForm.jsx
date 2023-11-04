@@ -7,10 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { fetchByPath, validateField } from "./utils";
-import { API } from "aws-amplify";
-import { createStudent } from "../graphql/mutations";
+import { Student } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
 export default function StudentCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -82,14 +81,7 @@ export default function StudentCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
-            query: createStudent,
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(new Student(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -98,8 +90,7 @@ export default function StudentCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}

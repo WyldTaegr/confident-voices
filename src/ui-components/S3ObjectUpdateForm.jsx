@@ -7,13 +7,13 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { fetchByPath, validateField } from "./utils";
-import { API } from "aws-amplify";
-import { createExercise } from "../graphql/mutations";
-export default function ExerciseCreateForm(props) {
+import { S3Object } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
+export default function S3ObjectUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id: idProp,
+    s3Object: s3ObjectModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -24,15 +24,33 @@ export default function ExerciseCreateForm(props) {
   } = props;
   const initialValues = {
     name: "",
+    key: "",
   };
   const [name, setName] = React.useState(initialValues.name);
+  const [key, setKey] = React.useState(initialValues.key);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
+    const cleanValues = s3ObjectRecord
+      ? { ...initialValues, ...s3ObjectRecord }
+      : initialValues;
+    setName(cleanValues.name);
+    setKey(cleanValues.key);
     setErrors({});
   };
+  const [s3ObjectRecord, setS3ObjectRecord] = React.useState(s3ObjectModelProp);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = idProp
+        ? await DataStore.query(S3Object, idProp)
+        : s3ObjectModelProp;
+      setS3ObjectRecord(record);
+    };
+    queryData();
+  }, [idProp, s3ObjectModelProp]);
+  React.useEffect(resetStateValues, [s3ObjectRecord]);
   const validations = {
-    name: [],
+    name: [{ type: "Required" }],
+    key: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +79,7 @@ export default function ExerciseCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
+          key,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -90,33 +109,26 @@ export default function ExerciseCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
-            query: createExercise.replaceAll("__typename", ""),
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(
+            S3Object.copyOf(s3ObjectRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
           }
-          if (clearOnSuccess) {
-            resetStateValues();
-          }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExerciseCreateForm")}
+      {...getOverrideProps(overrides, "S3ObjectUpdateForm")}
       {...rest}
     >
       <TextField
         label="Name"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={name}
         onChange={(e) => {
@@ -124,6 +136,7 @@ export default function ExerciseCreateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
+              key,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -138,18 +151,44 @@ export default function ExerciseCreateForm(props) {
         hasError={errors.name?.hasError}
         {...getOverrideProps(overrides, "name")}
       ></TextField>
+      <TextField
+        label="Key"
+        isRequired={false}
+        isReadOnly={false}
+        value={key}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              key: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.key ?? value;
+          }
+          if (errors.key?.hasError) {
+            runValidationTasks("key", value);
+          }
+          setKey(value);
+        }}
+        onBlur={() => runValidationTasks("key", key)}
+        errorMessage={errors.key?.errorMessage}
+        hasError={errors.key?.hasError}
+        {...getOverrideProps(overrides, "key")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, "ClearButton")}
+          isDisabled={!(idProp || s3ObjectModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -159,7 +198,10 @@ export default function ExerciseCreateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || s3ObjectModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Exercise } from "../models";
+import { S3Object } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -22,26 +22,29 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type ExerciseUpdateFormInputValues = {
+export declare type S3ObjectUpdateFormInputValues = {
     name?: string;
+    key?: string;
 };
-export declare type ExerciseUpdateFormValidationValues = {
+export declare type S3ObjectUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
+    key?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type ExerciseUpdateFormOverridesProps = {
-    ExerciseUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+export declare type S3ObjectUpdateFormOverridesProps = {
+    S3ObjectUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
+    key?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type ExerciseUpdateFormProps = React.PropsWithChildren<{
-    overrides?: ExerciseUpdateFormOverridesProps | undefined | null;
+export declare type S3ObjectUpdateFormProps = React.PropsWithChildren<{
+    overrides?: S3ObjectUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    exercise?: Exercise;
-    onSubmit?: (fields: ExerciseUpdateFormInputValues) => ExerciseUpdateFormInputValues;
-    onSuccess?: (fields: ExerciseUpdateFormInputValues) => void;
-    onError?: (fields: ExerciseUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: ExerciseUpdateFormInputValues) => ExerciseUpdateFormInputValues;
-    onValidate?: ExerciseUpdateFormValidationValues;
+    s3Object?: S3Object;
+    onSubmit?: (fields: S3ObjectUpdateFormInputValues) => S3ObjectUpdateFormInputValues;
+    onSuccess?: (fields: S3ObjectUpdateFormInputValues) => void;
+    onError?: (fields: S3ObjectUpdateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: S3ObjectUpdateFormInputValues) => S3ObjectUpdateFormInputValues;
+    onValidate?: S3ObjectUpdateFormValidationValues;
 } & React.CSSProperties>;
-export default function ExerciseUpdateForm(props: ExerciseUpdateFormProps): React.ReactElement;
+export default function S3ObjectUpdateForm(props: S3ObjectUpdateFormProps): React.ReactElement;

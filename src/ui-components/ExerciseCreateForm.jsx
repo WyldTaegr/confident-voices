@@ -7,10 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { fetchByPath, validateField } from "./utils";
-import { API } from "aws-amplify";
-import { createExercise } from "../graphql/mutations";
+import { Exercise } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
 export default function ExerciseCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -32,7 +31,7 @@ export default function ExerciseCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    name: [{ type: "Required" }],
+    name: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -90,14 +89,7 @@ export default function ExerciseCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
-            query: createExercise,
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(new Exercise(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -106,8 +98,7 @@ export default function ExerciseCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
@@ -116,7 +107,7 @@ export default function ExerciseCreateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {

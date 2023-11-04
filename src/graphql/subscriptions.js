@@ -1,23 +1,192 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
+      id
+      picture {
+        id
+        name
+        key
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        questionProgressSubmissionsId
+        __typename
+      }
+      active
+      therapist {
+        id
+        parent
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
+        __typename
+      }
+      student {
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      userPictureId
+      userTherapistId
+      userStudentId
+      __typename
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
+      id
+      picture {
+        id
+        name
+        key
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        questionProgressSubmissionsId
+        __typename
+      }
+      active
+      therapist {
+        id
+        parent
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
+        __typename
+      }
+      student {
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      userPictureId
+      userTherapistId
+      userStudentId
+      __typename
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
+      id
+      picture {
+        id
+        name
+        key
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        questionProgressSubmissionsId
+        __typename
+      }
+      active
+      therapist {
+        id
+        parent
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
+        __typename
+      }
+      student {
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
+        __typename
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      userPictureId
+      userTherapistId
+      userStudentId
+      __typename
+    }
+  }
+`;
 export const onCreateTherapist = /* GraphQL */ `
   subscription OnCreateTherapist(
     $filter: ModelSubscriptionTherapistFilterInput
   ) {
     onCreateTherapist(filter: $filter) {
       id
+      user {
+        id
+        active
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       parent
       students {
         nextToken
+        startedAt
         __typename
       }
       children {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      therapistUserId
       __typename
     }
   }
@@ -28,17 +197,36 @@ export const onUpdateTherapist = /* GraphQL */ `
   ) {
     onUpdateTherapist(filter: $filter) {
       id
+      user {
+        id
+        active
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       parent
       students {
         nextToken
+        startedAt
         __typename
       }
       children {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      therapistUserId
       __typename
     }
   }
@@ -49,17 +237,36 @@ export const onDeleteTherapist = /* GraphQL */ `
   ) {
     onDeleteTherapist(filter: $filter) {
       id
+      user {
+        id
+        active
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       parent
       students {
         nextToken
+        startedAt
         __typename
       }
       children {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      therapistUserId
       __typename
     }
   }
@@ -68,20 +275,40 @@ export const onCreateStudent = /* GraphQL */ `
   subscription OnCreateStudent($filter: ModelSubscriptionStudentFilterInput) {
     onCreateStudent(filter: $filter) {
       id
+      user {
+        id
+        active
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       therapists {
         nextToken
+        startedAt
         __typename
       }
       parents {
         nextToken
+        startedAt
         __typename
       }
       progress {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      studentUserId
       __typename
     }
   }
@@ -90,20 +317,40 @@ export const onUpdateStudent = /* GraphQL */ `
   subscription OnUpdateStudent($filter: ModelSubscriptionStudentFilterInput) {
     onUpdateStudent(filter: $filter) {
       id
+      user {
+        id
+        active
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       therapists {
         nextToken
+        startedAt
         __typename
       }
       parents {
         nextToken
+        startedAt
         __typename
       }
       progress {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      studentUserId
       __typename
     }
   }
@@ -112,20 +359,40 @@ export const onDeleteStudent = /* GraphQL */ `
   subscription OnDeleteStudent($filter: ModelSubscriptionStudentFilterInput) {
     onDeleteStudent(filter: $filter) {
       id
+      user {
+        id
+        active
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userPictureId
+        userTherapistId
+        userStudentId
+        __typename
+      }
       therapists {
         nextToken
+        startedAt
         __typename
       }
       parents {
         nextToken
+        startedAt
         __typename
       }
       progress {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      studentUserId
       __typename
     }
   }
@@ -137,10 +404,14 @@ export const onCreateExercise = /* GraphQL */ `
       name
       questions {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -152,10 +423,14 @@ export const onUpdateExercise = /* GraphQL */ `
       name
       questions {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -167,10 +442,14 @@ export const onDeleteExercise = /* GraphQL */ `
       name
       questions {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -181,17 +460,22 @@ export const onCreateQuestion = /* GraphQL */ `
       id
       description
       example {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         questionProgressSubmissionsId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       exerciseQuestionsId
       questionExampleId
       __typename
@@ -204,17 +488,22 @@ export const onUpdateQuestion = /* GraphQL */ `
       id
       description
       example {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         questionProgressSubmissionsId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       exerciseQuestionsId
       questionExampleId
       __typename
@@ -227,17 +516,22 @@ export const onDeleteQuestion = /* GraphQL */ `
       id
       description
       example {
-        bucket
-        region
-        key
         id
+        name
+        key
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         questionProgressSubmissionsId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       exerciseQuestionsId
       questionExampleId
       __typename
@@ -254,14 +548,22 @@ export const onCreateExerciseProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       progress {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       studentProgressId
       __typename
     }
@@ -277,14 +579,22 @@ export const onUpdateExerciseProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       progress {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       studentProgressId
       __typename
     }
@@ -300,14 +610,22 @@ export const onDeleteExerciseProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       progress {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       studentProgressId
       __typename
     }
@@ -323,6 +641,9 @@ export const onCreateQuestionProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         studentProgressId
         __typename
       }
@@ -331,6 +652,9 @@ export const onCreateQuestionProgress = /* GraphQL */ `
         description
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         exerciseQuestionsId
         questionExampleId
         __typename
@@ -338,10 +662,14 @@ export const onCreateQuestionProgress = /* GraphQL */ `
       completed
       submissions {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       exerciseProgressProgressId
       questionProgressQuestionId
       __typename
@@ -358,6 +686,9 @@ export const onUpdateQuestionProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         studentProgressId
         __typename
       }
@@ -366,6 +697,9 @@ export const onUpdateQuestionProgress = /* GraphQL */ `
         description
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         exerciseQuestionsId
         questionExampleId
         __typename
@@ -373,10 +707,14 @@ export const onUpdateQuestionProgress = /* GraphQL */ `
       completed
       submissions {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       exerciseProgressProgressId
       questionProgressQuestionId
       __typename
@@ -393,6 +731,9 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         studentProgressId
         __typename
       }
@@ -401,6 +742,9 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
         description
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
         exerciseQuestionsId
         questionExampleId
         __typename
@@ -408,59 +752,63 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
       completed
       submissions {
         nextToken
+        startedAt
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       exerciseProgressProgressId
       questionProgressQuestionId
       __typename
     }
   }
 `;
-export const onCreateRecording = /* GraphQL */ `
-  subscription OnCreateRecording(
-    $filter: ModelSubscriptionRecordingFilterInput
-  ) {
-    onCreateRecording(filter: $filter) {
-      bucket
-      region
-      key
+export const onCreateS3Object = /* GraphQL */ `
+  subscription OnCreateS3Object($filter: ModelSubscriptionS3ObjectFilterInput) {
+    onCreateS3Object(filter: $filter) {
       id
+      name
+      key
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       questionProgressSubmissionsId
       __typename
     }
   }
 `;
-export const onUpdateRecording = /* GraphQL */ `
-  subscription OnUpdateRecording(
-    $filter: ModelSubscriptionRecordingFilterInput
-  ) {
-    onUpdateRecording(filter: $filter) {
-      bucket
-      region
-      key
+export const onUpdateS3Object = /* GraphQL */ `
+  subscription OnUpdateS3Object($filter: ModelSubscriptionS3ObjectFilterInput) {
+    onUpdateS3Object(filter: $filter) {
       id
+      name
+      key
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       questionProgressSubmissionsId
       __typename
     }
   }
 `;
-export const onDeleteRecording = /* GraphQL */ `
-  subscription OnDeleteRecording(
-    $filter: ModelSubscriptionRecordingFilterInput
-  ) {
-    onDeleteRecording(filter: $filter) {
-      bucket
-      region
-      key
+export const onDeleteS3Object = /* GraphQL */ `
+  subscription OnDeleteS3Object($filter: ModelSubscriptionS3ObjectFilterInput) {
+    onDeleteS3Object(filter: $filter) {
       id
+      name
+      key
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       questionProgressSubmissionsId
       __typename
     }
@@ -475,6 +823,9 @@ export const onCreatePostInfo = /* GraphQL */ `
       id
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -488,6 +839,9 @@ export const onUpdatePostInfo = /* GraphQL */ `
       id
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -501,6 +855,9 @@ export const onDeletePostInfo = /* GraphQL */ `
       id
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -518,16 +875,27 @@ export const onCreateTherapistsStudents = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -545,16 +913,27 @@ export const onUpdateTherapistsStudents = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -572,16 +951,27 @@ export const onDeleteTherapistsStudents = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -599,16 +989,27 @@ export const onCreateParentsChildren = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -626,16 +1027,27 @@ export const onUpdateParentsChildren = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }
@@ -653,16 +1065,27 @@ export const onDeleteParentsChildren = /* GraphQL */ `
         parent
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        therapistUserId
         __typename
       }
       student {
         id
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        studentUserId
         __typename
       }
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
       __typename
     }
   }

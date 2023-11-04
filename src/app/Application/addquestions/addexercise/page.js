@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
 import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 Amplify.configure(awsExports);
 
 
@@ -18,11 +19,11 @@ Amplify.configure(awsExports);
 const Exercise = ({ params }) => {
   async function exerciseCreation(event, inputValue){
     event.preventDefault();
-    const newQuestion = await API.graphql(
-      graphqlOperation(mutations.createExercise, { input: {
-        name: inputValue,
-      } })
-    );
+    const newQuestion = await API.graphql({
+      query: mutations.createExercise,
+      variables: {input: {name: inputValue}},
+      authMode: GRAPHQL_AUTH_MODE.API_KEY
+    });
   }
 const router = useRouter();
 const [inputValue, setInputValue] = useState('');

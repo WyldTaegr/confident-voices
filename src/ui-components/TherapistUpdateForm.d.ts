@@ -6,7 +6,17 @@
 
 import * as React from "react";
 import { GridProps, SwitchFieldProps } from "@aws-amplify/ui-react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { Therapist } from "../models";
+export declare type EscapeHatchProps = {
+    [elementHierarchy: string]: Record<string, unknown>;
+} | null;
+export declare type VariantValues = {
+    [key: string]: string;
+};
+export declare type Variant = {
+    variantValues: VariantValues;
+    overrides: EscapeHatchProps;
+};
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -27,7 +37,7 @@ export declare type TherapistUpdateFormProps = React.PropsWithChildren<{
     overrides?: TherapistUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    therapist?: any;
+    therapist?: Therapist;
     onSubmit?: (fields: TherapistUpdateFormInputValues) => TherapistUpdateFormInputValues;
     onSuccess?: (fields: TherapistUpdateFormInputValues) => void;
     onError?: (fields: TherapistUpdateFormInputValues, errorMessage: string) => void;

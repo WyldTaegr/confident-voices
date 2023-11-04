@@ -7,11 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { fetchByPath, validateField } from "./utils";
-import { API } from "aws-amplify";
-import { getExercise } from "../graphql/queries";
-import { updateExercise } from "../graphql/mutations";
+import { Exercise } from "../models";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
 export default function ExerciseUpdateForm(props) {
   const {
     id: idProp,
@@ -40,12 +38,7 @@ export default function ExerciseUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? (
-            await API.graphql({
-              query: getExercise,
-              variables: { id: idProp },
-            })
-          )?.data?.getExercise
+        ? await DataStore.query(Exercise, idProp)
         : exerciseModelProp;
       setExerciseRecord(record);
     };
@@ -53,7 +46,7 @@ export default function ExerciseUpdateForm(props) {
   }, [idProp, exerciseModelProp]);
   React.useEffect(resetStateValues, [exerciseRecord]);
   const validations = {
-    name: [{ type: "Required" }],
+    name: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -111,22 +104,17 @@ export default function ExerciseUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
-            query: updateExercise,
-            variables: {
-              input: {
-                id: exerciseRecord.id,
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(
+            Exercise.copyOf(exerciseRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
@@ -135,7 +123,7 @@ export default function ExerciseUpdateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {
