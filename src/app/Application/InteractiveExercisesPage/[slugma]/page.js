@@ -10,6 +10,8 @@ import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
 import AudioRecording from '@/app/components/AudioRecording';
 import Videofeed from '@/app/components/Videofeed';
+import { Card, Typography, Button, Box, CardActions, CardContent } from '@mui/material';
+
 Amplify.configure(awsExports);
 
 const SlugmaPage = ({params}) => {
@@ -44,8 +46,10 @@ const SlugmaPage = ({params}) => {
       <ul>
         {questions.map((question) => (
           <li key={question.id}>
+            <Card>
             {question.description}
             <AudioRecording></AudioRecording>
+            </Card>
           </li>
         ))}
       </ul>
