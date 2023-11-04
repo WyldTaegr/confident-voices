@@ -6,13 +6,17 @@ const Videofeed = () => {
   const webcamRef = useRef(null);
   const [isWebcamOn, setIsWebcamOn] = useState(false);
 
+  const toggleWebcam = () => {
+    setIsWebcamOn(!isWebcamOn);
+  }
+
   const startWebcam = () => {
     setIsWebcamOn(true);
   };
 
   return (
     <div>
-      <button onClick={startWebcam}>Turn On Webcam</button>
+      <button onClick={toggleWebcam}>{isWebcamOn ? 'Turn off Webcam' : 'Turn on Webcam'}</button>
       {isWebcamOn && (
         <div>
           <Webcam
