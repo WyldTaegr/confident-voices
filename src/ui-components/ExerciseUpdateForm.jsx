@@ -7,9 +7,10 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { Exercise } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { getExercise } from "../graphql/queries";
+import { updateExercise } from "../graphql/mutations";
 export default function ExerciseUpdateForm(props) {
   const {
     id: idProp,
@@ -38,7 +39,12 @@ export default function ExerciseUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(Exercise, idProp)
+        ? (
+            await API.graphql({
+              query: getExercise.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getExercise
         : exerciseModelProp;
       setExerciseRecord(record);
     };
@@ -74,7 +80,7 @@ export default function ExerciseUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
+          name: name ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -104,17 +110,22 @@ export default function ExerciseUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            Exercise.copyOf(exerciseRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await API.graphql({
+            query: updateExercise.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: exerciseRecord.id,
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

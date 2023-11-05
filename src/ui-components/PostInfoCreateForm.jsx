@@ -7,9 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { PostInfo } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { createPostInfo } from "../graphql/mutations";
 export default function PostInfoCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -25,23 +25,27 @@ export default function PostInfoCreateForm(props) {
     title: "",
     tags: "",
     description: "",
+    likes: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [tags, setTags] = React.useState(initialValues.tags);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
+  const [likes, setLikes] = React.useState(initialValues.likes);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
     setTags(initialValues.tags);
     setDescription(initialValues.description);
+    setLikes(initialValues.likes);
     setErrors({});
   };
   const validations = {
     title: [{ type: "Required" }],
     tags: [{ type: "Required" }],
     description: [{ type: "Required" }],
+    likes: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -72,6 +76,7 @@ export default function PostInfoCreateForm(props) {
           title,
           tags,
           description,
+          likes,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -101,7 +106,14 @@ export default function PostInfoCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(new PostInfo(modelFields));
+          await API.graphql({
+            query: createPostInfo.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -110,7 +122,8 @@ export default function PostInfoCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
@@ -129,6 +142,7 @@ export default function PostInfoCreateForm(props) {
               title: value,
               tags,
               description,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -155,6 +169,7 @@ export default function PostInfoCreateForm(props) {
               title,
               tags: value,
               description,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.tags ?? value;
@@ -181,6 +196,7 @@ export default function PostInfoCreateForm(props) {
               title,
               tags,
               description: value,
+              likes,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -194,6 +210,37 @@ export default function PostInfoCreateForm(props) {
         errorMessage={errors.description?.errorMessage}
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
+      ></TextField>
+      <TextField
+        label="Likes"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={likes}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              tags,
+              description,
+              likes: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.likes ?? value;
+          }
+          if (errors.likes?.hasError) {
+            runValidationTasks("likes", value);
+          }
+          setLikes(value);
+        }}
+        onBlur={() => runValidationTasks("likes", likes)}
+        errorMessage={errors.likes?.errorMessage}
+        hasError={errors.likes?.hasError}
+        {...getOverrideProps(overrides, "likes")}
       ></TextField>
       <Flex
         justifyContent="space-between"

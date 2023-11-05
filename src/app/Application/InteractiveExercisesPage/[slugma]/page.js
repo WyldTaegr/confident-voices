@@ -2,6 +2,7 @@
 // pages/index.js
 import React from 'react';
 import Link from 'next/link';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 import { Amplify } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -22,9 +23,10 @@ const SlugmaPage = ({params}) => {
     const fetchQuestions = async () => {
       try {
         // Fetch all questions
-        const allQuestionsData = await API.graphql(
-          graphqlOperation(queries.listQuestions)
-        );
+        const allQuestionsData = await API.graphql({
+          query: queries.listQuestions,
+          authMode: GRAPHQL_AUTH_MODE.API_KEY
+        });
         
         // Filter questions related to the given exerciseId
         const relatedQuestions = allQuestionsData.data.listQuestions.items.filter(

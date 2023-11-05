@@ -6,13 +6,16 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { Button, Flex, Grid } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createExercise } from "../graphql/mutations";
-export default function ExerciseCreateForm(props) {
+import { getStudent } from "../graphql/queries";
+import { updateStudent } from "../graphql/mutations";
+export default function StudentUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id: idProp,
+    student: studentModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -21,18 +24,31 @@ export default function ExerciseCreateForm(props) {
     overrides,
     ...rest
   } = props;
-  const initialValues = {
-    name: "",
-  };
-  const [name, setName] = React.useState(initialValues.name);
+  const initialValues = {};
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
+    const cleanValues = studentRecord
+      ? { ...initialValues, ...studentRecord }
+      : initialValues;
     setErrors({});
   };
-  const validations = {
-    name: [],
-  };
+  const [studentRecord, setStudentRecord] = React.useState(studentModelProp);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = idProp
+        ? (
+            await API.graphql({
+              query: getStudent.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getStudent
+        : studentModelProp;
+      setStudentRecord(record);
+    };
+    queryData();
+  }, [idProp, studentModelProp]);
+  React.useEffect(resetStateValues, [studentRecord]);
+  const validations = {};
   const runValidationTasks = async (
     fieldName,
     currentValue,
@@ -58,9 +74,7 @@ export default function ExerciseCreateForm(props) {
       padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
-        let modelFields = {
-          name,
-        };
+        let modelFields = {};
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
@@ -90,18 +104,16 @@ export default function ExerciseCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createExercise.replaceAll("__typename", ""),
+            query: updateStudent.replaceAll("__typename", ""),
             variables: {
               input: {
+                id: studentRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -110,45 +122,22 @@ export default function ExerciseCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExerciseCreateForm")}
+      {...getOverrideProps(overrides, "StudentUpdateForm")}
       {...rest}
     >
-      <TextField
-        label="Name"
-        isRequired={false}
-        isReadOnly={false}
-        value={name}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.name ?? value;
-          }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
-          }
-          setName(value);
-        }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, "ClearButton")}
+          isDisabled={!(idProp || studentModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -158,7 +147,10 @@ export default function ExerciseCreateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || studentModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

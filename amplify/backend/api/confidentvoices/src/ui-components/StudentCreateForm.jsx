@@ -6,11 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { Button, Flex, Grid } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createExercise } from "../graphql/mutations";
-export default function ExerciseCreateForm(props) {
+import { createStudent } from "../graphql/mutations";
+export default function StudentCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -21,18 +22,12 @@ export default function ExerciseCreateForm(props) {
     overrides,
     ...rest
   } = props;
-  const initialValues = {
-    name: "",
-  };
-  const [name, setName] = React.useState(initialValues.name);
+  const initialValues = {};
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
     setErrors({});
   };
-  const validations = {
-    name: [],
-  };
+  const validations = {};
   const runValidationTasks = async (
     fieldName,
     currentValue,
@@ -58,9 +53,7 @@ export default function ExerciseCreateForm(props) {
       padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
-        let modelFields = {
-          name,
-        };
+        let modelFields = {};
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
@@ -90,7 +83,7 @@ export default function ExerciseCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createExercise.replaceAll("__typename", ""),
+            query: createStudent.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -110,33 +103,9 @@ export default function ExerciseCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExerciseCreateForm")}
+      {...getOverrideProps(overrides, "StudentCreateForm")}
       {...rest}
     >
-      <TextField
-        label="Name"
-        isRequired={false}
-        isReadOnly={false}
-        value={name}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.name ?? value;
-          }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
-          }
-          setName(value);
-        }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

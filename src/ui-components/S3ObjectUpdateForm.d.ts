@@ -6,7 +6,6 @@
 
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { S3Object } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -40,7 +39,7 @@ export declare type S3ObjectUpdateFormProps = React.PropsWithChildren<{
     overrides?: S3ObjectUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    s3Object?: S3Object;
+    s3Object?: any;
     onSubmit?: (fields: S3ObjectUpdateFormInputValues) => S3ObjectUpdateFormInputValues;
     onSuccess?: (fields: S3ObjectUpdateFormInputValues) => void;
     onError?: (fields: S3ObjectUpdateFormInputValues, errorMessage: string) => void;

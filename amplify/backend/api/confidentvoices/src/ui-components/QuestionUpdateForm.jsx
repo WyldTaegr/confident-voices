@@ -7,14 +7,15 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getPostInfo } from "../graphql/queries";
-import { updatePostInfo } from "../graphql/mutations";
-export default function PostInfoUpdateForm(props) {
+import { getQuestion } from "../graphql/queries";
+import { updateQuestion } from "../graphql/mutations";
+export default function QuestionUpdateForm(props) {
   const {
     id: idProp,
-    postInfo: postInfoModelProp,
+    question: questionModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -24,49 +25,37 @@ export default function PostInfoUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    title: "",
-    tags: "",
     description: "",
-    likes: "",
   };
-  const [title, setTitle] = React.useState(initialValues.title);
-  const [tags, setTags] = React.useState(initialValues.tags);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
-  const [likes, setLikes] = React.useState(initialValues.likes);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = postInfoRecord
-      ? { ...initialValues, ...postInfoRecord }
+    const cleanValues = questionRecord
+      ? { ...initialValues, ...questionRecord }
       : initialValues;
-    setTitle(cleanValues.title);
-    setTags(cleanValues.tags);
     setDescription(cleanValues.description);
-    setLikes(cleanValues.likes);
     setErrors({});
   };
-  const [postInfoRecord, setPostInfoRecord] = React.useState(postInfoModelProp);
+  const [questionRecord, setQuestionRecord] = React.useState(questionModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await API.graphql({
-              query: getPostInfo.replaceAll("__typename", ""),
+              query: getQuestion.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getPostInfo
-        : postInfoModelProp;
-      setPostInfoRecord(record);
+          )?.data?.getQuestion
+        : questionModelProp;
+      setQuestionRecord(record);
     };
     queryData();
-  }, [idProp, postInfoModelProp]);
-  React.useEffect(resetStateValues, [postInfoRecord]);
+  }, [idProp, questionModelProp]);
+  React.useEffect(resetStateValues, [questionRecord]);
   const validations = {
-    title: [{ type: "Required" }],
-    tags: [{ type: "Required" }],
-    description: [{ type: "Required" }],
-    likes: [],
+    description: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -94,10 +83,7 @@ export default function PostInfoUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          title,
-          tags,
-          description,
-          likes: likes ?? null,
+          description: description ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,10 +114,10 @@ export default function PostInfoUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updatePostInfo.replaceAll("__typename", ""),
+            query: updateQuestion.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: postInfoRecord.id,
+                id: questionRecord.id,
                 ...modelFields,
               },
             },
@@ -146,76 +132,19 @@ export default function PostInfoUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostInfoUpdateForm")}
+      {...getOverrideProps(overrides, "QuestionUpdateForm")}
       {...rest}
     >
       <TextField
-        label="Title"
-        isRequired={true}
-        isReadOnly={false}
-        value={title}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title: value,
-              tags,
-              description,
-              likes,
-            };
-            const result = onChange(modelFields);
-            value = result?.title ?? value;
-          }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
-          }
-          setTitle(value);
-        }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
-      ></TextField>
-      <TextField
-        label="Tags"
-        isRequired={true}
-        isReadOnly={false}
-        value={tags}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              tags: value,
-              description,
-              likes,
-            };
-            const result = onChange(modelFields);
-            value = result?.tags ?? value;
-          }
-          if (errors.tags?.hasError) {
-            runValidationTasks("tags", value);
-          }
-          setTags(value);
-        }}
-        onBlur={() => runValidationTasks("tags", tags)}
-        errorMessage={errors.tags?.errorMessage}
-        hasError={errors.tags?.hasError}
-        {...getOverrideProps(overrides, "tags")}
-      ></TextField>
-      <TextField
         label="Description"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={description}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              tags,
               description: value,
-              likes,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -230,37 +159,6 @@ export default function PostInfoUpdateForm(props) {
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
       ></TextField>
-      <TextField
-        label="Likes"
-        isRequired={false}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={likes}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              title,
-              tags,
-              description,
-              likes: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.likes ?? value;
-          }
-          if (errors.likes?.hasError) {
-            runValidationTasks("likes", value);
-          }
-          setLikes(value);
-        }}
-        onBlur={() => runValidationTasks("likes", likes)}
-        errorMessage={errors.likes?.errorMessage}
-        hasError={errors.likes?.hasError}
-        {...getOverrideProps(overrides, "likes")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -272,7 +170,7 @@ export default function PostInfoUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || postInfoModelProp)}
+          isDisabled={!(idProp || questionModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -284,7 +182,7 @@ export default function PostInfoUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || postInfoModelProp) ||
+              !(idProp || questionModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

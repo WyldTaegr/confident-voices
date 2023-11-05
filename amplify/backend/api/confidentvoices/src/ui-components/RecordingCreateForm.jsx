@@ -7,14 +7,13 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getPostInfo } from "../graphql/queries";
-import { updatePostInfo } from "../graphql/mutations";
-export default function PostInfoUpdateForm(props) {
+import { createRecording } from "../graphql/mutations";
+export default function RecordingCreateForm(props) {
   const {
-    id: idProp,
-    postInfo: postInfoModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -24,49 +23,24 @@ export default function PostInfoUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    title: "",
-    tags: "",
-    description: "",
-    likes: "",
+    bucket: "",
+    region: "",
+    key: "",
   };
-  const [title, setTitle] = React.useState(initialValues.title);
-  const [tags, setTags] = React.useState(initialValues.tags);
-  const [description, setDescription] = React.useState(
-    initialValues.description
-  );
-  const [likes, setLikes] = React.useState(initialValues.likes);
+  const [bucket, setBucket] = React.useState(initialValues.bucket);
+  const [region, setRegion] = React.useState(initialValues.region);
+  const [key, setKey] = React.useState(initialValues.key);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = postInfoRecord
-      ? { ...initialValues, ...postInfoRecord }
-      : initialValues;
-    setTitle(cleanValues.title);
-    setTags(cleanValues.tags);
-    setDescription(cleanValues.description);
-    setLikes(cleanValues.likes);
+    setBucket(initialValues.bucket);
+    setRegion(initialValues.region);
+    setKey(initialValues.key);
     setErrors({});
   };
-  const [postInfoRecord, setPostInfoRecord] = React.useState(postInfoModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? (
-            await API.graphql({
-              query: getPostInfo.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getPostInfo
-        : postInfoModelProp;
-      setPostInfoRecord(record);
-    };
-    queryData();
-  }, [idProp, postInfoModelProp]);
-  React.useEffect(resetStateValues, [postInfoRecord]);
   const validations = {
-    title: [{ type: "Required" }],
-    tags: [{ type: "Required" }],
-    description: [{ type: "Required" }],
-    likes: [],
+    bucket: [{ type: "Required" }],
+    region: [{ type: "Required" }],
+    key: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -94,10 +68,9 @@ export default function PostInfoUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          title,
-          tags,
-          description,
-          likes: likes ?? null,
+          bucket,
+          region,
+          key,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,16 +101,18 @@ export default function PostInfoUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updatePostInfo.replaceAll("__typename", ""),
+            query: createRecording.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: postInfoRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -146,134 +121,99 @@ export default function PostInfoUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostInfoUpdateForm")}
+      {...getOverrideProps(overrides, "RecordingCreateForm")}
       {...rest}
     >
       <TextField
-        label="Title"
+        label="Bucket"
         isRequired={true}
         isReadOnly={false}
-        value={title}
+        value={bucket}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title: value,
-              tags,
-              description,
-              likes,
+              bucket: value,
+              region,
+              key,
             };
             const result = onChange(modelFields);
-            value = result?.title ?? value;
+            value = result?.bucket ?? value;
           }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
+          if (errors.bucket?.hasError) {
+            runValidationTasks("bucket", value);
           }
-          setTitle(value);
+          setBucket(value);
         }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
+        onBlur={() => runValidationTasks("bucket", bucket)}
+        errorMessage={errors.bucket?.errorMessage}
+        hasError={errors.bucket?.hasError}
+        {...getOverrideProps(overrides, "bucket")}
       ></TextField>
       <TextField
-        label="Tags"
+        label="Region"
         isRequired={true}
         isReadOnly={false}
-        value={tags}
+        value={region}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              tags: value,
-              description,
-              likes,
+              bucket,
+              region: value,
+              key,
             };
             const result = onChange(modelFields);
-            value = result?.tags ?? value;
+            value = result?.region ?? value;
           }
-          if (errors.tags?.hasError) {
-            runValidationTasks("tags", value);
+          if (errors.region?.hasError) {
+            runValidationTasks("region", value);
           }
-          setTags(value);
+          setRegion(value);
         }}
-        onBlur={() => runValidationTasks("tags", tags)}
-        errorMessage={errors.tags?.errorMessage}
-        hasError={errors.tags?.hasError}
-        {...getOverrideProps(overrides, "tags")}
+        onBlur={() => runValidationTasks("region", region)}
+        errorMessage={errors.region?.errorMessage}
+        hasError={errors.region?.hasError}
+        {...getOverrideProps(overrides, "region")}
       ></TextField>
       <TextField
-        label="Description"
+        label="Key"
         isRequired={true}
         isReadOnly={false}
-        value={description}
+        value={key}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              tags,
-              description: value,
-              likes,
+              bucket,
+              region,
+              key: value,
             };
             const result = onChange(modelFields);
-            value = result?.description ?? value;
+            value = result?.key ?? value;
           }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
+          if (errors.key?.hasError) {
+            runValidationTasks("key", value);
           }
-          setDescription(value);
+          setKey(value);
         }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
-      ></TextField>
-      <TextField
-        label="Likes"
-        isRequired={false}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={likes}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              title,
-              tags,
-              description,
-              likes: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.likes ?? value;
-          }
-          if (errors.likes?.hasError) {
-            runValidationTasks("likes", value);
-          }
-          setLikes(value);
-        }}
-        onBlur={() => runValidationTasks("likes", likes)}
-        errorMessage={errors.likes?.errorMessage}
-        hasError={errors.likes?.hasError}
-        {...getOverrideProps(overrides, "likes")}
+        onBlur={() => runValidationTasks("key", key)}
+        errorMessage={errors.key?.errorMessage}
+        hasError={errors.key?.hasError}
+        {...getOverrideProps(overrides, "key")}
       ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || postInfoModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -283,10 +223,7 @@ export default function PostInfoUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || postInfoModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

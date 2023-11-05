@@ -7,12 +7,15 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createExercise } from "../graphql/mutations";
-export default function ExerciseCreateForm(props) {
+import { getExercise } from "../graphql/queries";
+import { updateExercise } from "../graphql/mutations";
+export default function ExerciseUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id: idProp,
+    exercise: exerciseModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -27,9 +30,28 @@ export default function ExerciseCreateForm(props) {
   const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
+    const cleanValues = exerciseRecord
+      ? { ...initialValues, ...exerciseRecord }
+      : initialValues;
+    setName(cleanValues.name);
     setErrors({});
   };
+  const [exerciseRecord, setExerciseRecord] = React.useState(exerciseModelProp);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = idProp
+        ? (
+            await API.graphql({
+              query: getExercise.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getExercise
+        : exerciseModelProp;
+      setExerciseRecord(record);
+    };
+    queryData();
+  }, [idProp, exerciseModelProp]);
+  React.useEffect(resetStateValues, [exerciseRecord]);
   const validations = {
     name: [],
   };
@@ -59,7 +81,7 @@ export default function ExerciseCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
+          name: name ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -90,18 +112,16 @@ export default function ExerciseCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createExercise.replaceAll("__typename", ""),
+            query: updateExercise.replaceAll("__typename", ""),
             variables: {
               input: {
+                id: exerciseRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -110,7 +130,7 @@ export default function ExerciseCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExerciseCreateForm")}
+      {...getOverrideProps(overrides, "ExerciseUpdateForm")}
       {...rest}
     >
       <TextField
@@ -142,13 +162,14 @@ export default function ExerciseCreateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, "ClearButton")}
+          isDisabled={!(idProp || exerciseModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -158,7 +179,10 @@ export default function ExerciseCreateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || exerciseModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -4,6 +4,7 @@
 import React, { useState , useEffect} from 'react';
 import Link from 'next/link';
 import { Amplify } from 'aws-amplify';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 import { API, graphqlOperation } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
@@ -20,7 +21,10 @@ const AddQuestionsPage = () => {
   //Getting all the current exercises from graphQL
   const fetchExercises = async () => {
     try {
-      const exerciseData = await API.graphql(graphqlOperation(queries.listExercises));
+      const exerciseData = await API.graphql({
+        query: queries.listExercises,
+        authMode: GRAPHQL_AUTH_MODE.API_KEY
+      });
       setExercises(exerciseData.data.listExercises.items);
     } catch (err) {
       console.error("Error fetching exercises:", err);

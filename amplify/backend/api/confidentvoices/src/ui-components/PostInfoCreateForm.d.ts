@@ -6,16 +6,7 @@
 
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-export declare type EscapeHatchProps = {
-    [elementHierarchy: string]: Record<string, unknown>;
-} | null;
-export declare type VariantValues = {
-    [key: string]: string;
-};
-export declare type Variant = {
-    variantValues: VariantValues;
-    overrides: EscapeHatchProps;
-};
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -25,13 +16,11 @@ export declare type PostInfoCreateFormInputValues = {
     title?: string;
     tags?: string;
     description?: string;
-    likes?: number;
 };
 export declare type PostInfoCreateFormValidationValues = {
     title?: ValidationFunction<string>;
     tags?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
-    likes?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostInfoCreateFormOverridesProps = {
@@ -39,7 +28,6 @@ export declare type PostInfoCreateFormOverridesProps = {
     title?: PrimitiveOverrideProps<TextFieldProps>;
     tags?: PrimitiveOverrideProps<TextFieldProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
-    likes?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type PostInfoCreateFormProps = React.PropsWithChildren<{
     overrides?: PostInfoCreateFormOverridesProps | undefined | null;

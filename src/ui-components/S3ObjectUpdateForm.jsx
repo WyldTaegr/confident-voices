@@ -7,9 +7,10 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { S3Object } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { getS3Object } from "../graphql/queries";
+import { updateS3Object } from "../graphql/mutations";
 export default function S3ObjectUpdateForm(props) {
   const {
     id: idProp,
@@ -41,7 +42,12 @@ export default function S3ObjectUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(S3Object, idProp)
+        ? (
+            await API.graphql({
+              query: getS3Object.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getS3Object
         : s3ObjectModelProp;
       setS3ObjectRecord(record);
     };
@@ -79,7 +85,7 @@ export default function S3ObjectUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
-          key,
+          key: key ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -109,17 +115,22 @@ export default function S3ObjectUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            S3Object.copyOf(s3ObjectRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await API.graphql({
+            query: updateS3Object.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: s3ObjectRecord.id,
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

@@ -1,16 +1,11 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
-
-type User @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
-  picture: S3Object @hasOne
   active: String!
   therapist: Therapist @hasOne
   student: Student @hasOne
 }
 
-type Therapist @model @auth(rules: [{allow: public}]) {
+type Therapist @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   user: User @belongsTo
   parent: Boolean!
@@ -18,48 +13,54 @@ type Therapist @model @auth(rules: [{allow: public}]) {
   children: [Student] @manyToMany(relationName: "ParentsChildren")
 }
 
-type Student @model @auth(rules: [{allow: public}]) {
+type Student @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   user: User @belongsTo
   therapists: [Therapist] @manyToMany(relationName: "TherapistsStudents")
   parents: [Therapist] @manyToMany(relationName: "ParentsChildren")
-  progress: [ExerciseProgress] @hasMany
+  progress: [ExerciseProgress] @hasMany(indexName: "byStudent", fields: ["id"])
 }
 
-type Exercise @model @auth(rules: [{allow: public}]) {
+type Exercise @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   name: String
-  questions: [Question] @hasMany
+  questions: [Question] @hasMany(indexName: "byExercise", fields: ["id"])
 }
 
-type Question @model @auth(rules: [{allow: public}]) {
+type Question @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   description: String
   example: S3Object @hasOne
+  exerciseID: ID! @index(name: "byExercise")
 }
 
-type ExerciseProgress @model @auth(rules: [{allow: public}]) {
+type ExerciseProgress @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   student: Student! @belongsTo
-  progress: [QuestionProgress] @hasMany
+  progress: [QuestionProgress] @hasMany(indexName: "byExerciseProgress", fields: ["id"])
+  studentID: ID! @index(name: "byStudent")
 }
 
-type QuestionProgress @model @auth(rules: [{allow: public}]) {
+type QuestionProgress @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   exerciseProgress: ExerciseProgress! @belongsTo
   question: Question! @hasOne
   completed: Boolean!
-  submissions: [S3Object] @hasMany
+  submissions: [S3Object] @hasMany(indexName: "byQuestionProgress", fields: ["id"])
+  exerciseprogressID: ID! @index(name: "byExerciseProgress")
 }
 
-type S3Object @model @auth(rules: [{ allow: public }]) {
+type S3Object @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   name: String!
   key: String
+  questionprogressID: ID @index(name: "byQuestionProgress")
 }
 
-type PostInfo @model @auth(rules: [{allow: public}]){
+type PostInfo @model @auth(rules: [{allow: public}, {allow: private}]) {
   title: String!
   tags: String!
   description: String!
+  likes: Int
 }
+ 

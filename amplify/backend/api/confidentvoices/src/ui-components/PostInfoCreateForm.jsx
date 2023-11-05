@@ -7,14 +7,13 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { getPostInfo } from "../graphql/queries";
-import { updatePostInfo } from "../graphql/mutations";
-export default function PostInfoUpdateForm(props) {
+import { createPostInfo } from "../graphql/mutations";
+export default function PostInfoCreateForm(props) {
   const {
-    id: idProp,
-    postInfo: postInfoModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -27,46 +26,23 @@ export default function PostInfoUpdateForm(props) {
     title: "",
     tags: "",
     description: "",
-    likes: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [tags, setTags] = React.useState(initialValues.tags);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
-  const [likes, setLikes] = React.useState(initialValues.likes);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = postInfoRecord
-      ? { ...initialValues, ...postInfoRecord }
-      : initialValues;
-    setTitle(cleanValues.title);
-    setTags(cleanValues.tags);
-    setDescription(cleanValues.description);
-    setLikes(cleanValues.likes);
+    setTitle(initialValues.title);
+    setTags(initialValues.tags);
+    setDescription(initialValues.description);
     setErrors({});
   };
-  const [postInfoRecord, setPostInfoRecord] = React.useState(postInfoModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? (
-            await API.graphql({
-              query: getPostInfo.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getPostInfo
-        : postInfoModelProp;
-      setPostInfoRecord(record);
-    };
-    queryData();
-  }, [idProp, postInfoModelProp]);
-  React.useEffect(resetStateValues, [postInfoRecord]);
   const validations = {
     title: [{ type: "Required" }],
     tags: [{ type: "Required" }],
     description: [{ type: "Required" }],
-    likes: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -97,7 +73,6 @@ export default function PostInfoUpdateForm(props) {
           title,
           tags,
           description,
-          likes: likes ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,16 +103,18 @@ export default function PostInfoUpdateForm(props) {
             }
           });
           await API.graphql({
-            query: updatePostInfo.replaceAll("__typename", ""),
+            query: createPostInfo.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: postInfoRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -146,7 +123,7 @@ export default function PostInfoUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostInfoUpdateForm")}
+      {...getOverrideProps(overrides, "PostInfoCreateForm")}
       {...rest}
     >
       <TextField
@@ -161,7 +138,6 @@ export default function PostInfoUpdateForm(props) {
               title: value,
               tags,
               description,
-              likes,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -188,7 +164,6 @@ export default function PostInfoUpdateForm(props) {
               title,
               tags: value,
               description,
-              likes,
             };
             const result = onChange(modelFields);
             value = result?.tags ?? value;
@@ -215,7 +190,6 @@ export default function PostInfoUpdateForm(props) {
               title,
               tags,
               description: value,
-              likes,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -230,50 +204,18 @@ export default function PostInfoUpdateForm(props) {
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
       ></TextField>
-      <TextField
-        label="Likes"
-        isRequired={false}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={likes}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              title,
-              tags,
-              description,
-              likes: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.likes ?? value;
-          }
-          if (errors.likes?.hasError) {
-            runValidationTasks("likes", value);
-          }
-          setLikes(value);
-        }}
-        onBlur={() => runValidationTasks("likes", likes)}
-        errorMessage={errors.likes?.errorMessage}
-        hasError={errors.likes?.hasError}
-        {...getOverrideProps(overrides, "likes")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || postInfoModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -283,10 +225,7 @@ export default function PostInfoUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || postInfoModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -7,9 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { S3Object } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { createS3Object } from "../graphql/mutations";
 export default function S3ObjectCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -94,7 +94,14 @@ export default function S3ObjectCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(new S3Object(modelFields));
+          await API.graphql({
+            query: createS3Object.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -103,7 +110,8 @@ export default function S3ObjectCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

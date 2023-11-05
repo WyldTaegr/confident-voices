@@ -6,11 +6,12 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { Button, Flex, Grid, SwitchField } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
-import { createExercise } from "../graphql/mutations";
-export default function ExerciseCreateForm(props) {
+import { createTherapist } from "../graphql/mutations";
+export default function TherapistCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -22,16 +23,16 @@ export default function ExerciseCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
+    parent: false,
   };
-  const [name, setName] = React.useState(initialValues.name);
+  const [parent, setParent] = React.useState(initialValues.parent);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
+    setParent(initialValues.parent);
     setErrors({});
   };
   const validations = {
-    name: [],
+    parent: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -59,7 +60,7 @@ export default function ExerciseCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
+          parent,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -90,7 +91,7 @@ export default function ExerciseCreateForm(props) {
             }
           });
           await API.graphql({
-            query: createExercise.replaceAll("__typename", ""),
+            query: createTherapist.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -110,33 +111,33 @@ export default function ExerciseCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExerciseCreateForm")}
+      {...getOverrideProps(overrides, "TherapistCreateForm")}
       {...rest}
     >
-      <TextField
-        label="Name"
-        isRequired={false}
-        isReadOnly={false}
-        value={name}
+      <SwitchField
+        label="Parent"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={parent}
         onChange={(e) => {
-          let { value } = e.target;
+          let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              name: value,
+              parent: value,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.parent ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.parent?.hasError) {
+            runValidationTasks("parent", value);
           }
-          setName(value);
+          setParent(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
+        onBlur={() => runValidationTasks("parent", parent)}
+        errorMessage={errors.parent?.errorMessage}
+        hasError={errors.parent?.hasError}
+        {...getOverrideProps(overrides, "parent")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

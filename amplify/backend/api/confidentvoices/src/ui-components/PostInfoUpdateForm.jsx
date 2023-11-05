@@ -7,7 +7,8 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { fetchByPath, validateField } from "./utils";
 import { API } from "aws-amplify";
 import { getPostInfo } from "../graphql/queries";
 import { updatePostInfo } from "../graphql/mutations";
@@ -27,14 +28,12 @@ export default function PostInfoUpdateForm(props) {
     title: "",
     tags: "",
     description: "",
-    likes: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [tags, setTags] = React.useState(initialValues.tags);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
-  const [likes, setLikes] = React.useState(initialValues.likes);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = postInfoRecord
@@ -43,7 +42,6 @@ export default function PostInfoUpdateForm(props) {
     setTitle(cleanValues.title);
     setTags(cleanValues.tags);
     setDescription(cleanValues.description);
-    setLikes(cleanValues.likes);
     setErrors({});
   };
   const [postInfoRecord, setPostInfoRecord] = React.useState(postInfoModelProp);
@@ -66,7 +64,6 @@ export default function PostInfoUpdateForm(props) {
     title: [{ type: "Required" }],
     tags: [{ type: "Required" }],
     description: [{ type: "Required" }],
-    likes: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -97,7 +94,6 @@ export default function PostInfoUpdateForm(props) {
           title,
           tags,
           description,
-          likes: likes ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -161,7 +157,6 @@ export default function PostInfoUpdateForm(props) {
               title: value,
               tags,
               description,
-              likes,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -188,7 +183,6 @@ export default function PostInfoUpdateForm(props) {
               title,
               tags: value,
               description,
-              likes,
             };
             const result = onChange(modelFields);
             value = result?.tags ?? value;
@@ -215,7 +209,6 @@ export default function PostInfoUpdateForm(props) {
               title,
               tags,
               description: value,
-              likes,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -229,37 +222,6 @@ export default function PostInfoUpdateForm(props) {
         errorMessage={errors.description?.errorMessage}
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
-      ></TextField>
-      <TextField
-        label="Likes"
-        isRequired={false}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={likes}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              title,
-              tags,
-              description,
-              likes: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.likes ?? value;
-          }
-          if (errors.likes?.hasError) {
-            runValidationTasks("likes", value);
-          }
-          setLikes(value);
-        }}
-        onBlur={() => runValidationTasks("likes", likes)}
-        errorMessage={errors.likes?.errorMessage}
-        hasError={errors.likes?.hasError}
-        {...getOverrideProps(overrides, "likes")}
       ></TextField>
       <Flex
         justifyContent="space-between"

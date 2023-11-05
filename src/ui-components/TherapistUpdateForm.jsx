@@ -7,9 +7,10 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, SwitchField } from "@aws-amplify/ui-react";
-import { Therapist } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { getTherapist } from "../graphql/queries";
+import { updateTherapist } from "../graphql/mutations";
 export default function TherapistUpdateForm(props) {
   const {
     id: idProp,
@@ -39,7 +40,12 @@ export default function TherapistUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(Therapist, idProp)
+        ? (
+            await API.graphql({
+              query: getTherapist.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getTherapist
         : therapistModelProp;
       setTherapistRecord(record);
     };
@@ -105,17 +111,22 @@ export default function TherapistUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            Therapist.copyOf(therapistRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await API.graphql({
+            query: updateTherapist.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: therapistRecord.id,
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}

@@ -7,9 +7,10 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid } from "@aws-amplify/ui-react";
-import { Student } from "../models";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { DataStore } from "aws-amplify";
+import { API } from "aws-amplify";
+import { getStudent } from "../graphql/queries";
+import { updateStudent } from "../graphql/mutations";
 export default function StudentUpdateForm(props) {
   const {
     id: idProp,
@@ -34,7 +35,12 @@ export default function StudentUpdateForm(props) {
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
-        ? await DataStore.query(Student, idProp)
+        ? (
+            await API.graphql({
+              query: getStudent.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getStudent
         : studentModelProp;
       setStudentRecord(record);
     };
@@ -96,17 +102,22 @@ export default function StudentUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await DataStore.save(
-            Student.copyOf(studentRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await API.graphql({
+            query: updateStudent.replaceAll("__typename", ""),
+            variables: {
+              input: {
+                id: studentRecord.id,
+                ...modelFields,
+              },
+            },
+          });
           if (onSuccess) {
             onSuccess(modelFields);
           }
         } catch (err) {
           if (onError) {
-            onError(modelFields, err.message);
+            const messages = err.errors.map((e) => e.message).join("\n");
+            onError(modelFields, messages);
           }
         }
       }}
