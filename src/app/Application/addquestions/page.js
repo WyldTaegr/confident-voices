@@ -9,8 +9,9 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
-import { Button } from '@aws-amplify/ui-react';
+import Button from '@mui/material/Button';
 import awsExports from '@/aws-exports';
+import { Typography } from '@mui/material';
 Amplify.configure(awsExports);
 
 
@@ -51,10 +52,8 @@ const AddQuestionsPage = () => {
 
   return (
     <div>
-      <p>Do you want to Add an exercise or add a question to an existing exercise?</p>
-      <Button onClick={handleAddExercise}>Add exercise</Button>
-      <Button>Add question to existing exercise</Button>
-      <p>Please select the exercise you want to add a question to:</p>
+      <Button onClick={handleAddExercise} variant="outlined">Add exercise</Button>
+      <p> Or please select the exercise you want to add a question to:</p>
       <ul>
         {exercises.map(exercise => (
           <li key={exercise.id}>
