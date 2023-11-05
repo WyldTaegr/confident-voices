@@ -1,7 +1,8 @@
-import { API, Amplify, Auth } from "aws-amplify";
+import { API, Amplify, Auth, DataStore } from "aws-amplify";
 import * as mutations from "@/graphql/mutations";
 import awsExports from '@/aws-exports';
 import { createStudent, createTherapist, createUser } from "./api";
+import { User } from "@/models";
 Amplify.configure(awsExports);
 
 export async function getCurrentUser() {
@@ -22,7 +23,7 @@ export async function signOut() {
     await Auth.signOut();
 }
 
-export async function signUp(email, password, name, familyName, mode) {
+export async function signUp(email, password, name, familyName) {
     let progress = 0
     try {
         // Create the Cognito user
@@ -30,7 +31,6 @@ export async function signUp(email, password, name, familyName, mode) {
             username: email,
             password: password,
             attributes: {
-                email: email,
                 name: name,
                 family_name: familyName
             },
@@ -40,39 +40,30 @@ export async function signUp(email, password, name, familyName, mode) {
         });
         progress += 1;
 
-        await Auth.confirmSignUp(email, "hmm");
-
-        await Auth.signIn(email, password);
-        const userApi = await createUser(email, mode);
-        progress += 1;
-        // Create the Student/Therapist object in the GraphQL database
-        const userDetails = { id: email };
-        switch(mode) {
-            case "student":
-                const newStudent = await createStudent(userApi);
-                userDetails["student"] = newStudent;
-                break;
-            case "parent":
-            case "therapist":
-                const newTherapist = await createTherapist(userApi, mode === "parent");
-                userDetails["therapist"] = newTherapist;
-
-                break;
-            default:
-                console.error("unrecognized account type:", mode);
-        }
-        progress += 1;
-        // Link the GraphQL user to the GraphQL Student/Therapist objects
-        const updatedUser = await API.graphql({
-            query: mutations.updateUser,
-            variables: { input: userDetails }
-        });
-
-        progress += 1;
-        return updatedUser
-
 
     } catch (e) {
         console.log(`error signing up: reached ${progress}\n`, e);
+    }
+}
+
+export async function confirmEmail(email, password, code, mode) {
+    let progress = 0;
+    try {
+        await Auth.confirmSignUp(email, code);
+        await Auth.signIn(email, password);
+        const result = await createUser(email, mode);
+        const userId = result.data.createUser.id;
+        console.log(userId);
+        progress += 1;
+        // Create the Student/Therapist object in the GraphQL database
+        const newStudent = await createStudent(userId);
+        const newTherapist = await createTherapist(userId, mode === "parent");
+        progress += 1;
+        console.log("Confirm sucess!")
+        return true;
+
+
+    } catch (e) {
+        console.log(`error confirming email: reached ${progress}\n`, e);
     }
 }

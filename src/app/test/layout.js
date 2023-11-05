@@ -1,6 +1,6 @@
 export default function TestLayout({children}) {
     return (
-        <div>
+        <div className="flex justify-center">
             {children}
         </div>
     )

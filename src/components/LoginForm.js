@@ -3,11 +3,13 @@
 import { Card, Label, Input, TabItem, Tabs, Flex, Button, PasswordField, SelectField } from "@aws-amplify/ui-react";
 import { useState } from "react";
 import '@aws-amplify/ui-react/styles.css';
-import { signUp } from "@/util/auth";
+import { confirmEmail, signUp } from "@/util/auth";
 import { redirect } from "next/navigation";
 
 export default function LoginForm() {
     const [inputs, setInputs] = useState({});
+    const [verifyMode, setVerifyMode] = useState(false);
+    const [userID, setUserID] = useState("");
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -22,18 +24,28 @@ export default function LoginForm() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-        const user = await signUp(data.get("email"), data.get("password"), data.get("first-name"), data.get("last-name"), data.get("role"));
+        const user = await signUp(data.get("email"), data.get("password"), data.get("first-name"), data.get("last-name"));
+        setInputs(values => ({...values, ["role"]: data.get("role")}));
+
+        setVerifyMode(() => true);
+    }
+
+    const handleVerify = async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const user = await confirmEmail(inputs["email"], inputs["password"], data.get("code"), inputs["role"])
+
         //redirect("/Application");
     }
 
     return (
-        <Card maxWidth="600px" alignSelf="center">
-            <Tabs justifyContent="flex-start">
+        <Card maxWidth="600px" minWidth="300px" width="30vw" className="content-center">
+            <Tabs justifyContent="center" defaultIndex={1}>
                 <TabItem title="Log In">
                     TODO: Login
                 </TabItem>
                 <TabItem title="Create Account">
-                    <form onSubmit={handleSignUp}>
+                    <form onSubmit={handleSignUp} className={verifyMode ? "hidden" : ""}>
                         <Flex direction="column" gap="medium">
                             <Flex direction="column" gap="small">
                                 <Label htmlFor="email">Email</Label>
@@ -58,6 +70,15 @@ export default function LoginForm() {
                                 <option value="parent">Parent</option>
                                 <option value="therapist">Speech Therapist</option>
                             </SelectField>
+                            <Button type="submit">Sign Up</Button>
+                        </Flex>
+                    </form>
+                    <form onSubmit={handleVerify} className={verifyMode ? "" : "hidden"}>
+                        <Flex direction="column" gap="medium">
+                            <Flex direction="column" gap="small">
+                                <Label htmlFor="code">Verification Code</Label>
+                                <Input id="code" name="code" type="number" isRequired={true} onChange={handleChange} />
+                            </Flex>
                             <Button type="submit">Create Account</Button>
                         </Flex>
                     </form>

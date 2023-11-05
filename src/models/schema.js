@@ -10,24 +10,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "picture": {
-                    "name": "picture",
-                    "isArray": false,
-                    "type": {
-                        "model": "S3Object"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "userPictureId"
-                        ]
-                    }
-                },
                 "active": {
                     "name": "active",
                     "isArray": false,
@@ -87,13 +69,6 @@ export const schema = {
                     "attributes": [],
                     "isReadOnly": true
                 },
-                "userPictureId": {
-                    "name": "userPictureId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "userTherapistId": {
                     "name": "userTherapistId",
                     "isArray": false,
@@ -122,6 +97,15 @@ export const schema = {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -241,6 +225,15 @@ export const schema = {
                                     "delete",
                                     "read"
                                 ]
+                            },
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
                             }
                         ]
                     }
@@ -316,7 +309,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "studentProgressId"
+                            "studentID"
                         ]
                     }
                 },
@@ -363,6 +356,15 @@ export const schema = {
                                     "delete",
                                     "read"
                                 ]
+                            },
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
                             }
                         ]
                     }
@@ -398,7 +400,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "exerciseQuestionsId"
+                            "exerciseID"
                         ]
                     }
                 },
@@ -432,6 +434,15 @@ export const schema = {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -479,6 +490,13 @@ export const schema = {
                         ]
                     }
                 },
+                "exerciseID": {
+                    "name": "exerciseID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -494,13 +512,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "exerciseQuestionsId": {
-                    "name": "exerciseQuestionsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 },
                 "questionExampleId": {
                     "name": "questionExampleId",
@@ -520,9 +531,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "gsi-Exercise.questions",
+                        "name": "byExercise",
                         "fields": [
-                            "exerciseQuestionsId"
+                            "exerciseID"
                         ]
                     }
                 },
@@ -532,6 +543,15 @@ export const schema = {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -581,9 +601,16 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "exerciseProgressProgressId"
+                            "exerciseprogressID"
                         ]
                     }
+                },
+                "studentID": {
+                    "name": "studentID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -605,7 +632,7 @@ export const schema = {
                     "name": "studentProgressId",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 }
             },
@@ -617,11 +644,29 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byStudent",
+                        "fields": [
+                            "studentID"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -696,9 +741,16 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "questionProgressSubmissionsId"
+                            "questionprogressID"
                         ]
                     }
+                },
+                "exerciseprogressID": {
+                    "name": "exerciseprogressID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -720,7 +772,7 @@ export const schema = {
                     "name": "exerciseProgressProgressId",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "questionProgressQuestionId": {
@@ -739,11 +791,29 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byExerciseProgress",
+                        "fields": [
+                            "exerciseprogressID"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -780,6 +850,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "questionprogressID": {
+                    "name": "questionprogressID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -795,13 +872,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "questionProgressSubmissionsId": {
-                    "name": "questionProgressSubmissionsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -814,9 +884,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "gsi-QuestionProgress.submissions",
+                        "name": "byQuestionProgress",
                         "fields": [
-                            "questionProgressSubmissionsId"
+                            "questionprogressID"
                         ]
                     }
                 },
@@ -826,6 +896,15 @@ export const schema = {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -899,6 +978,15 @@ export const schema = {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -1111,5 +1199,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "fff56df2e2bffefd2bebb86708825a87"
+    "version": "d17230ed7cb6505b948f72d367fcc16a"
 };

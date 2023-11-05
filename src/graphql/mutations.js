@@ -8,18 +8,6 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
-      picture {
-        id
-        name
-        key
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        questionProgressSubmissionsId
-        __typename
-      }
       active
       therapist {
         id
@@ -31,7 +19,6 @@ export const createUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -65,7 +52,6 @@ export const createUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -98,7 +84,6 @@ export const createUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userPictureId
       userTherapistId
       userStudentId
       __typename
@@ -112,18 +97,6 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
-      picture {
-        id
-        name
-        key
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        questionProgressSubmissionsId
-        __typename
-      }
       active
       therapist {
         id
@@ -135,7 +108,6 @@ export const updateUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -169,7 +141,6 @@ export const updateUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -202,7 +173,6 @@ export const updateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userPictureId
       userTherapistId
       userStudentId
       __typename
@@ -216,18 +186,6 @@ export const deleteUser = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       id
-      picture {
-        id
-        name
-        key
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        questionProgressSubmissionsId
-        __typename
-      }
       active
       therapist {
         id
@@ -239,7 +197,6 @@ export const deleteUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -273,7 +230,6 @@ export const deleteUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -306,7 +262,6 @@ export const deleteUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userPictureId
       userTherapistId
       userStudentId
       __typename
@@ -322,18 +277,6 @@ export const createTherapist = /* GraphQL */ `
       id
       user {
         id
-        picture {
-          id
-          name
-          key
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressSubmissionsId
-          __typename
-        }
         active
         therapist {
           id
@@ -361,7 +304,6 @@ export const createTherapist = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -418,18 +360,6 @@ export const updateTherapist = /* GraphQL */ `
       id
       user {
         id
-        picture {
-          id
-          name
-          key
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressSubmissionsId
-          __typename
-        }
         active
         therapist {
           id
@@ -457,7 +387,6 @@ export const updateTherapist = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -514,18 +443,6 @@ export const deleteTherapist = /* GraphQL */ `
       id
       user {
         id
-        picture {
-          id
-          name
-          key
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressSubmissionsId
-          __typename
-        }
         active
         therapist {
           id
@@ -553,7 +470,6 @@ export const deleteTherapist = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -610,18 +526,6 @@ export const createStudent = /* GraphQL */ `
       id
       user {
         id
-        picture {
-          id
-          name
-          key
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressSubmissionsId
-          __typename
-        }
         active
         therapist {
           id
@@ -649,7 +553,6 @@ export const createStudent = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -689,12 +592,12 @@ export const createStudent = /* GraphQL */ `
       progress {
         items {
           id
+          studentID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          studentProgressId
           __typename
         }
         nextToken
@@ -720,18 +623,6 @@ export const updateStudent = /* GraphQL */ `
       id
       user {
         id
-        picture {
-          id
-          name
-          key
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressSubmissionsId
-          __typename
-        }
         active
         therapist {
           id
@@ -759,7 +650,6 @@ export const updateStudent = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -799,12 +689,12 @@ export const updateStudent = /* GraphQL */ `
       progress {
         items {
           id
+          studentID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          studentProgressId
           __typename
         }
         nextToken
@@ -830,18 +720,6 @@ export const deleteStudent = /* GraphQL */ `
       id
       user {
         id
-        picture {
-          id
-          name
-          key
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressSubmissionsId
-          __typename
-        }
         active
         therapist {
           id
@@ -869,7 +747,6 @@ export const deleteStudent = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -909,12 +786,12 @@ export const deleteStudent = /* GraphQL */ `
       progress {
         items {
           id
+          studentID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          studentProgressId
           __typename
         }
         nextToken
@@ -943,12 +820,12 @@ export const createExercise = /* GraphQL */ `
         items {
           id
           description
+          exerciseID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          exerciseQuestionsId
           questionExampleId
           __typename
         }
@@ -977,12 +854,12 @@ export const updateExercise = /* GraphQL */ `
         items {
           id
           description
+          exerciseID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          exerciseQuestionsId
           questionExampleId
           __typename
         }
@@ -1011,12 +888,12 @@ export const deleteExercise = /* GraphQL */ `
         items {
           id
           description
+          exerciseID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          exerciseQuestionsId
           questionExampleId
           __typename
         }
@@ -1045,20 +922,20 @@ export const createQuestion = /* GraphQL */ `
         id
         name
         key
+        questionprogressID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        questionProgressSubmissionsId
         __typename
       }
+      exerciseID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      exerciseQuestionsId
       questionExampleId
       __typename
     }
@@ -1076,20 +953,20 @@ export const updateQuestion = /* GraphQL */ `
         id
         name
         key
+        questionprogressID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        questionProgressSubmissionsId
         __typename
       }
+      exerciseID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      exerciseQuestionsId
       questionExampleId
       __typename
     }
@@ -1107,20 +984,20 @@ export const deleteQuestion = /* GraphQL */ `
         id
         name
         key
+        questionprogressID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        questionProgressSubmissionsId
         __typename
       }
+      exerciseID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      exerciseQuestionsId
       questionExampleId
       __typename
     }
@@ -1143,7 +1020,6 @@ export const createExerciseProgress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1175,12 +1051,12 @@ export const createExerciseProgress = /* GraphQL */ `
         items {
           id
           completed
+          exerciseprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          exerciseProgressProgressId
           questionProgressQuestionId
           __typename
         }
@@ -1188,12 +1064,12 @@ export const createExerciseProgress = /* GraphQL */ `
         startedAt
         __typename
       }
+      studentID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      studentProgressId
       __typename
     }
   }
@@ -1215,7 +1091,6 @@ export const updateExerciseProgress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1247,12 +1122,12 @@ export const updateExerciseProgress = /* GraphQL */ `
         items {
           id
           completed
+          exerciseprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          exerciseProgressProgressId
           questionProgressQuestionId
           __typename
         }
@@ -1260,12 +1135,12 @@ export const updateExerciseProgress = /* GraphQL */ `
         startedAt
         __typename
       }
+      studentID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      studentProgressId
       __typename
     }
   }
@@ -1287,7 +1162,6 @@ export const deleteExerciseProgress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1319,12 +1193,12 @@ export const deleteExerciseProgress = /* GraphQL */ `
         items {
           id
           completed
+          exerciseprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          exerciseProgressProgressId
           questionProgressQuestionId
           __typename
         }
@@ -1332,12 +1206,12 @@ export const deleteExerciseProgress = /* GraphQL */ `
         startedAt
         __typename
       }
+      studentID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      studentProgressId
       __typename
     }
   }
@@ -1366,12 +1240,12 @@ export const createQuestionProgress = /* GraphQL */ `
           startedAt
           __typename
         }
+        studentID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        studentProgressId
         __typename
       }
       question {
@@ -1381,20 +1255,20 @@ export const createQuestionProgress = /* GraphQL */ `
           id
           name
           key
+          questionprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          questionProgressSubmissionsId
           __typename
         }
+        exerciseID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        exerciseQuestionsId
         questionExampleId
         __typename
       }
@@ -1404,24 +1278,24 @@ export const createQuestionProgress = /* GraphQL */ `
           id
           name
           key
+          questionprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          questionProgressSubmissionsId
           __typename
         }
         nextToken
         startedAt
         __typename
       }
+      exerciseprogressID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      exerciseProgressProgressId
       questionProgressQuestionId
       __typename
     }
@@ -1451,12 +1325,12 @@ export const updateQuestionProgress = /* GraphQL */ `
           startedAt
           __typename
         }
+        studentID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        studentProgressId
         __typename
       }
       question {
@@ -1466,20 +1340,20 @@ export const updateQuestionProgress = /* GraphQL */ `
           id
           name
           key
+          questionprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          questionProgressSubmissionsId
           __typename
         }
+        exerciseID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        exerciseQuestionsId
         questionExampleId
         __typename
       }
@@ -1489,24 +1363,24 @@ export const updateQuestionProgress = /* GraphQL */ `
           id
           name
           key
+          questionprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          questionProgressSubmissionsId
           __typename
         }
         nextToken
         startedAt
         __typename
       }
+      exerciseprogressID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      exerciseProgressProgressId
       questionProgressQuestionId
       __typename
     }
@@ -1536,12 +1410,12 @@ export const deleteQuestionProgress = /* GraphQL */ `
           startedAt
           __typename
         }
+        studentID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        studentProgressId
         __typename
       }
       question {
@@ -1551,20 +1425,20 @@ export const deleteQuestionProgress = /* GraphQL */ `
           id
           name
           key
+          questionprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          questionProgressSubmissionsId
           __typename
         }
+        exerciseID
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        exerciseQuestionsId
         questionExampleId
         __typename
       }
@@ -1574,24 +1448,24 @@ export const deleteQuestionProgress = /* GraphQL */ `
           id
           name
           key
+          questionprogressID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          questionProgressSubmissionsId
           __typename
         }
         nextToken
         startedAt
         __typename
       }
+      exerciseprogressID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      exerciseProgressProgressId
       questionProgressQuestionId
       __typename
     }
@@ -1606,12 +1480,12 @@ export const createS3Object = /* GraphQL */ `
       id
       name
       key
+      questionprogressID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      questionProgressSubmissionsId
       __typename
     }
   }
@@ -1625,12 +1499,12 @@ export const updateS3Object = /* GraphQL */ `
       id
       name
       key
+      questionprogressID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      questionProgressSubmissionsId
       __typename
     }
   }
@@ -1644,12 +1518,12 @@ export const deleteS3Object = /* GraphQL */ `
       id
       name
       key
+      questionprogressID
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      questionProgressSubmissionsId
       __typename
     }
   }
@@ -1730,7 +1604,6 @@ export const createTherapistsStudents = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1764,7 +1637,6 @@ export const createTherapistsStudents = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1820,7 +1692,6 @@ export const updateTherapistsStudents = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1854,7 +1725,6 @@ export const updateTherapistsStudents = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1910,7 +1780,6 @@ export const deleteTherapistsStudents = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -1944,7 +1813,6 @@ export const deleteTherapistsStudents = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -2000,7 +1868,6 @@ export const createParentsChildren = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -2034,7 +1901,6 @@ export const createParentsChildren = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -2090,7 +1956,6 @@ export const updateParentsChildren = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -2124,7 +1989,6 @@ export const updateParentsChildren = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -2180,7 +2044,6 @@ export const deleteParentsChildren = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
@@ -2214,7 +2077,6 @@ export const deleteParentsChildren = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          userPictureId
           userTherapistId
           userStudentId
           __typename
