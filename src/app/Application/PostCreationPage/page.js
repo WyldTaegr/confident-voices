@@ -75,7 +75,8 @@ const PostCreationPage = () => {
           const newPostInfo = {
               title: inputTitle,
               tags: inputTags,
-              description: inputDesc
+              description: inputDesc,
+              likes: 0
           };
           
 
@@ -102,12 +103,6 @@ const PostCreationPage = () => {
                         direction = "column"
                         size = "large"
                         defaultValue = "White">
-                        <Radio backgroundColor="rgb(255,0,0)" color = "rgb(255, 0, 0)" value = "Red"> Red </Radio>
-                        <Radio value = "Orange"> Orange </Radio>
-                        <Radio value = "Yellow"> Yellow </Radio>
-                        <Radio value = "Green"> Green </Radio>
-                        <Radio value = "Blue"> Blue </Radio>
-                        <Radio value = "Purple"> Purple </Radio>
                         <Radio value = "White"> White </Radio>
 
                     </RadioGroupField>
