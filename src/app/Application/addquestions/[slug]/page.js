@@ -6,25 +6,25 @@ import { Amplify } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
-import * as queries from '@/graphql/queries';
 import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
-
-
-async function questionCreation(event, inputValue){
-  event.preventDefault();
-  const newQuestion = await API.graphql(
-    graphqlOperation(mutations.createQuestion, { input: {description: inputValue} })
-  );
-}
 
 /**
  * Method to add a question to the set of questions already present in an exercise
  * @param {*} param0 
  */
 const Question = ({ params }) => {
+  async function questionCreation(event, inputValue){
+    event.preventDefault();
+    const newQuestion = await API.graphql(
+      graphqlOperation(mutations.createQuestion, { input: {
+        description: inputValue,
+        exerciseQuestionsId: params.slug
+      } })
+    );
+  }
 const router = useRouter();
 const [inputValue, setInputValue] = useState('');
 
@@ -37,7 +37,7 @@ const [inputValue, setInputValue] = useState('');
 
   return (
     <div>
-     <p>Post: {params.slug}</p>  
+     <p>Exercise: {params.slug}</p> 
      <form onSubmit={(e) => questionCreation(e, inputValue)}>
         <input
           type="text"
@@ -45,7 +45,7 @@ const [inputValue, setInputValue] = useState('');
           onChange={handleInputChange}
           placeholder="Enter something"
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Add Question</button>
       </form>
     </div>
     
