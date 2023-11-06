@@ -25,6 +25,7 @@ export const getUser = /* GraphQL */ `
       updatedAt
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -43,6 +44,7 @@ export const listUsers = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       nextToken
@@ -61,6 +63,7 @@ export const getTherapist = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -110,6 +113,7 @@ export const getStudent = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {

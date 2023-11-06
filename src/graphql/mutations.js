@@ -28,6 +28,7 @@ export const createUser = /* GraphQL */ `
       updatedAt
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -59,6 +60,7 @@ export const updateUser = /* GraphQL */ `
       updatedAt
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -90,6 +92,7 @@ export const deleteUser = /* GraphQL */ `
       updatedAt
       userTherapistId
       userStudentId
+      owner
       __typename
     }
   }
@@ -108,6 +111,7 @@ export const createTherapist = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -140,6 +144,7 @@ export const updateTherapist = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -172,6 +177,7 @@ export const deleteTherapist = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       parent
@@ -204,6 +210,7 @@ export const createStudent = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {
@@ -239,6 +246,7 @@ export const updateStudent = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {
@@ -274,6 +282,7 @@ export const deleteStudent = /* GraphQL */ `
         updatedAt
         userTherapistId
         userStudentId
+        owner
         __typename
       }
       therapists {
