@@ -8,79 +8,21 @@ export const getUser = /* GraphQL */ `
       active
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       userTherapistId
       userStudentId
       __typename
@@ -97,90 +39,13 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncUsers = /* GraphQL */ `
-  query SyncUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncUsers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        userTherapistId
-        userStudentId
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -192,74 +57,23 @@ export const getTherapist = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       parent
       students {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       children {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       therapistUserId
       __typename
     }
@@ -274,91 +88,13 @@ export const listTherapists = /* GraphQL */ `
     listTherapists(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncTherapists = /* GraphQL */ `
-  query SyncTherapists(
-    $filter: ModelTherapistFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncTherapists(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        therapistUserId
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -370,88 +106,26 @@ export const getStudent = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       therapists {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       parents {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       progress {
-        items {
-          id
-          studentID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       studentUserId
       __typename
     }
@@ -466,99 +140,12 @@ export const listStudents = /* GraphQL */ `
     listStudents(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncStudents = /* GraphQL */ `
-  query SyncStudents(
-    $filter: ModelStudentFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncStudents(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        studentUserId
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -569,27 +156,11 @@ export const getExercise = /* GraphQL */ `
       id
       name
       questions {
-        items {
-          id
-          description
-          exerciseID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionExampleId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -604,54 +175,11 @@ export const listExercises = /* GraphQL */ `
       items {
         id
         name
-        questions {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncExercises = /* GraphQL */ `
-  query SyncExercises(
-    $filter: ModelExerciseFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncExercises(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        questions {
-          nextToken
-          startedAt
-          __typename
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -668,17 +196,11 @@ export const getQuestion = /* GraphQL */ `
         questionprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       exerciseID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionExampleId
       __typename
     }
@@ -694,72 +216,13 @@ export const listQuestions = /* GraphQL */ `
       items {
         id
         description
-        example {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         exerciseID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionExampleId
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncQuestions = /* GraphQL */ `
-  query SyncQuestions(
-    $filter: ModelQuestionFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncQuestions(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        description
-        example {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
-        exerciseID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        questionExampleId
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -782,29 +245,13 @@ export const questionsByExerciseID = /* GraphQL */ `
       items {
         id
         description
-        example {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         exerciseID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionExampleId
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }
@@ -815,64 +262,18 @@ export const getExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       progress {
-        items {
-          id
-          completed
-          exerciseprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressQuestionId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       studentID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -890,75 +291,12 @@ export const listExerciseProgresses = /* GraphQL */ `
     ) {
       items {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         studentID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncExerciseProgresses = /* GraphQL */ `
-  query SyncExerciseProgresses(
-    $filter: ModelExerciseProgressFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncExerciseProgresses(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
-        studentID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -980,31 +318,12 @@ export const exerciseProgressesByStudentID = /* GraphQL */ `
     ) {
       items {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         studentID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }
@@ -1015,77 +334,28 @@ export const getQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         studentID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       question {
         id
         description
-        example {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         exerciseID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionExampleId
         __typename
       }
       completed
       submissions {
-        items {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       exerciseprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionProgressQuestionId
       __typename
     }
@@ -1104,103 +374,14 @@ export const listQuestionProgresses = /* GraphQL */ `
     ) {
       items {
         id
-        exerciseProgress {
-          id
-          studentID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
-        question {
-          id
-          description
-          exerciseID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionExampleId
-          __typename
-        }
         completed
-        submissions {
-          nextToken
-          startedAt
-          __typename
-        }
         exerciseprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionProgressQuestionId
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncQuestionProgresses = /* GraphQL */ `
-  query SyncQuestionProgresses(
-    $filter: ModelQuestionProgressFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncQuestionProgresses(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        exerciseProgress {
-          id
-          studentID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
-        question {
-          id
-          description
-          exerciseID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionExampleId
-          __typename
-        }
-        completed
-        submissions {
-          nextToken
-          startedAt
-          __typename
-        }
-        exerciseprogressID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        questionProgressQuestionId
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -1222,45 +403,14 @@ export const questionProgressesByExerciseprogressID = /* GraphQL */ `
     ) {
       items {
         id
-        exerciseProgress {
-          id
-          studentID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
-        question {
-          id
-          description
-          exerciseID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionExampleId
-          __typename
-        }
         completed
-        submissions {
-          nextToken
-          startedAt
-          __typename
-        }
         exerciseprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionProgressQuestionId
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }
@@ -1274,9 +424,6 @@ export const getS3Object = /* GraphQL */ `
       questionprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1295,44 +442,9 @@ export const listS3Objects = /* GraphQL */ `
         questionprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncS3Objects = /* GraphQL */ `
-  query SyncS3Objects(
-    $filter: ModelS3ObjectFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncS3Objects(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        key
-        questionprogressID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -1359,13 +471,9 @@ export const s3ObjectsByQuestionprogressID = /* GraphQL */ `
         questionprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }
@@ -1376,12 +484,10 @@ export const getPostInfo = /* GraphQL */ `
       title
       tags
       description
+      likes
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1397,47 +503,13 @@ export const listPostInfos = /* GraphQL */ `
         title
         tags
         description
+        likes
         id
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncPostInfos = /* GraphQL */ `
-  query SyncPostInfos(
-    $filter: ModelPostInfoFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncPostInfos(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        title
-        tags
-        description
-        id
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -1450,79 +522,21 @@ export const getTherapistsStudents = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1542,87 +556,11 @@ export const listTherapistsStudents = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncTherapistsStudents = /* GraphQL */ `
-  query SyncTherapistsStudents(
-    $filter: ModelTherapistsStudentsFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncTherapistsStudents(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        therapistId
-        studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -1646,36 +584,11 @@ export const therapistsStudentsByTherapistId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }
@@ -1699,36 +612,11 @@ export const therapistsStudentsByStudentId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }
@@ -1741,79 +629,21 @@ export const getParentsChildren = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1829,87 +659,11 @@ export const listParentsChildren = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncParentsChildren = /* GraphQL */ `
-  query SyncParentsChildren(
-    $filter: ModelParentsChildrenFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncParentsChildren(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        therapistId
-        studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -1933,36 +687,11 @@ export const parentsChildrenByTherapistId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }
@@ -1986,36 +715,11 @@ export const parentsChildrenByStudentId = /* GraphQL */ `
         id
         therapistId
         studentId
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }

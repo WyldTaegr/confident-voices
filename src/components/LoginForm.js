@@ -1,15 +1,22 @@
 "use client"
 
-import { Card, Label, Input, TabItem, Tabs, Flex, Button, PasswordField, SelectField } from "@aws-amplify/ui-react";
+import { Card, Label, Input, TabItem, Tabs, Flex, Button, PasswordField, SelectField, Alert } from "@aws-amplify/ui-react";
 import { useState } from "react";
 import '@aws-amplify/ui-react/styles.css';
-import { confirmEmail, signUp } from "@/util/auth";
+import { confirmEmail, getCurrentUser, signIn, signUp } from "@/util/auth";
 import { redirect } from "next/navigation";
 
 export default function LoginForm() {
     const [inputs, setInputs] = useState({});
     const [verifyMode, setVerifyMode] = useState(false);
     const [userID, setUserID] = useState("");
+    const [currentUser, setCurrentUser] = useState("");
+
+    const updateUser = async () => {
+        const user = await getCurrentUser();
+        console.log(user);
+        setCurrentUser(() => user);
+    }
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -17,14 +24,16 @@ export default function LoginForm() {
         setInputs(values => ({...values, [name]: value}));
     }
     
-    const signIn = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        const data = new FormData(e.target);
+        await signIn(data.get("email"), data.get("password"));
     }
     
     const handleSignUp = async (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-        const user = await signUp(data.get("email"), data.get("password"), data.get("first-name"), data.get("last-name"));
+        await signUp(data.get("email"), data.get("password"), data.get("first-name"), data.get("last-name"));
         setInputs(values => ({...values, ["role"]: data.get("role")}));
 
         setVerifyMode(() => true);
@@ -33,16 +42,28 @@ export default function LoginForm() {
     const handleVerify = async (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-        const user = await confirmEmail(inputs["email"], inputs["password"], data.get("code"), inputs["role"])
+        await confirmEmail(inputs["email"], inputs["password"], data.get("code"), inputs["role"])
 
         //redirect("/Application");
     }
 
     return (
         <Card maxWidth="600px" minWidth="300px" width="30vw" className="content-center">
-            <Tabs justifyContent="center" defaultIndex={1}>
+            <Tabs justifyContent="center">
                 <TabItem title="Log In">
-                    TODO: Login
+                    <form onSubmit={handleLogin}>
+                        <Flex direction="column" gap="medium">
+                            <Flex direction="column" gap="small">
+                                <Label htmlFor="email">Email</Label>
+                                <Input id="loginEmail" name="email" type="email" isRequired={true} onChange={handleChange} />
+                            </Flex>
+                            <Flex direction="column" gap="small">
+                                <Label htmlFor="password">Password</Label>
+                                <PasswordField name="password" size="small" isRequired={true} onChange={handleChange} />
+                            </Flex>
+                            <Button type="submit">Log In</Button>
+                        </Flex>
+                    </form>
                 </TabItem>
                 <TabItem title="Create Account">
                     <form onSubmit={handleSignUp} className={verifyMode ? "hidden" : ""}>
@@ -84,6 +105,12 @@ export default function LoginForm() {
                     </form>
                 </TabItem>
             </Tabs>
+            <Alert isDismissible={false} hasIcon={true} heading="Login State">
+                <Flex direction="column" gap="medium">
+                    {currentUser}
+                    <Button onClick={updateUser}>Update user info</Button>
+                </Flex>
+            </Alert>
         </Card>
     )
 }

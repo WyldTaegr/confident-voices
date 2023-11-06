@@ -14,14 +14,15 @@
         "authConfig": {
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "AWS_IAM"
-            },
-            {
               "apiKeyConfig": {
-                "apiKeyExpirationDays": 30,
-                "description": "api key description"
+                "apiKeyExpirationDate": "2023-11-12T19:53:35.539Z",
+                "apiKeyExpirationDays": 7,
+                "description": ""
               },
               "authenticationType": "API_KEY"
+            },
+            {
+              "authenticationType": "AWS_IAM"
             }
           ],
           "defaultAuthentication": {
@@ -46,7 +47,12 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+          ],
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
@@ -65,7 +71,6 @@
       "service": "Cognito"
     }
   },
-  "function": {},
   "storage": {
     "voicestorage": {
       "dependsOn": [],

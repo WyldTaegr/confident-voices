@@ -61,5 +61,6 @@ type PostInfo @model @auth(rules: [{allow: public}, {allow: private}]) {
   title: String!
   tags: String!
   description: String!
+  likes: Int
 }
  

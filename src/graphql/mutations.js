@@ -11,79 +11,21 @@ export const createUser = /* GraphQL */ `
       active
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       userTherapistId
       userStudentId
       __typename
@@ -100,79 +42,21 @@ export const updateUser = /* GraphQL */ `
       active
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       userTherapistId
       userStudentId
       __typename
@@ -189,79 +73,21 @@ export const deleteUser = /* GraphQL */ `
       active
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       userTherapistId
       userStudentId
       __typename
@@ -278,74 +104,23 @@ export const createTherapist = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       parent
       students {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       children {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       therapistUserId
       __typename
     }
@@ -361,74 +136,23 @@ export const updateTherapist = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       parent
       students {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       children {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       therapistUserId
       __typename
     }
@@ -444,74 +168,23 @@ export const deleteTherapist = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       parent
       students {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       children {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       therapistUserId
       __typename
     }
@@ -527,88 +200,26 @@ export const createStudent = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       therapists {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       parents {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       progress {
-        items {
-          id
-          studentID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       studentUserId
       __typename
     }
@@ -624,88 +235,26 @@ export const updateStudent = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       therapists {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       parents {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       progress {
-        items {
-          id
-          studentID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       studentUserId
       __typename
     }
@@ -721,88 +270,26 @@ export const deleteStudent = /* GraphQL */ `
       user {
         id
         active
-        therapist {
-          id
-          parent
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          therapistUserId
-          __typename
-        }
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         userTherapistId
         userStudentId
         __typename
       }
       therapists {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       parents {
-        items {
-          id
-          therapistId
-          studentId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       progress {
-        items {
-          id
-          studentID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       studentUserId
       __typename
     }
@@ -817,27 +304,11 @@ export const createExercise = /* GraphQL */ `
       id
       name
       questions {
-        items {
-          id
-          description
-          exerciseID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionExampleId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -851,27 +322,11 @@ export const updateExercise = /* GraphQL */ `
       id
       name
       questions {
-        items {
-          id
-          description
-          exerciseID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionExampleId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -885,27 +340,11 @@ export const deleteExercise = /* GraphQL */ `
       id
       name
       questions {
-        items {
-          id
-          description
-          exerciseID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionExampleId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -925,17 +364,11 @@ export const createQuestion = /* GraphQL */ `
         questionprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       exerciseID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionExampleId
       __typename
     }
@@ -956,17 +389,11 @@ export const updateQuestion = /* GraphQL */ `
         questionprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       exerciseID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionExampleId
       __typename
     }
@@ -987,17 +414,11 @@ export const deleteQuestion = /* GraphQL */ `
         questionprogressID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       exerciseID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionExampleId
       __typename
     }
@@ -1012,64 +433,18 @@ export const createExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       progress {
-        items {
-          id
-          completed
-          exerciseprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressQuestionId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       studentID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1083,64 +458,18 @@ export const updateExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       progress {
-        items {
-          id
-          completed
-          exerciseprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressQuestionId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       studentID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1154,64 +483,18 @@ export const deleteExerciseProgress = /* GraphQL */ `
       id
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       progress {
-        items {
-          id
-          completed
-          exerciseprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          questionProgressQuestionId
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       studentID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1225,77 +508,28 @@ export const createQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         studentID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       question {
         id
         description
-        example {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         exerciseID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionExampleId
         __typename
       }
       completed
       submissions {
-        items {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       exerciseprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionProgressQuestionId
       __typename
     }
@@ -1310,77 +544,28 @@ export const updateQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         studentID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       question {
         id
         description
-        example {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         exerciseID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionExampleId
         __typename
       }
       completed
       submissions {
-        items {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       exerciseprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionProgressQuestionId
       __typename
     }
@@ -1395,77 +580,28 @@ export const deleteQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
-        student {
-          id
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          studentUserId
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         studentID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       question {
         id
         description
-        example {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         exerciseID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         questionExampleId
         __typename
       }
       completed
       submissions {
-        items {
-          id
-          name
-          key
-          questionprogressID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          __typename
-        }
         nextToken
-        startedAt
         __typename
       }
       exerciseprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       questionProgressQuestionId
       __typename
     }
@@ -1483,9 +619,6 @@ export const createS3Object = /* GraphQL */ `
       questionprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1502,9 +635,6 @@ export const updateS3Object = /* GraphQL */ `
       questionprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1521,9 +651,6 @@ export const deleteS3Object = /* GraphQL */ `
       questionprogressID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1537,12 +664,10 @@ export const createPostInfo = /* GraphQL */ `
       title
       tags
       description
+      likes
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1556,12 +681,10 @@ export const updatePostInfo = /* GraphQL */ `
       title
       tags
       description
+      likes
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1575,12 +698,10 @@ export const deletePostInfo = /* GraphQL */ `
       title
       tags
       description
+      likes
       id
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1596,79 +717,21 @@ export const createTherapistsStudents = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1684,79 +747,21 @@ export const updateTherapistsStudents = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1772,79 +777,21 @@ export const deleteTherapistsStudents = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1860,79 +807,21 @@ export const createParentsChildren = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -1948,79 +837,21 @@ export const updateParentsChildren = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -2036,79 +867,21 @@ export const deleteParentsChildren = /* GraphQL */ `
       studentId
       therapist {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
         parent
-        students {
-          nextToken
-          startedAt
-          __typename
-        }
-        children {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         therapistUserId
         __typename
       }
       student {
         id
-        user {
-          id
-          active
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          userTherapistId
-          userStudentId
-          __typename
-        }
-        therapists {
-          nextToken
-          startedAt
-          __typename
-        }
-        parents {
-          nextToken
-          startedAt
-          __typename
-        }
-        progress {
-          nextToken
-          startedAt
-          __typename
-        }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         studentUserId
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
