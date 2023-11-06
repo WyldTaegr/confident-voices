@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import * as styles from "../../styles/Hero.module.css";
-import images from "../../constants/images";
+import * as styles from "@/styles/Hero.module.css";
+import images from "@/constants/images";
 import Button from "./Button";
 import Link from "next/link";
 const Hero = () => {

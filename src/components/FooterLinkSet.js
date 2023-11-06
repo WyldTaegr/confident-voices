@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import * as styles from "../../styles/Footer.module.css";
+import * as styles from "@/styles/Footer.module.css";
 //made it 0 this was showing errors
 const FooterLinkSet = ({ linkSet }) => {
 	return (
