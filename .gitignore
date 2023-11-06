@@ -56,5 +56,7 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 
-# we don't use the ui-components folder, this will automatically be updated on amplify pulls
+# Amplify directories placed in src/ are automatically generated
 src/ui-components/
+src/graphql/
+src/models/
