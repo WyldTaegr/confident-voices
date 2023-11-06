@@ -3,7 +3,7 @@
 import { Card, Label, Input, TabItem, Tabs, Flex, Button, PasswordField, SelectField, Alert } from "@aws-amplify/ui-react";
 import { useState } from "react";
 import '@aws-amplify/ui-react/styles.css';
-import { confirmEmail, getCurrentUser, signIn, signUp } from "@/util/auth";
+import { confirmEmail, getCurrentUser, signIn, signOut, signUp } from "@/util/auth";
 import { redirect } from "next/navigation";
 
 export default function LoginForm() {
@@ -45,6 +45,11 @@ export default function LoginForm() {
         await confirmEmail(inputs["email"], inputs["password"], data.get("code"), inputs["role"])
 
         //redirect("/Application");
+    }
+
+    const forceLogOut = async (e) => {
+        await signOut();
+        await updateUser();
     }
 
     return (
@@ -109,6 +114,7 @@ export default function LoginForm() {
                 <Flex direction="column" gap="medium">
                     {currentUser}
                     <Button onClick={updateUser}>Update user info</Button>
+                    <Button onClick={forceLogOut}>Log Out</Button>
                 </Flex>
             </Alert>
         </Card>

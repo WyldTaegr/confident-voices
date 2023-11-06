@@ -7,10 +7,8 @@ Amplify.configure(awsExports);
 
 export async function getCurrentUser() {
     try {
-        console.log("boop")
         const user = await Auth.currentUserInfo();
-        console.log("zoot")
-        return user === null ? "NULL" : user;
+        return user === null ? "NULL" : user.attributes.email;
 
     } catch(e) {
         console.log("error caught!!!")
