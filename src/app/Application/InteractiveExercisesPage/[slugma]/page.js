@@ -30,7 +30,7 @@ const SlugmaPage = ({params}) => {
         
         // Filter questions related to the given exerciseId
         const relatedQuestions = allQuestionsData.data.listQuestions.items.filter(
-          (question) => question.exerciseQuestionsId === params.slugma
+          (question) => question.exerciseID === params.slugma
         );
         
         setQuestions(relatedQuestions);
