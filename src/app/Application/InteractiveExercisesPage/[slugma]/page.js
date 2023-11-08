@@ -11,7 +11,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
 import AudioRecording from '@/app/components/AudioRecording';
 import Videofeed from '@/app/components/Videofeed';
-import { Card, Typography, Button, Box, CardActions, CardContent } from '@mui/material';
+import { Card, Typography, Button, Box, CardContent, CardActions, Grid } from '@mui/material';
 
 Amplify.configure(awsExports);
 
@@ -43,20 +43,32 @@ const SlugmaPage = ({params}) => {
   }, [params.slugma]);
 
   return (
-    <div>
-      <p>Questions:</p>
-      <ul>
+    <Box sx={{ flexGrow: 1, padding: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Questions
+      </Typography>
+      <Grid container spacing={2}>
         {questions.map((question) => (
-          <li key={question.id}>
+          <Grid item xs={12} md={6} lg={4} key={question.id}>
             <Card>
-            {question.description}
-            <AudioRecording></AudioRecording>
-            <Videofeed></Videofeed>
+              <CardContent>
+                <Typography variant="h6">
+                  {question.description}
+                </Typography>
+                {/* Insert additional content here */}
+              </CardContent>
+              <CardActions>
+                {/* If you have actions like buttons, they would go here */}
+              </CardActions>
+              <Box sx={{ margin: 2 }}>
+                <AudioRecording />
+                <Videofeed />
+              </Box>
             </Card>
-          </li>
+          </Grid>
         ))}
-      </ul>
-    </div>
+      </Grid>
+    </Box>
   );
 };
 

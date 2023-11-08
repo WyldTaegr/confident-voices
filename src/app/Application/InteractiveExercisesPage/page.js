@@ -7,8 +7,8 @@ import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
-import Videofeed from '@/app/components/Videofeed';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
+import { List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 Amplify.configure(awsExports);
 
 
@@ -49,18 +49,28 @@ const InteractiveExercisesPage = () => {
   }
 
   return (
-
-    <div>
-      <h1>Interactive Exercises</h1>
-      <Videofeed></Videofeed>
-      <ul>
+    <Paper elevation={3} sx={{ margin: 2 }}>
+      <Typography variant="h4" sx={{ textAlign: 'center', padding: 2 }}>
+        Exercise List
+      </Typography>
+      <List component="nav">
         {exercises.map(exercise => (
-          <li key={exercise.id}>
-            <h2 onClick={(e) => pushTo(e, exercise.id)}>{exercise.name}</h2>
-          </li>
+          <ListItem 
+            button 
+            key={exercise.id} 
+            onClick={(e) => pushTo(e, exercise.id)}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'action.hover',
+              },
+              transition: 'background-color 0.3s',
+            }}
+          >
+            <ListItemText primary={exercise.name} />
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Paper>
   );
 };
 

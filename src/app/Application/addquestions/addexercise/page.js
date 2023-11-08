@@ -6,9 +6,9 @@ import { Amplify } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
-import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
+import { Box, Button, TextField, Typography, Container } from '@mui/material';
 Amplify.configure(awsExports);
 
 
@@ -36,19 +36,27 @@ const [inputValue, setInputValue] = useState('');
 
 
   return (
-    <div>
-     <p>Exercise: {params.slug}</p> 
-     <form onSubmit={(e) => exerciseCreation(e, inputValue)}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter something"
-        />
-        <button type="submit">Add Exercise</button>
-      </form>
-    </div>
-    
+    <Container maxWidth="sm">
+      <Box my={4} display="flex" flexDirection="column" alignItems="center">
+        <Typography variant="h5" component="h2" gutterBottom>
+          Exercise: {params.slug}
+        </Typography>
+        <form onSubmit={(e) => exerciseCreation(e, inputValue)} noValidate autoComplete="off" style={{ width: '100%' }}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Enter something"
+            label="New Exercise"
+          />
+          <Button type="submit" variant="contained" color="primary" size="large">
+            Add Exercise
+          </Button>
+        </form>
+      </Box>
+    </Container>
   );
 };
 
