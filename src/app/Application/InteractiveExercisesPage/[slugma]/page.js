@@ -51,6 +51,7 @@ const SlugmaPage = ({params}) => {
             <Card>
             {question.description}
             <AudioRecording></AudioRecording>
+            <Videofeed></Videofeed>
             </Card>
           </li>
         ))}

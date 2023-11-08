@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
 import { Button } from '@aws-amplify/ui-react';
 import awsExports from '@/aws-exports';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 Amplify.configure(awsExports);
 
 
@@ -19,10 +20,15 @@ const Question = ({ params }) => {
   async function questionCreation(event, inputValue){
     event.preventDefault();
     const newQuestion = await API.graphql(
-      graphqlOperation(mutations.createQuestion, { input: {
-        description: inputValue,
-        exerciseQuestionsId: params.slug
-      } })
+      // graphqlOperation(mutations.createQuestion, { input: {
+      //   description: inputValue,
+      //   exerciseQuestionsId: params.slug
+      // } })
+      {
+        query: mutations.createQuestion,
+        variables: {input : {description: inputValue, exerciseID: params.slug}},
+        authMode: GRAPHQL_AUTH_MODE.API_KEY
+      }
     );
   }
 const router = useRouter();
