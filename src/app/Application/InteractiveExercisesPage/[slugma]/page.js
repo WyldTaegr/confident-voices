@@ -14,7 +14,7 @@ import Videofeed from '@/app/components/Videofeed';
 import { Card, Typography, Button, Box, CardContent, CardActions, Grid } from '@mui/material';
 
 Amplify.configure(awsExports);
-
+//Every time a user records themselves, a new S3 bucket is created, and recordings are pushed into new S3 bucket.
 const SlugmaPage = ({params}) => {
 
   const [questions, setQuestions] = useState([]);
