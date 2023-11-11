@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useRef } from 'react';
+import { Storage } from 'aws-amplify';
 
 function AudioRecording() {
   const [recording, setRecording] = useState(false);
@@ -20,10 +21,18 @@ function AudioRecording() {
         }
       };
 
-      recorder.onstop = () => {
-        setAudioChunks((prevChunks) => {
+      recorder.onstop = async () => {
+        setAudioChunks(async (prevChunks) => {
           const audioBlob = new Blob(prevChunks, { type: 'audio/webm' });
-      
+          
+          try {
+            await Storage.put('recorded-audio.webm', audioBlob, {
+              contentType: 'audio/webm', // Adjust the content type based on your audio format
+            });
+          } catch (error) {
+            console.log('Error uploading file: ', error);
+          }
+
           // Create a download link for the recorded audio
           const audioUrl = URL.createObjectURL(audioBlob);
           const a = document.createElement('a');
