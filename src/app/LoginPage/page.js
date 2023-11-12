@@ -14,6 +14,10 @@ export default function LoginPage() {
   const [authState, setAuthState] = useState();
   const router = useRouter();
 
+  function goToApp(){
+    router.push('/Application/UserProfilePage');
+  }
+
   useEffect(() => {
     if (authState === 'signedIn') {
       router.push('/');
@@ -57,6 +61,7 @@ export default function LoginPage() {
         <main>
           <h1>Hello {user.username}</h1>
           <button onClick={signOut}>Sign out</button>
+          <button onClick={goToApp}>Go to Application</button>
           <p>{authState}</p>
         </main>
       )}
