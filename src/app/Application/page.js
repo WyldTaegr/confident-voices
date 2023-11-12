@@ -7,8 +7,6 @@ export default async function ApplicationPage() {
   return (
     <div className="text-black">
       ApplicationPage
-      <h1>Users</h1>
-      <p>{output}</p>
     </div>
   );
 };
