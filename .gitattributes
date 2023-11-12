@@ -5,3 +5,4 @@
 amplify/** text eol=lf
 src/graphql/* text eol=lf
 src/ui-components/* text eol=lf
+src/models/* text eol=lf

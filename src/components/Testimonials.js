@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import * as styles from "./../../styles/Testimonials.module.css";
+import * as styles from "@/styles/Testimonials.module.css";
 import SectionHeading from "./SectionHeading";
 import Image from "next/image";
 import useEmblaCarousel from 'embla-carousel-react'

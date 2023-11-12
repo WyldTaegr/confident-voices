@@ -12,13 +12,11 @@ type EagerUser = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly picture?: S3Object | null;
   readonly active: string;
   readonly therapist?: Therapist | null;
   readonly student?: Student | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userPictureId?: string | null;
   readonly userTherapistId?: string | null;
   readonly userStudentId?: string | null;
 }
@@ -29,13 +27,11 @@ type LazyUser = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly picture: AsyncItem<S3Object | undefined>;
   readonly active: string;
   readonly therapist: AsyncItem<Therapist | undefined>;
   readonly student: AsyncItem<Student | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userPictureId?: string | null;
   readonly userTherapistId?: string | null;
   readonly userStudentId?: string | null;
 }
@@ -156,9 +152,9 @@ type EagerQuestion = {
   readonly id: string;
   readonly description?: string | null;
   readonly example?: S3Object | null;
+  readonly exerciseID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly exerciseQuestionsId?: string | null;
   readonly questionExampleId?: string | null;
 }
 
@@ -170,9 +166,9 @@ type LazyQuestion = {
   readonly id: string;
   readonly description?: string | null;
   readonly example: AsyncItem<S3Object | undefined>;
+  readonly exerciseID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly exerciseQuestionsId?: string | null;
   readonly questionExampleId?: string | null;
 }
 
@@ -190,9 +186,10 @@ type EagerExerciseProgress = {
   readonly id: string;
   readonly student: Student;
   readonly progress?: (QuestionProgress | null)[] | null;
+  readonly studentID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly studentProgressId?: string | null;
+  readonly studentProgressId: string;
 }
 
 type LazyExerciseProgress = {
@@ -203,9 +200,10 @@ type LazyExerciseProgress = {
   readonly id: string;
   readonly student: AsyncItem<Student>;
   readonly progress: AsyncCollection<QuestionProgress>;
+  readonly studentID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly studentProgressId?: string | null;
+  readonly studentProgressId: string;
 }
 
 export declare type ExerciseProgress = LazyLoading extends LazyLoadingDisabled ? EagerExerciseProgress : LazyExerciseProgress
@@ -224,9 +222,10 @@ type EagerQuestionProgress = {
   readonly question: Question;
   readonly completed: boolean;
   readonly submissions?: (S3Object | null)[] | null;
+  readonly exerciseprogressID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly exerciseProgressProgressId?: string | null;
+  readonly exerciseProgressProgressId: string;
   readonly questionProgressQuestionId: string;
 }
 
@@ -240,9 +239,10 @@ type LazyQuestionProgress = {
   readonly question: AsyncItem<Question>;
   readonly completed: boolean;
   readonly submissions: AsyncCollection<S3Object>;
+  readonly exerciseprogressID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly exerciseProgressProgressId?: string | null;
+  readonly exerciseProgressProgressId: string;
   readonly questionProgressQuestionId: string;
 }
 
@@ -260,9 +260,9 @@ type EagerS3Object = {
   readonly id: string;
   readonly name: string;
   readonly key?: string | null;
+  readonly questionprogressID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly questionProgressSubmissionsId?: string | null;
 }
 
 type LazyS3Object = {
@@ -273,9 +273,9 @@ type LazyS3Object = {
   readonly id: string;
   readonly name: string;
   readonly key?: string | null;
+  readonly questionprogressID?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly questionProgressSubmissionsId?: string | null;
 }
 
 export declare type S3Object = LazyLoading extends LazyLoadingDisabled ? EagerS3Object : LazyS3Object

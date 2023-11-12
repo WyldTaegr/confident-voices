@@ -1,11 +1,11 @@
 'use client'
 // pages/index.js
-import Advantages from "./components/Advantages";
-import Footer from "./components/Footer";
-import Hero from "./components/Hero";
-import Navbar from "./components/Navbar";
-import Services from "./components/Services";
-import Testimonials from "./components/Testimonials";
+import Advantages from "@/components/Advantages";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
+import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
 import data from "../constants/data";
 import Head from "next/head";
 import React from 'react';

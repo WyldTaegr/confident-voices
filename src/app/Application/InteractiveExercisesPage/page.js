@@ -1,13 +1,13 @@
 'use client'
 import React from 'react';
 import Link from 'next/link';
-import { Amplify } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
+import { Amplify } from 'aws-amplify';
 import { List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 Amplify.configure(awsExports);
 

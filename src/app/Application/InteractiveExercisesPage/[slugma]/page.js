@@ -9,8 +9,8 @@ import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import awsExports from '@/aws-exports';
-import AudioRecording from '@/app/components/AudioRecording';
-import Videofeed from '@/app/components/Videofeed';
+import AudioRecording from '@/components/AudioRecording';
+import Videofeed from '@/components/Videofeed';
 import { Card, Typography, Button, Box, CardContent, CardActions, Grid } from '@mui/material';
 
 Amplify.configure(awsExports);

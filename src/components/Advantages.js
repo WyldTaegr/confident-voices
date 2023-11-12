@@ -1,6 +1,6 @@
 import React from "react";
-import images from "./../../constants/images";
-import * as styles from "./../../styles/Advantages.module.css";
+import images from "@/constants/images";
+import * as styles from "@/styles/Advantages.module.css";
 import SingleAdvantage from "./SingleAdvantage";
 const advantageData = [
 	{
