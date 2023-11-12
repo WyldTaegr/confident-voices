@@ -1,26 +1,36 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { Authenticator } from '@aws-amplify/ui-react';
+import { Flex, Button } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { Amplify } from 'aws-amplify';
 import awsExports from '@/aws-exports';
-import { signOut as funcSignOut } from '@/util/auth';
+import { getCurrentUser, signOut } from '@/util/auth';
+import { useRouter } from 'next/navigation';
 Amplify.configure(awsExports);
 
 export default function ApplicationLayout({children}){
+	const [user, setUser] = useState("...");
+	const router = useRouter();
+	const handleSignOut = async () => {
+		await signOut();
+		router.push("/LoginPage");
+	}
+
+	getCurrentUser().then((user) => {
+		if (user === null) router.push("/LoginPage");
+		else setUser(user.attributes.email);
+	})
 	return (
-		<Authenticator>
-			{({signOut, user}) => (
 				<div>
 					<Navbar/>
 					{children}
-					<button onClick={funcSignOut} className = "text-black">FUNC SIGNOUT</button>
-					<button onClick={signOut} className="text-black">SIGNOUT</button>
+					<Flex direction="row" gap="medium">
+						{user}
+						<Button onClick={handleSignOut} className="text-black">SIGNOUT</Button>
+					</Flex>
 				</div>
-			)}
-		</Authenticator>
 	)
 
 };
