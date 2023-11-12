@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import { Flex, Button } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
@@ -18,10 +18,12 @@ export default function ApplicationLayout({children}){
 		router.push("/LoginPage");
 	}
 
-	getCurrentUser().then((user) => {
-		if (user === null) router.push("/LoginPage");
-		else setUser(user.attributes.email);
-	})
+	useEffect(() => {
+		getCurrentUser().then((user) => {
+			if (user === null) router.push("/LoginPage");
+			else setUser(user.attributes.email);
+		})
+	});
 	return (
 				<div>
 					<Navbar/>
