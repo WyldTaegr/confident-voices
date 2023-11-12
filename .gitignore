@@ -58,5 +58,3 @@ amplifytools.xcconfig
 
 # Amplify directories placed in src/ are automatically generated
 src/ui-components/
-src/graphql/
-src/models/
