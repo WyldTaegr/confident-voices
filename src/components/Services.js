@@ -1,8 +1,8 @@
 import React from "react";
 import SectionHeading from "./SectionHeading";
-import * as styles from "../../styles/Services.module.css";
+import * as styles from "@/styles/Services.module.css";
 import ServiceCard from "./ServiceCard";
-import images from "../../constants/images";
+import images from "@/constants/images";
 import Button from "./Button";
 const Services = ({ services }) => {
 	return (

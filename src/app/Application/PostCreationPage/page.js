@@ -13,8 +13,6 @@ import {ImPlus} from 'react-icons/im';
 
 // backend imports
 import {addInformation, allPostInformation} from '../../Database/postDB';
-import awsExports from '@/aws-exports';
-Amplify.configure(awsExports);
 
 const PostCreationPage = () => {
     

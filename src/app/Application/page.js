@@ -1,15 +1,12 @@
 // pages/index.js
 import React from 'react';
+import { API } from 'aws-amplify';
+import * as queries from '@/graphql/queries';
 
-import Link from 'next/link';
-
-const ApplicationPage = () => {
+export default async function ApplicationPage() {
   return (
-    <div>
+    <div className="text-black">
       ApplicationPage
     </div>
   );
 };
-
-
-export default ApplicationPage;

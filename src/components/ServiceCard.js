@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import * as styles from "../../styles/ServiceCard.module.css";
+import * as styles from "@/styles/ServiceCard.module.css";
 const ServiceCard = ({ service }) => {
 	return (
 		<div className={styles.cardContainer}>

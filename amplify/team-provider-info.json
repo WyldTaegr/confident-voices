@@ -15,11 +15,11 @@
       "auth": {
         "confidentvoices": {}
       },
-      "api": {
-        "confidentvoices": {}
-      },
       "storage": {
         "voicestorage": {}
+      },
+      "api": {
+        "confidentvoices": {}
       }
     }
   }

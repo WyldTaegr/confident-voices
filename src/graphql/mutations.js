@@ -8,15 +8,6 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
-      picture {
-        id
-        name
-        key
-        createdAt
-        updatedAt
-        questionProgressSubmissionsId
-        __typename
-      }
       active
       therapist {
         id
@@ -35,10 +26,8 @@ export const createUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userPictureId
       userTherapistId
       userStudentId
-      owner
       __typename
     }
   }
@@ -50,15 +39,6 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
-      picture {
-        id
-        name
-        key
-        createdAt
-        updatedAt
-        questionProgressSubmissionsId
-        __typename
-      }
       active
       therapist {
         id
@@ -77,10 +57,8 @@ export const updateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userPictureId
       userTherapistId
       userStudentId
-      owner
       __typename
     }
   }
@@ -92,15 +70,6 @@ export const deleteUser = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       id
-      picture {
-        id
-        name
-        key
-        createdAt
-        updatedAt
-        questionProgressSubmissionsId
-        __typename
-      }
       active
       therapist {
         id
@@ -119,10 +88,8 @@ export const deleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      userPictureId
       userTherapistId
       userStudentId
-      owner
       __typename
     }
   }
@@ -139,10 +106,8 @@ export const createTherapist = /* GraphQL */ `
         active
         createdAt
         updatedAt
-        userPictureId
         userTherapistId
         userStudentId
-        owner
         __typename
       }
       parent
@@ -173,10 +138,8 @@ export const updateTherapist = /* GraphQL */ `
         active
         createdAt
         updatedAt
-        userPictureId
         userTherapistId
         userStudentId
-        owner
         __typename
       }
       parent
@@ -207,10 +170,8 @@ export const deleteTherapist = /* GraphQL */ `
         active
         createdAt
         updatedAt
-        userPictureId
         userTherapistId
         userStudentId
-        owner
         __typename
       }
       parent
@@ -241,10 +202,8 @@ export const createStudent = /* GraphQL */ `
         active
         createdAt
         updatedAt
-        userPictureId
         userTherapistId
         userStudentId
-        owner
         __typename
       }
       therapists {
@@ -278,10 +237,8 @@ export const updateStudent = /* GraphQL */ `
         active
         createdAt
         updatedAt
-        userPictureId
         userTherapistId
         userStudentId
-        owner
         __typename
       }
       therapists {
@@ -315,10 +272,8 @@ export const deleteStudent = /* GraphQL */ `
         active
         createdAt
         updatedAt
-        userPictureId
         userTherapistId
         userStudentId
-        owner
         __typename
       }
       therapists {
@@ -406,14 +361,14 @@ export const createQuestion = /* GraphQL */ `
         id
         name
         key
+        questionprogressID
         createdAt
         updatedAt
-        questionProgressSubmissionsId
         __typename
       }
+      exerciseID
       createdAt
       updatedAt
-      exerciseQuestionsId
       questionExampleId
       __typename
     }
@@ -431,14 +386,14 @@ export const updateQuestion = /* GraphQL */ `
         id
         name
         key
+        questionprogressID
         createdAt
         updatedAt
-        questionProgressSubmissionsId
         __typename
       }
+      exerciseID
       createdAt
       updatedAt
-      exerciseQuestionsId
       questionExampleId
       __typename
     }
@@ -456,14 +411,14 @@ export const deleteQuestion = /* GraphQL */ `
         id
         name
         key
+        questionprogressID
         createdAt
         updatedAt
-        questionProgressSubmissionsId
         __typename
       }
+      exerciseID
       createdAt
       updatedAt
-      exerciseQuestionsId
       questionExampleId
       __typename
     }
@@ -487,9 +442,9 @@ export const createExerciseProgress = /* GraphQL */ `
         nextToken
         __typename
       }
+      studentID
       createdAt
       updatedAt
-      studentProgressId
       __typename
     }
   }
@@ -512,9 +467,9 @@ export const updateExerciseProgress = /* GraphQL */ `
         nextToken
         __typename
       }
+      studentID
       createdAt
       updatedAt
-      studentProgressId
       __typename
     }
   }
@@ -537,9 +492,9 @@ export const deleteExerciseProgress = /* GraphQL */ `
         nextToken
         __typename
       }
+      studentID
       createdAt
       updatedAt
-      studentProgressId
       __typename
     }
   }
@@ -553,17 +508,17 @@ export const createQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        studentID
         createdAt
         updatedAt
-        studentProgressId
         __typename
       }
       question {
         id
         description
+        exerciseID
         createdAt
         updatedAt
-        exerciseQuestionsId
         questionExampleId
         __typename
       }
@@ -572,9 +527,9 @@ export const createQuestionProgress = /* GraphQL */ `
         nextToken
         __typename
       }
+      exerciseprogressID
       createdAt
       updatedAt
-      exerciseProgressProgressId
       questionProgressQuestionId
       __typename
     }
@@ -589,17 +544,17 @@ export const updateQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        studentID
         createdAt
         updatedAt
-        studentProgressId
         __typename
       }
       question {
         id
         description
+        exerciseID
         createdAt
         updatedAt
-        exerciseQuestionsId
         questionExampleId
         __typename
       }
@@ -608,9 +563,9 @@ export const updateQuestionProgress = /* GraphQL */ `
         nextToken
         __typename
       }
+      exerciseprogressID
       createdAt
       updatedAt
-      exerciseProgressProgressId
       questionProgressQuestionId
       __typename
     }
@@ -625,17 +580,17 @@ export const deleteQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        studentID
         createdAt
         updatedAt
-        studentProgressId
         __typename
       }
       question {
         id
         description
+        exerciseID
         createdAt
         updatedAt
-        exerciseQuestionsId
         questionExampleId
         __typename
       }
@@ -644,9 +599,9 @@ export const deleteQuestionProgress = /* GraphQL */ `
         nextToken
         __typename
       }
+      exerciseprogressID
       createdAt
       updatedAt
-      exerciseProgressProgressId
       questionProgressQuestionId
       __typename
     }
@@ -661,9 +616,9 @@ export const createS3Object = /* GraphQL */ `
       id
       name
       key
+      questionprogressID
       createdAt
       updatedAt
-      questionProgressSubmissionsId
       __typename
     }
   }
@@ -677,9 +632,9 @@ export const updateS3Object = /* GraphQL */ `
       id
       name
       key
+      questionprogressID
       createdAt
       updatedAt
-      questionProgressSubmissionsId
       __typename
     }
   }
@@ -693,9 +648,9 @@ export const deleteS3Object = /* GraphQL */ `
       id
       name
       key
+      questionprogressID
       createdAt
       updatedAt
-      questionProgressSubmissionsId
       __typename
     }
   }
@@ -709,6 +664,7 @@ export const createPostInfo = /* GraphQL */ `
       title
       tags
       description
+      likes
       id
       createdAt
       updatedAt
@@ -725,6 +681,7 @@ export const updatePostInfo = /* GraphQL */ `
       title
       tags
       description
+      likes
       id
       createdAt
       updatedAt
@@ -741,6 +698,7 @@ export const deletePostInfo = /* GraphQL */ `
       title
       tags
       description
+      likes
       id
       createdAt
       updatedAt
