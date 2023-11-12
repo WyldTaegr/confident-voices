@@ -4,7 +4,7 @@ import { Card, Label, Input, TabItem, Tabs, Flex, Button, PasswordField, SelectF
 import { useState } from "react";
 import '@aws-amplify/ui-react/styles.css';
 import { confirmEmail, getCurrentUser, signIn, signOut, signUp } from "@/util/auth";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
     const [inputs, setInputs] = useState({});
@@ -48,7 +48,7 @@ export default function LoginForm() {
         const data = new FormData(e.target);
         await confirmEmail(inputs["email"], inputs["password"], data.get("code"), inputs["role"])
 
-        redirect("/Application");
+        router.push("/Application");
     }
 
     const forceLogOut = async (e) => {
