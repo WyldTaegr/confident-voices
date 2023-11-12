@@ -6,7 +6,7 @@ import { getCurrentUser } from '@/util/auth';
 
 export default function LoginPage() {
     const router = useRouter();
-    getCurrentUser().then((user) => {
+    getCurrentUser().then(async (user) => {
         if (user !== null) router.push("/Application");
     })
 
