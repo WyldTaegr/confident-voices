@@ -114,7 +114,7 @@ function WeeklyBarChart(){
         var pieChartCreation = new Chart('totalProgress', {
             type: 'doughnut',
             data: {
-                labels: ["Awesome Stars", "BAD Stars"],
+                labels: ["Awesome Stars", "Redo Stars"],
                 datasets: [{
                     data: [40, 70],
                     backgroundColor: ["rgb(50, 255, 50, 0.3)", "rgb(255, 50, 50, 0.3)"]

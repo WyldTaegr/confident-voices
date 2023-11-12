@@ -6,7 +6,7 @@ import {useRouter} from 'next/navigation';
 // front-end imports
 import { Amplify, Auth } from 'aws-amplify';
 import React, {useState} from 'react';
-import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex } from '@aws-amplify/ui-react';
+import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex, Radio, RadioGroupField } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import {ImPlus} from 'react-icons/im';
 
@@ -67,18 +67,14 @@ const PostCreationPage = () => {
           setErrorDesc(false);
           setAlertDesc(false);
       }
-      //alert(hasErrorDesc);
-      //alert(hasErrorTags);
-      //alert(hasErrorTitle)
+      
       if((titleCheck == false) && (tagsCheck == false) && (descCheck == false)){
-          alert("GREAT NO ERRORS");
-          alert(inputTitle);
           // holds new post info from user input
-          
           const newPostInfo = {
               title: inputTitle,
               tags: inputTags,
-              description: inputDesc
+              description: inputDesc,
+              likes: 0
           };
           
 
@@ -86,13 +82,7 @@ const PostCreationPage = () => {
           addInformation(newPostInfo);
           var holdposts = allPostInformation();
           console.log(holdposts);
-          /*
-          const newPost = API.graphql({
-              query: mutations.createPostInfo,
-              variables: {input: newPostInfo},
-              authMode: GRAPHQL_AUTH_MODE.API_KEY
-          });
-          */
+          
          
           // go back to Community Page to see new post 
           router.push("/Application/CommunityPage");
@@ -103,6 +93,18 @@ const PostCreationPage = () => {
         <Flex as = "form" direction = "row" justifyContent = "space-evenly" alignContent = "stretch">
             <Flex direction = "column" justifyContent = "space-between">
                 <Heading level={1} color= "blue"> Post Creation</Heading>
+                 <Flex direction = "column">
+                    <br/><br/>
+                   
+                    <RadioGroupField label = "Color of Post:"
+                        name = "Color of Post"
+                        direction = "column"
+                        size = "large"
+                        defaultValue = "White">
+                        <Radio value = "White"> White </Radio>
+
+                    </RadioGroupField>
+                </Flex>
                 <Flex direction = "column">
                     {alertTitle? (<Alert variation="error" isDimissible={true} hasIcon={true}>Please enter a title</Alert>): null}
                     {alertTags? (<Alert variation="error" isDimissible={true} hasIcon={true}>Please enter tags</Alert>): null}
@@ -118,7 +120,6 @@ const PostCreationPage = () => {
                     variation="quiet"
                     size = "large"
                     placeholder = "Enter title .."
-                    isRequired = {true}
                     value = {inputTitle}
                     hasError = {hasErrorTitle}
                     onChange = {(e) => setInputTitle(e.currentTarget.value)}/>
@@ -128,7 +129,6 @@ const PostCreationPage = () => {
                     variation="quiet"
                     size = "large"
                     placeholder = "Enter tags/key words .." 
-                    isRequired = {true}
                     value = {inputTags}
                     onChange = {(e) => setInputTags(e.currentTarget.value)}
                     hasError = {hasErrorTags}/>
@@ -137,7 +137,6 @@ const PostCreationPage = () => {
                     maxLength = {250}
                     rows = {6}
                     placeholder = "Enter a description .." 
-                    isRequired = {true}
                     value = {inputDesc}
                     onChange = {(e) => setInputDesc(e.currentTarget.value)}
                     hasError = {hasErrorDesc}/>
