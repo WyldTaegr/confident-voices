@@ -61,8 +61,8 @@ const SlugmaPage = ({params}) => {
                 {/* If you have actions like buttons, they would go here */}
               </CardActions>
               <Box sx={{ margin: 2 }}>
-                <AudioRecording />
-                <Videofeed />
+                <AudioRecording questionID = {params.slugma} />
+                <Videofeed/>
               </Box>
             </Card>
           </Grid>

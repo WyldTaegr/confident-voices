@@ -1,8 +1,9 @@
 'use client'
 import React, { useState, useRef } from 'react';
 import { Storage } from 'aws-amplify';
+import { createExerciseProgress } from '@/util/api';
 
-function AudioRecording() {
+function AudioRecording({questionID}) {
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState([]);
   const mediaRecorder = useRef(null);

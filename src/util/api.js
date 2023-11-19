@@ -51,3 +51,30 @@ export async function createStudent(userId) {
 
     return newStudent;
 }
+
+export async function getStudent({studentID}){
+    const studentDetails = {
+        studentID: studentID
+    }
+
+    const student = await API.graphql({
+        query: queries.getStudent,
+        variables: {input: studentDetails},
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    return student.data.getStudent;
+}
+
+export async function createExerciseProgress({studentID}){
+    const exerciseProgressParams = {
+        studentID: studentID
+    };
+
+    const newExerciseProgress = await API.graphql({
+        query: mutations.createExerciseProgress,
+        variables:{input: exerciseProgressParams},
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    return newExerciseProgress;
+}
