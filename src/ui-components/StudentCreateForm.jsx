@@ -8,8 +8,9 @@
 import * as React from "react";
 import { Button, Flex, Grid } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { API } from "aws-amplify";
+import { generateClient } from "aws-amplify/api";
 import { createStudent } from "../graphql/mutations";
+const client = generateClient();
 export default function StudentCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -81,7 +82,7 @@ export default function StudentCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
+          await client.graphql({
             query: createStudent.replaceAll("__typename", ""),
             variables: {
               input: {

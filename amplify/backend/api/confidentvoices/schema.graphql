@@ -36,9 +36,9 @@ type Question @model @auth(rules: [{allow: public}, {allow: private}]) {
 
 type ExerciseProgress @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
-  student: Student! @belongsTo
+  student: Student @belongsTo
   progress: [QuestionProgress] @hasMany(indexName: "byExerciseProgress", fields: ["id"])
-  studentID: ID! @index(name: "byStudent")
+  studentID: ID @index(name: "byStudent")
 }
 
 type QuestionProgress @model @auth(rules: [{allow: public}, {allow: private}]) {

@@ -65,7 +65,7 @@ export async function getStudent(studentID){
     return student.data.getStudent;
 }
 
-export async function createExerciseProgress({studentID}){
+export async function createExerciseProgress(studentID){
     const exerciseProgressParams = {
         studentID: studentID
     };

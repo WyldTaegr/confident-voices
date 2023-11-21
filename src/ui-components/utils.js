@@ -6,7 +6,9 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Auth, DataStore, Hub } from "aws-amplify";
+import { signOut } from "aws-amplify/auth";
+import { DataStore } from "aws-amplify/datastore";
+import { Hub } from "aws-amplify/utils";
 export const UI_CHANNEL = "ui";
 export const UI_EVENT_TYPE_ACTIONS = "actions";
 export const CATEGORY_AUTH = "auth";
@@ -479,7 +481,7 @@ export const useAuthSignOutAction = (options) => async () => {
       EVENT_ACTION_AUTH_SIGNOUT,
       AMPLIFY_SYMBOL
     );
-    await Auth.signOut(options);
+    await signOut(options);
     Hub.dispatch(
       UI_CHANNEL,
       {

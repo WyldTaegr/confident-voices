@@ -8,8 +8,9 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { API } from "aws-amplify";
+import { generateClient } from "aws-amplify/api";
 import { createPostInfo } from "../graphql/mutations";
+const client = generateClient();
 export default function PostInfoCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -106,7 +107,7 @@ export default function PostInfoCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
+          await client.graphql({
             query: createPostInfo.replaceAll("__typename", ""),
             variables: {
               input: {

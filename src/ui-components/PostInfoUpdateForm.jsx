@@ -8,9 +8,10 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
-import { API } from "aws-amplify";
+import { generateClient } from "aws-amplify/api";
 import { getPostInfo } from "../graphql/queries";
 import { updatePostInfo } from "../graphql/mutations";
+const client = generateClient();
 export default function PostInfoUpdateForm(props) {
   const {
     id: idProp,
@@ -51,7 +52,7 @@ export default function PostInfoUpdateForm(props) {
     const queryData = async () => {
       const record = idProp
         ? (
-            await API.graphql({
+            await client.graphql({
               query: getPostInfo.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
@@ -127,7 +128,7 @@ export default function PostInfoUpdateForm(props) {
               modelFields[key] = null;
             }
           });
-          await API.graphql({
+          await client.graphql({
             query: updatePostInfo.replaceAll("__typename", ""),
             variables: {
               input: {
