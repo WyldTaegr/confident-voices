@@ -34,7 +34,7 @@ const AddQuestionsPage = () => {
     try {
       const exerciseData = await API.graphql({
         query: queries.listExercises,
-        authMode: GRAPHQL_AUTH_MODE.API_KEY
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       setExercises(exerciseData.data.listExercises.items);
     } catch (err) {

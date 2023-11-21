@@ -27,7 +27,7 @@ const Question = ({ params }) => {
       {
         query: mutations.createQuestion,
         variables: {input : {description: inputValue, exerciseID: params.slug}},
-        authMode: GRAPHQL_AUTH_MODE.API_KEY
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       }
     );
   }

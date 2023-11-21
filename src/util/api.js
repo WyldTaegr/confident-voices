@@ -52,7 +52,7 @@ export async function createStudent(userId) {
     return newStudent;
 }
 
-export async function getStudent({studentID}){
+export async function getStudent(studentID){
     const studentDetails = {
         studentID: studentID
     }

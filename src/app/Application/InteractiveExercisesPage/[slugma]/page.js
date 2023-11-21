@@ -25,7 +25,7 @@ const SlugmaPage = ({params}) => {
         // Fetch all questions
         const allQuestionsData = await API.graphql({
           query: queries.listQuestions,
-          authMode: GRAPHQL_AUTH_MODE.API_KEY
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
         
         // Filter questions related to the given exerciseId

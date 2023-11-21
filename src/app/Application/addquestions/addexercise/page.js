@@ -22,7 +22,7 @@ const Exercise = ({ params }) => {
     const newQuestion = await API.graphql({
       query: mutations.createExercise,
       variables: {input: {name: inputValue}},
-      authMode: GRAPHQL_AUTH_MODE.API_KEY
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
   }
 const router = useRouter();

@@ -31,7 +31,7 @@ const CommunityPage = () => {
   const getAllPostInformation = async() => {
     const holdPostsResponse =  await API.graphql({
          query: queries.listPostInfos,
-         authMode: GRAPHQL_AUTH_MODE.API_KEY
+         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
      });
     setPost(holdPostsResponse.data.listPostInfos.items);
     console.log(holdPostsResponse);
@@ -53,7 +53,7 @@ const CommunityPage = () => {
     const delete_post_data = await API.graphql({
               query: mutations.deletePostInfo,
               variables: {input: post_details},
-              authMode: GRAPHQL_AUTH_MODE.API_KEY
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
      });
      //filter out deleted post 
      setPost(post.filter(x => x.id !== id));
@@ -76,7 +76,7 @@ const CommunityPage = () => {
     const update_post_data = await API.graphql({
               query: mutations.updatePostInfo,
               variables: {input: post_like_details},
-              authMode: GRAPHQL_AUTH_MODE.API_KEY
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
      });
      //setPressLike(!pressLike);
      getAllPostInformation();
