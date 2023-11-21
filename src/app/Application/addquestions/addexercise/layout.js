@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Level1({children}){
+export default function QuestionsAdderLayout({children}){
 	return (
 		
 		<div>

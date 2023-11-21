@@ -10,13 +10,13 @@ export function addInformation(newPostInfo){
     return API.graphql({
               query: mutations.createPostInfo,
               variables: {input: newPostInfo},
-              authMode: GRAPHQL_AUTH_MODE.API_KEY
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 } 
 
 export async function allPostInformation(){
      return await API.graphql({
          query: queries.listPostInfos,
-         authMode: GRAPHQL_AUTH_MODE.API_KEY
+         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
      });
 }

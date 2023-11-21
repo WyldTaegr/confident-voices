@@ -1,13 +1,21 @@
 'use client'
 import React, { useState, useRef } from 'react';
+import { Storage } from 'aws-amplify';
+import { createExerciseProgress } from '@/util/api';
+import { Auth } from 'aws-amplify';
 
-function AudioRecorder() {
+function AudioRecording({questionID}) {
   const [recording, setRecording] = useState(false);
   const [audioChunks, setAudioChunks] = useState([]);
   const mediaRecorder = useRef(null);
   const mediaStream = useRef(null); // Add this line to store the media stream
 
   const startRecording = async () => {
+    Auth.currentAuthenticatedUser({
+      bypassCache: false // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    })
+      .then((user) => createExerciseProgress(user.attributes.email))
+      .catch((err) => console.log(err));
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStream.current = stream; // Store the stream
@@ -20,10 +28,18 @@ function AudioRecorder() {
         }
       };
 
-      recorder.onstop = () => {
-        setAudioChunks((prevChunks) => {
+      recorder.onstop = async () => {
+        setAudioChunks(async (prevChunks) => {
           const audioBlob = new Blob(prevChunks, { type: 'audio/webm' });
-      
+          
+          // try {
+          //   await Storage.put('recorded-audio.webm', audioBlob, {
+          //     contentType: 'audio/webm', // Adjust the content type based on your audio format
+          //   });
+          // } catch (error) {
+          //   console.log('Error uploading file: ', error);
+          // }
+
           // Create a download link for the recorded audio
           const audioUrl = URL.createObjectURL(audioBlob);
           const a = document.createElement('a');
@@ -70,7 +86,6 @@ function AudioRecorder() {
 
   return (
     <div>
-      <h2>Audio Recorder</h2>
       <button onClick={toggleRecording}>
         {recording ? 'Stop Recording' : 'Start Recording'}
       </button>
@@ -78,4 +93,4 @@ function AudioRecorder() {
   );
 }
 
-export default AudioRecorder;
+export default AudioRecording;
