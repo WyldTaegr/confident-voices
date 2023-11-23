@@ -1,15 +1,17 @@
 // components/Navbar.js
+// components/Navbar.js
+import { Button } from '@aws-amplify/ui-react';
 import Link from 'next/link';
 import React from 'react';
 
-const Navbar = ({ userEmail, onSignOut }) => {
+const Navbar = ({ userName, onSignOut }) => {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <Link
             href="/Application/UserProfilePage"
-            className="text-white text-2xl font-bold">
+            className="text-white text-2xl font-bold border border-white rounded p-1">
             Home
           </Link>
           <ul className="flex space-x-4">
@@ -48,6 +50,12 @@ const Navbar = ({ userEmail, onSignOut }) => {
                 Exercise Creation
               </Link>
             </li>
+            <li>
+              <span className="text-white">{userName}</span>
+            </li>
+            <li>
+             <button className="text-white text-sm font-bold border border-white rounded px-2 py-1" onClick={onSignOut}>Sign Out</button>
+             </li>
           </ul>
         </div>
       </div>

@@ -13,29 +13,31 @@ import styles from '../../styles/baseApp.css';
 Amplify.configure(awsExports);
 
 export default function ApplicationLayout({children}){
-	const [user, setUser] = useState("...");
-	const [dropdownOpen, setDropdownOpen] = useState(false);
-	const router = useRouter();
-	const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+    const [user, setUser] = useState("...");
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const router = useRouter();
+    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-	const handleSignOut = async () => {
-		await signOut();
-		router.push("/LoginPage");
-	}
+    const handleSignOut = async () => {
+        await signOut();
+        router.push("/LoginPage");
+    }
 
-	useEffect(() => {
-		getCurrentUser().then((user) => {
-		  if (user === null) {
-			router.push("/LoginPage");
-		  } else {
-			setUser(user.attributes.name +" " +user.attributes.family_name);
-		  }
-		});
-	  }, [router]);
-	  
-	return (
-		<div>
-      <Navbar/>
+    useEffect(() => {
+        getCurrentUser().then((user) => {
+          if (user === null) {
+            router.push("/LoginPage");
+          } else {
+            setUser(user.attributes.name);
+			//if we want to add last name but we dont
+			//" " +user.attributes.family_name
+          }
+        });
+      }, [router]);
+
+    return (
+        <div>
+      <Navbar userName = {user} onSignOut={handleSignOut}/>
       <Flex direction="row" justifyContent="space-between" className={styles.userProfile}>
         <span onClick={toggleDropdown} className={styles.userEmail}>{user}</span>
         {dropdownOpen && (
