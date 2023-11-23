@@ -12,11 +12,9 @@ import styles from '../../styles/baseApp.css';
 
 Amplify.configure(awsExports);
 
-export default function ApplicationLayout({children}){
+export default function ApplicationLayout({ children }) {
     const [user, setUser] = useState("...");
-    const [dropdownOpen, setDropdownOpen] = useState(false);
     const router = useRouter();
-    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
     const handleSignOut = async () => {
         await signOut();
@@ -24,30 +22,20 @@ export default function ApplicationLayout({children}){
     }
 
     useEffect(() => {
-        getCurrentUser().then((user) => {
-          if (user === null) {
+        getCurrentUser().then((currentUser) => {
+          if (currentUser === null) {
             router.push("/LoginPage");
           } else {
-            setUser(user.attributes.name);
-			//if we want to add last name but we dont
-			//" " +user.attributes.family_name
+            setUser(currentUser.attributes.name);
           }
         });
       }, [router]);
 
     return (
         <div>
-      <Navbar userName = {user} onSignOut={handleSignOut}/>
-      <Flex direction="row" justifyContent="space-between" className={styles.userProfile}>
-        <span onClick={toggleDropdown} className={styles.userEmail}>{user}</span>
-        {dropdownOpen && (
-          <Flex direction="column" className={styles.dropdown}>
-            <Button onClick={handleSignOut} className={styles.signOutButton}>Sign Out</Button>
-          </Flex>
-        )}
-      </Flex>
-      {children}
-    </div>
-  );
-
+            <Navbar userName={user} onSignOut={handleSignOut}/>
+            {/* Removed the dropdown and related components */}
+            {children}
+        </div>
+    );
 };
