@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react';
 import { Storage } from 'aws-amplify';
 import { createExerciseProgress } from '@/util/api';
 import { Auth } from 'aws-amplify';
+import * as mutations from '@/graphql/mutations' 
 
 function AudioRecording({questionID}) {
   const [recording, setRecording] = useState(false);
@@ -31,20 +32,37 @@ function AudioRecording({questionID}) {
       recorder.onstop = async () => {
         setAudioChunks(async (prevChunks) => {
           const audioBlob = new Blob(prevChunks, { type: 'audio/webm' });
-          
-          // try {
-          //   await Storage.put('recorded-audio.webm', audioBlob, {
-          //     contentType: 'audio/webm', // Adjust the content type based on your audio format
-          //   });
-          // } catch (error) {
-          //   console.log('Error uploading file: ', error);
-          // }
+          const user = await Auth.currentAuthenticatedUser();
+          console.log(user);
+          const userName = user.attributes.email;
+          const userEmail = userName.replace(/[@.]/g, '_'); // Sanitize email
+          const fileName = `${userName}_${questionID}.webm`;
+          try {
+            await Storage.put(fileName, audioBlob, {
+               contentType: 'audio/webm', // Adjust the content type based on your audio format
+             });
+
+            // Create a record in the S3Object table
+            // Assuming you have a mutation setup for this
+            const s3ObjectData = {
+              name: fileName,
+              key: fileName, // or any other unique identifier you'd like to use
+              // You need to determine how to get this ID
+            };
+            await API.graphql({
+              query: mutations.createS3Object,
+              variables:{input: s3ObjectData},
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+           } catch (error) {
+             console.log('Error uploading file: ', error);
+           }
 
           // Create a download link for the recorded audio
           const audioUrl = URL.createObjectURL(audioBlob);
           const a = document.createElement('a');
           a.href = audioUrl;
-          a.download = 'recorded-audio.webm';
+          a.download = fileName;
           a.style.display = 'none';
           document.body.appendChild(a);
           a.click();
