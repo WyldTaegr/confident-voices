@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-const Navbar = () => {
+const Navbar = ({ userEmail, onSignOut }) => {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto">
