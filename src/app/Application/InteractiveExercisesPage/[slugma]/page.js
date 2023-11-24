@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
-import { Amplify } from 'aws-amplify';
-import { useRouter } from 'next/navigation';
+import { Storage } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
@@ -16,7 +16,7 @@ import { Card, Typography, Button, Box, CardContent, CardActions, Grid } from '@
 Amplify.configure(awsExports);
 //Every time a user records themselves, a new S3 bucket is created, and recordings are pushed into new S3 bucket.
 const SlugmaPage = ({params}) => {
-
+  const [audioUrl, setAudioUrl] = useState('');
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -39,7 +39,22 @@ const SlugmaPage = ({params}) => {
       }
     };
 
+        // Fetch the audio file URL
+    const fetchAudio = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        const userName = user.attributes.email;
+        const userEmail = userName.replace(/[@.]/g, '_'); // Sanitize email
+        const fileName = `${userEmail}_${params.slugma}.webm`;
+        const url = await Storage.get(fileName, { level: 'public' });
+        setAudioUrl(url);
+      } catch (error) {
+      console.error("Error fetching audio file: ", error);
+      }
+    };
+
     fetchQuestions();
+    fetchAudio();
   }, [params.slugma]);
 
   return (
@@ -68,6 +83,12 @@ const SlugmaPage = ({params}) => {
           </Grid>
         ))}
       </Grid>
+      {audioUrl && (
+        <audio controls>
+          <source src={audioUrl} type="webm" />
+          Your browser does not support the audio element.
+        </audio>
+      )}
     </Box>
   );
 };

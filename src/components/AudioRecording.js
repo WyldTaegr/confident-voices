@@ -34,7 +34,6 @@ function AudioRecording({questionID}) {
         setAudioChunks(async (prevChunks) => {
           const audioBlob = new Blob(prevChunks, { type: 'audio/webm' });
           const user = await Auth.currentAuthenticatedUser();
-          console.log(user);
           const userName = user.attributes.email;
           const userEmail = userName.replace(/[@.]/g, '_'); // Sanitize email
           const fileName = `${userEmail}_${questionID}.webm`;
