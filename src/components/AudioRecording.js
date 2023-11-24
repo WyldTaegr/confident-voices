@@ -1,9 +1,10 @@
 'use client'
 import React, { useState, useRef } from 'react';
 import { Storage } from 'aws-amplify';
-import { createExerciseProgress } from '@/util/api';
+import { createExerciseProgress, createS3Object } from '@/util/api';
 import { Auth } from 'aws-amplify';
 import * as mutations from '@/graphql/mutations' 
+import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api";
 
 function AudioRecording({questionID}) {
   const [recording, setRecording] = useState(false);
@@ -36,24 +37,12 @@ function AudioRecording({questionID}) {
           console.log(user);
           const userName = user.attributes.email;
           const userEmail = userName.replace(/[@.]/g, '_'); // Sanitize email
-          const fileName = `${userName}_${questionID}.webm`;
+          const fileName = `${userEmail}_${questionID}.webm`;
           try {
+            await createS3Object(fileName);
             await Storage.put(fileName, audioBlob, {
                contentType: 'audio/webm', // Adjust the content type based on your audio format
              });
-
-            // Create a record in the S3Object table
-            // Assuming you have a mutation setup for this
-            const s3ObjectData = {
-              name: fileName,
-              key: fileName, // or any other unique identifier you'd like to use
-              // You need to determine how to get this ID
-            };
-            await API.graphql({
-              query: mutations.createS3Object,
-              variables:{input: s3ObjectData},
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-            });
            } catch (error) {
              console.log('Error uploading file: ', error);
            }
