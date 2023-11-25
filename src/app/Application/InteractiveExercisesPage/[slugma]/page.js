@@ -29,6 +29,7 @@ const SlugmaPage = ({params}) => {
       const url = await Storage.get(fileName,{
         level: 'public',
         expires: 3600, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+        contentType: ".webm"
       });
       return url;
     } catch (error) {
@@ -95,10 +96,7 @@ const SlugmaPage = ({params}) => {
                 <AudioRecording questionID = {question.id} />
                 <Videofeed/>
                 {audioUrls[question.id] && (
-                  <audio controls>
-                    <source src={audioUrls[question.id]} type="audio/webm" />
-                    Your browser does not support the audio element.
-                  </audio>
+                  <a href={audioUrls[question.id]}>Download the Recording</a>
                 )}
               </Box>
             </Card>
