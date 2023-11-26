@@ -78,3 +78,16 @@ export async function createExerciseProgress(studentID){
 
     return newExerciseProgress;
 }
+
+export async function createS3Object(name){
+    const s3ObjectData = {
+    name: name,
+    key: name, // or any other unique identifier you'd like to use
+    // You need to determine how to get this ID
+  };
+  await API.graphql({
+    query: mutations.createS3Object,
+    variables:{input: s3ObjectData},
+    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+  });
+}

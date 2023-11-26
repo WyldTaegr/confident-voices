@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
-import { Amplify } from 'aws-amplify';
-import { useRouter } from 'next/navigation';
+import { Storage } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
@@ -16,8 +16,40 @@ import { Card, Typography, Button, Box, CardContent, CardActions, Grid } from '@
 Amplify.configure(awsExports);
 //Every time a user records themselves, a new S3 bucket is created, and recordings are pushed into new S3 bucket.
 const SlugmaPage = ({params}) => {
-
+  const [audioUrls, setAudioUrls] = useState({});
   const [questions, setQuestions] = useState([]);
+
+  const fetchAudio = async (questionID) => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      const userName = user.attributes.email;
+      const userEmail = userName.replace(/[@.]/g, '_');
+      const fileName = `${userEmail}_${questionID}.webm`;
+
+      const url = await Storage.get(fileName,{
+        level: 'public',
+        expires: 3600, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+        contentType: ".webm"
+      });
+      return url;
+    } catch (error) {
+      console.error("Error fetching audio file: ", error);
+      return null;
+    }
+  };
+
+
+  const fetchAllAudios = async (questions) => {
+    const urls = {};
+    for (const question of questions) {
+      const url = await fetchAudio(question.id);
+      if (url) {
+        urls[question.id] = url;
+        console.log(url);
+      }
+    }
+    setAudioUrls(urls);
+  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -34,11 +66,11 @@ const SlugmaPage = ({params}) => {
         );
         
         setQuestions(relatedQuestions);
+        fetchAllAudios(relatedQuestions);
       } catch (error) {
         console.error("Error fetching questions: ", error);
       }
     };
-
     fetchQuestions();
   }, [params.slugma]);
 
@@ -61,8 +93,11 @@ const SlugmaPage = ({params}) => {
                 {/* If you have actions like buttons, they would go here */}
               </CardActions>
               <Box sx={{ margin: 2 }}>
-                <AudioRecording questionID = {params.slugma} />
+                <AudioRecording questionID = {question.id} />
                 <Videofeed/>
+                {audioUrls[question.id] && (
+                  <a href={audioUrls[question.id]}>Download the Recording</a>
+                )}
               </Box>
             </Card>
           </Grid>
