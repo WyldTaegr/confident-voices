@@ -36,9 +36,9 @@ type Question @model @auth(rules: [{allow: public}, {allow: private}]) {
 
 type ExerciseProgress @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
-  student: Student! @belongsTo
+  student: Student @belongsTo
   progress: [QuestionProgress] @hasMany(indexName: "byExerciseProgress", fields: ["id"])
-  studentID: ID! @index(name: "byStudent")
+  studentID: ID @index(name: "byStudent")
 }
 
 type QuestionProgress @model @auth(rules: [{allow: public}, {allow: private}]) {
@@ -62,5 +62,15 @@ type PostInfo @model @auth(rules: [{allow: public}, {allow: private}]) {
   tags: String!
   description: String!
   likes: Int
+  fname: String
+  lname: String
+  email: String
 }
- 
+
+type Comments @model @auth(rules: [{allow: public}, {allow: private}]) {
+  description: String!
+  fname: String!
+  lname: String!
+  email: String!
+  idpost: String!
+}

@@ -3,21 +3,37 @@
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 
+
 // front-end imports
-import { Amplify, Auth } from 'aws-amplify';
-import React, {useState} from 'react';
-import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex, Radio, RadioGroupField } from '@aws-amplify/ui-react';
+import { Amplify, Auth} from 'aws-amplify';
+import React, {useState, useEffect} from 'react';
+import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex, Radio,
+RadioGroupField } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import {ImPlus} from 'react-icons/im';
-
-
 // backend imports
+import awsExports from '@/aws-exports';
 import {addInformation, allPostInformation} from '../../Database/postDB';
+import { getCurrentUser, signOut } from '@/util/auth';
+//import { Amplify } from 'aws-amplify';
+Amplify.configure(awsExports);
+
 
 const PostCreationPage = () => {
     
   const router = useRouter(); //used for going back to Community Page
 
+  // get current user
+  const [user, setUser] = useState(false);
+
+  //if user not set, set user
+  if(!user){
+      // get current user
+   getCurrentUser().then((user) => {
+		setUser(user);
+	})
+  }
+  //}
   // to set values in the input
   const [inputTitle, setInputTitle] = useState("");
   const [inputTags, setInputTags] = useState("");
@@ -69,21 +85,22 @@ const PostCreationPage = () => {
       }
       
       if((titleCheck == false) && (tagsCheck == false) && (descCheck == false)){
+         
           // holds new post info from user input
           const newPostInfo = {
               title: inputTitle,
               tags: inputTags,
               description: inputDesc,
-              likes: 0
-          };
-          
+              likes: 0,
+              fname: user.attributes.name,
+              lname: user.attributes.family_name,
+              email: user.attributes.email
 
+          };
           // puts information to backend dB
           addInformation(newPostInfo);
           var holdposts = allPostInformation();
-          console.log(holdposts);
           
-         
           // go back to Community Page to see new post 
           router.push("/Application/CommunityPage");
       }
