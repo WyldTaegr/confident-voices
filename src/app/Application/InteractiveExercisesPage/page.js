@@ -5,6 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
+import awsExports from '@/aws-exports';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
+import { Amplify } from 'aws-amplify';
+import { List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
+Amplify.configure(awsExports);
 
 
 // async function exerciseCreation(){
@@ -20,7 +25,10 @@ const InteractiveExercisesPage = () => {
 
   const fetchExercises = async () => {
     try {
-      const exerciseData = await API.graphql(graphqlOperation(queries.listExercises));
+      const exerciseData = await API.graphql({
+        query: queries.listExercises,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
       setExercises(exerciseData.data.listExercises.items);
     } catch (err) {
       console.error("Error fetching exercises:", err);
@@ -41,17 +49,28 @@ const InteractiveExercisesPage = () => {
   }
 
   return (
-
-    <div>
-      <h1>Interactive Exercises</h1>
-      <ul>
+    <Paper elevation={3} sx={{ margin: 2 }}>
+      <Typography variant="h4" sx={{ textAlign: 'center', padding: 2 }}>
+        Exercise List
+      </Typography>
+      <List component="nav">
         {exercises.map(exercise => (
-          <li key={exercise.id}>
-            <h2 onClick={(e) => pushTo(e, exercise.id)}>{exercise.name}</h2>
-          </li>
+          <ListItem 
+            button 
+            key={exercise.id} 
+            onClick={(e) => pushTo(e, exercise.id)}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'action.hover',
+              },
+              transition: 'background-color 0.3s',
+            }}
+          >
+            <ListItemText primary={exercise.name} />
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Paper>
   );
 };
 

@@ -6,7 +6,10 @@ import { Amplify } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
-import { Button } from '@aws-amplify/ui-react';
+import { Box, Button, TextField, Typography, Container, Paper } from '@mui/material';
+import awsExports from '@/aws-exports';
+import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
+Amplify.configure(awsExports);
 
 
 /**
@@ -17,10 +20,15 @@ const Question = ({ params }) => {
   async function questionCreation(event, inputValue){
     event.preventDefault();
     const newQuestion = await API.graphql(
-      graphqlOperation(mutations.createQuestion, { input: {
-        description: inputValue,
-        exerciseQuestionsId: params.slug
-      } })
+      // graphqlOperation(mutations.createQuestion, { input: {
+      //   description: inputValue,
+      //   exerciseQuestionsId: params.slug
+      // } })
+      {
+        query: mutations.createQuestion,
+        variables: {input : {description: inputValue, exerciseID: params.slug}},
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      }
     );
   }
 const router = useRouter();
@@ -34,19 +42,31 @@ const [inputValue, setInputValue] = useState('');
 
 
   return (
-    <div>
-     <p>Exercise: {params.slug}</p> 
-     <form onSubmit={(e) => questionCreation(e, inputValue)}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter something"
-        />
-        <button type="submit">Add Question</button>
-      </form>
-    </div>
-    
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Exercise: {params.slug}
+          </Typography>
+        </Box>
+        <form onSubmit={(e) => questionCreation(e, inputValue)} noValidate autoComplete="off">
+          <TextField
+            fullWidth
+            variant="outlined"
+            margin="normal"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Enter your question"
+            label="New Question"
+          />
+          <Box sx={{ mt: 2 }}>
+            <Button type="submit" variant="contained" color="primary" size="large">
+              Add Question
+            </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Container>
   );
 };
 
