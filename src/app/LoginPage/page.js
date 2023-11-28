@@ -9,7 +9,7 @@ export default function LoginPage() {
     const router = useRouter();
     useEffect(() => {
         getCurrentUser().then(async (user) => {
-            if (user !== null) router.push("/Application");
+            if (user !== null) router.push("/Application/UserProfilePage");
         })
     });
     return (

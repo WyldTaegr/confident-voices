@@ -5,18 +5,22 @@ import {useRouter} from 'next/navigation';
 
 //front-end imports
 import React, {useState, useEffect} from 'react';
-import { Button, Heading, Text, Card, Flex, Grid, Collection, Badge, Divider, useTheme, ToggleButton} from '@aws-amplify/ui-react';
+import { Button, Heading, Text, Card, Flex, Grid, Collection,
+Badge, Divider, useTheme, ToggleButton,
+TextAreaField} from '@aws-amplify/ui-react';
 import {ImPlus} from 'react-icons/im';
 import '@aws-amplify/ui-react/styles.css';
 
 //import * as queries from '../../graphql/queries';
 //import {listPostInfos} from '../../graphql/queries';
-import {API} from 'aws-amplify';
+import {API, Amplify} from 'aws-amplify';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 import * as mutations from '../../../graphql/mutations';
 import * as queries from '../../../graphql/queries';
 
-
+import awsExports from '@/aws-exports';
+import { getCurrentUser, signOut } from '@/util/auth';
+Amplify.configure(awsExports);
 
 const CommunityPage = () => {
   //holds theme
@@ -24,6 +28,18 @@ const CommunityPage = () => {
   const router = useRouter();
   //holds all post information
   const [post, setPost] = useState([]);
+
+  // get current user
+  const [user, setUser] = useState(false);
+
+  //if user not set, set user
+  if(!user){
+      // get current user
+   getCurrentUser().then((user) => {
+		setUser(user);
+	})
+  }
+
   // like button functionality (press/not press)
   //const [pressLike, setPressLike] = useState(false);
 
@@ -81,6 +97,22 @@ const CommunityPage = () => {
      //setPressLike(!pressLike);
      getAllPostInformation();
   }
+
+  //determine whether to show delete button
+  function permission_delete(email){
+      if(user != false){
+          //if current user's post, then can delete their own post
+          if(email == user.attributes.email){
+            return true;
+          }
+      }
+      return false;
+  }
+
+  //dynamic routing
+  function pushTo(e, id){
+    router.push(`/Application/CommunityPage/${id}`)    
+  }
   
   // front-end
   return (
@@ -92,38 +124,50 @@ const CommunityPage = () => {
         <ImPlus />&nbsp;
         <Text color = "white">Post</Text>
       </Button>
+      
     </Flex>
-    <Flex direction="column" grow = "4" basis= "100%" justifyContent = "flex-end">
+    <Flex direction="column" justifyContent = "flex-end">
       <div>
         <Collection
         type = "grid"
         templateColumns="1fr 1fr 1fr"
+        templateRows="1fr"
         gap = "15px"
         items = {post}
         isSearchable
         searchPlaceholder = "Type to search by title..."
         searchFilter= {(p, keyword) => ((p).title.toLowerCase().startsWith(keyword.toLowerCase()))} 
         isPaginated
-        itemsPerPage={6}>
+        itemsPerPage={3}>
         {((x, index) => (
             <Card variation = "elevated" 
             borderRadius="0.5rem"
             boxShadow="rgba(13, 26, 38, 0.25) 0px 4px 12px 0px"
             padding="1rem"
-            
             key = {x.id}>
+
+
                 <Flex direction = "row">
-                    <Flex direction = "column" basis = "100%" gap="1rem">    
+                    <Flex direction = "column" basis = "100%" gap="1rem">   
                         <Heading level = {4}>{x.title}</Heading>
+                        <Text as = "span">Created By: {x.fname} {x.lname}</Text>
                         <Flex direction = "row">
                             <Badge variation = "info" size = "small">{x.tags}</Badge>
                         </Flex>
                         <Divider border={`dotted ${tokens.colors.brand.primary[100]}`} orientation = "horizontal" />
-                        <Text as = "span">{x.description}</Text>
+                        <TextAreaField
+                            label = "desc"
+                            isDisabled={true}
+                            isReadOnly={true}
+                            labelHidden={true}
+                            placeholder={x.description}
+                            rows={3}/>
                         <Flex direction = "row" basis = "100%" alignSelf = "flex-end">
+                            <Button variation="primary" colorTheme = "warning" onClick = {(e) => pushTo(e, x.id)}> Comment</Button>
                             <Button size = "small" variation = "primary" colorTheme = "info" onClick={() => update_post_likes(x.id, x._version, x.likes)} >Like {x.likes}</Button>
-                            <Button size = "small" variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id, x._version)} >Delete</Button>
+                            {(permission_delete(x.email)) ? (<Button size = "small" variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id, x._version)} >Delete</Button>): null}
                         </Flex>
+                        
                     </Flex>
                     
                 </Flex>

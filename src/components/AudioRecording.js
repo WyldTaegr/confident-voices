@@ -1,8 +1,10 @@
 'use client'
 import React, { useState, useRef } from 'react';
 import { Storage } from 'aws-amplify';
-import { createExerciseProgress } from '@/util/api';
+import { createExerciseProgress, createS3Object } from '@/util/api';
 import { Auth } from 'aws-amplify';
+import * as mutations from '@/graphql/mutations' 
+import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api";
 
 function AudioRecording({questionID}) {
   const [recording, setRecording] = useState(false);
@@ -31,20 +33,24 @@ function AudioRecording({questionID}) {
       recorder.onstop = async () => {
         setAudioChunks(async (prevChunks) => {
           const audioBlob = new Blob(prevChunks, { type: 'audio/webm' });
-          
-          // try {
-          //   await Storage.put('recorded-audio.webm', audioBlob, {
-          //     contentType: 'audio/webm', // Adjust the content type based on your audio format
-          //   });
-          // } catch (error) {
-          //   console.log('Error uploading file: ', error);
-          // }
+          const user = await Auth.currentAuthenticatedUser();
+          const userName = user.attributes.email;
+          const userEmail = userName.replace(/[@.]/g, '_'); // Sanitize email
+          const fileName = `${userEmail}_${questionID}.webm`;
+          try {
+            await createS3Object(fileName);
+            await Storage.put(fileName, audioBlob, {
+               contentType: 'audio/webm', // Adjust the content type based on your audio format
+             });
+           } catch (error) {
+             console.log('Error uploading file: ', error);
+           }
 
           // Create a download link for the recorded audio
           const audioUrl = URL.createObjectURL(audioBlob);
           const a = document.createElement('a');
           a.href = audioUrl;
-          a.download = 'recorded-audio.webm';
+          a.download = fileName;
           a.style.display = 'none';
           document.body.appendChild(a);
           a.click();
