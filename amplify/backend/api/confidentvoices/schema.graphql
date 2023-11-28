@@ -1,6 +1,7 @@
 type User @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   active: String!
+  picture: S3Object @hasOne
   therapist: Therapist @hasOne
   student: Student @hasOne
 }
