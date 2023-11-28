@@ -29,11 +29,12 @@ const SlugmaPage = ({params}) => {
       const url = await Storage.get(fileName,{
         level: 'public',
         expires: 3600, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
-        contentType: ".webm"
+        contentType: ".webm",
+        validateObjectExistence: true
       });
       return url;
     } catch (error) {
-      console.error("Error fetching audio file: ", error);
+      console.log("No file found", error);
       return null;
     }
   };
@@ -68,7 +69,7 @@ const SlugmaPage = ({params}) => {
         setQuestions(relatedQuestions);
         fetchAllAudios(relatedQuestions);
       } catch (error) {
-        console.error("Error fetching questions: ", error);
+        console.log("No question found");
       }
     };
     fetchQuestions();
@@ -95,7 +96,7 @@ const SlugmaPage = ({params}) => {
               <Box sx={{ margin: 2 }}>
                 <AudioRecording questionID = {question.id} />
                 <Videofeed/>
-                {audioUrls[question.id] && (
+                {(audioUrls[question.id] != null) && (
                   <a href={audioUrls[question.id]}>Download the Recording</a>
                 )}
               </Box>
