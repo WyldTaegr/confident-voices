@@ -1,0 +1,35 @@
+/* baseApp.css */
+.header {
+  background-color: #4267B2; /* Facebook's header color */
+  color: white;
+  padding: 8px 16px; /* Adjust padding to reduce header height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navItem {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px; /* Adjust padding to reduce the size of navigation items */
+  font-weight: bold;
+  font-size: 0.85rem; /* Adjust font size for a more compact look */
+  margin: 0 4px; /* Add margin between items if needed */
+}
+
+/* Additional adjustments for a compact navbar layout */
+.navbar {
+  display: flex;
+  align-items: center;
+  /* Reduce the width of navbar to fit content */
+  width: auto;
+  /* Center the navbar horizontally */
+  margin: 0 auto;
+}
+
+/* Ensuring the navbar doesn't stretch too wide on larger screens */
+@media (min-width: 768px) {
+  .navbar {
+    max-width: 80%;
+  }
+}

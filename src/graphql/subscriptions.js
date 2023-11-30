@@ -6,6 +6,15 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser(filter: $filter) {
       id
       active
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       therapist {
         id
         parent
@@ -23,6 +32,7 @@ export const onCreateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPictureId
       userTherapistId
       userStudentId
       __typename
@@ -34,6 +44,15 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser(filter: $filter) {
       id
       active
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       therapist {
         id
         parent
@@ -51,6 +70,7 @@ export const onUpdateUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPictureId
       userTherapistId
       userStudentId
       __typename
@@ -62,6 +82,15 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser(filter: $filter) {
       id
       active
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       therapist {
         id
         parent
@@ -79,6 +108,7 @@ export const onDeleteUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPictureId
       userTherapistId
       userStudentId
       __typename
@@ -96,6 +126,7 @@ export const onCreateTherapist = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -127,6 +158,7 @@ export const onUpdateTherapist = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -158,6 +190,7 @@ export const onDeleteTherapist = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -187,6 +220,7 @@ export const onCreateStudent = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -219,6 +253,7 @@ export const onUpdateStudent = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -251,6 +286,7 @@ export const onDeleteStudent = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -608,6 +644,9 @@ export const onCreatePostInfo = /* GraphQL */ `
       tags
       description
       likes
+      fname
+      lname
+      email
       id
       createdAt
       updatedAt
@@ -622,6 +661,9 @@ export const onUpdatePostInfo = /* GraphQL */ `
       tags
       description
       likes
+      fname
+      lname
+      email
       id
       createdAt
       updatedAt
@@ -636,6 +678,54 @@ export const onDeletePostInfo = /* GraphQL */ `
       tags
       description
       likes
+      fname
+      lname
+      email
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onCreateComments = /* GraphQL */ `
+  subscription OnCreateComments($filter: ModelSubscriptionCommentsFilterInput) {
+    onCreateComments(filter: $filter) {
+      description
+      fname
+      lname
+      email
+      idpost
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateComments = /* GraphQL */ `
+  subscription OnUpdateComments($filter: ModelSubscriptionCommentsFilterInput) {
+    onUpdateComments(filter: $filter) {
+      description
+      fname
+      lname
+      email
+      idpost
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteComments = /* GraphQL */ `
+  subscription OnDeleteComments($filter: ModelSubscriptionCommentsFilterInput) {
+    onDeleteComments(filter: $filter) {
+      description
+      fname
+      lname
+      email
+      idpost
       id
       createdAt
       updatedAt
