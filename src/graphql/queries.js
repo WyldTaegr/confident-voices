@@ -6,6 +6,15 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       active
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       therapist {
         id
         parent
@@ -23,6 +32,7 @@ export const getUser = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      userPictureId
       userTherapistId
       userStudentId
       __typename
@@ -41,6 +51,7 @@ export const listUsers = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -59,6 +70,7 @@ export const getTherapist = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -108,6 +120,7 @@ export const getStudent = /* GraphQL */ `
         active
         createdAt
         updatedAt
+        userPictureId
         userTherapistId
         userStudentId
         __typename
@@ -485,6 +498,9 @@ export const getPostInfo = /* GraphQL */ `
       tags
       description
       likes
+      fname
+      lname
+      email
       id
       createdAt
       updatedAt
@@ -504,6 +520,47 @@ export const listPostInfos = /* GraphQL */ `
         tags
         description
         likes
+        fname
+        lname
+        email
+        id
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getComments = /* GraphQL */ `
+  query GetComments($id: ID!) {
+    getComments(id: $id) {
+      description
+      fname
+      lname
+      email
+      idpost
+      id
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listComments = /* GraphQL */ `
+  query ListComments(
+    $filter: ModelCommentsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        description
+        fname
+        lname
+        email
+        idpost
         id
         createdAt
         updatedAt
