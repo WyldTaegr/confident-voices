@@ -5,16 +5,27 @@ import dynamic from 'next/dynamic';
 const DynamicChart = dynamic(() => import('./DynamicChart'), { ssr: false });
 
 const data = [
-  { session: 'Session 1', score: 65 },
-  { session: 'Session 2', score: 72 },
-  { session: 'Session 3', score: 78 },
-  // Add more session data as needed
+  { session: 'Session 1', score: 2 },
+  { session: 'Session 2', score: 2.5 },
+  { session: 'Session 3', score: 3 },
+  { session: 'Session 4', score: 3 },
+  { session: 'Session 5', score: 3 },
+  { session: 'Session 6', score: 3 },
+  { session: 'Session 7', score: 3 },
+  { session: 'Session 8', score: 4 },
+  { session: 'Session 9', score: 4.5 },
+  { session: 'Session 10', score: 4.5 },
+
+
+
 ];
 
 const comments = [
   { session: 'Session 1', comment: 'Good effort, try to slow down your speech.' },
   { session: 'Session 2', comment: 'Great improvement in clarity.' },
   { session: 'Session 3', comment: 'Excellent progress, keep practicing the exercises.' },
+  { session: 'Session 4', comment: 'Great improvement, keep practicing the exercises.' },
+
   // Add more comments as needed
 ];
 
