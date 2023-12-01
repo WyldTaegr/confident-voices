@@ -51,11 +51,6 @@ const CommentsPage = ({params}) => {
     setPost(get_post.data.getPostInfo);
     console.log(get_post);
   };
-       
-  //used to get the particular post
-  useEffect(() => {
-    fetchPost();
-  }, []);
 
   //function to set all comment information to comment var
   const getAllCommentInfo = async() => {
@@ -72,10 +67,12 @@ const CommentsPage = ({params}) => {
      console.log(related_comments); //can comment out later
   };
 
-  // get all previous comment information
   useEffect(() => {
+        //used to get the particular post
+        fetchPost();
+        // get all previous comment information
         getAllCommentInfo();
-  }, []);
+  });
 
 
   //if user not set, set user
