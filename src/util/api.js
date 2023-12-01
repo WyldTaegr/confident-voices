@@ -91,3 +91,55 @@ export async function createS3Object(name){
     authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
   });
 }
+
+export async function listUsers() {
+    const result = await API.graphql({
+        query: queries.listUsers,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    return result.data.listUsers.items
+}
+
+export async function listStudents() {
+    const result = await API.graphql({
+        query: queries.listStudents,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.listStudents.items
+}
+
+export async function connectStudentToTherapist(studentId, therapistId) {
+    const connectionDetails = {
+        studentId: studentId,
+        therapistId: therapistId
+    }
+    try {
+        const result = await API.graphql({
+            query: mutations.createTherapistsStudents,
+              variables: {input: connectionDetails},
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        })
+    } catch (e) {
+        console.error("Error connecting student to therapist:", e)
+    }
+}
+
+export async function getStudentsByTherapist(therapistId) {
+    const connectionDetails = {
+        filter: {
+            therapistId: {
+                eq: therapistId
+            }
+        }
+    }
+
+    const result = await API.graphql({
+        query: queries.listTherapistsStudents,
+        variables: connectionDetails,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.listTherapistsStudents.items;
+}
