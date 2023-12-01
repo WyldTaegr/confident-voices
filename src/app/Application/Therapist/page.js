@@ -28,7 +28,7 @@ export default function TherapistDashboard() {
             });
             
         })
-    }, [therapistId]);
+    }, [therapistId, studentList]);
 
     async function addStudent(studentId) {
         await connectStudentToTherapist(studentId, therapistId);

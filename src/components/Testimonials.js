@@ -27,7 +27,7 @@ const Testimonials = ( {testimonoal} ) => {
 	);
 	const onSlideChange = useCallback(() => {
 		setselectedIndex(emblaApi.selectedScrollSnap);
-	}, [emblaApi]);
+	}, [emblaApi, onSlideChange]);
 
 	const renderSingleTestimonial = (item, key) => {
 		return (
