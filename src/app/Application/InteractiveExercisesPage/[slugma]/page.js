@@ -72,7 +72,7 @@ const SlugmaPage = ({params}) => {
       }
     };
     fetchQuestions();
-  }, [params.slugma, fetchAllAudios]);
+  }, [params.slugma]);
 
   return (
     <Box sx={{ flexGrow: 1, padding: 3 }}>

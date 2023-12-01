@@ -40,7 +40,7 @@ export default function TherapistDashboard() {
             <h2>Student List</h2>
             {studentList.map((student) => {
                 return (
-                    <p>{student}</p>
+                    <p key={student}>{student}</p>
                 )
             })}
             <h2>User List</h2>
