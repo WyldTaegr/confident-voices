@@ -143,3 +143,16 @@ export async function getStudentsByTherapist(therapistId) {
 
     return result.data.listTherapistsStudents.items;
 }
+
+export async function listExerciseProgressByStudent(studentId) {
+    const result = await API.graphql({
+        query: queries.listExerciseProgresses,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    const exercises = result.data.listExerciseProgresses.items.filter(
+        (exercise) => exercise.studentID === studentId
+    )
+    console.log(exercises);
+    return exercises;
+}
