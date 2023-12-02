@@ -51,12 +51,7 @@ function AudioRecording({questionID}) {
           const a = document.createElement('a');
           a.href = audioUrl;
           a.download = fileName;
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          a.click();
-          URL.revokeObjectURL(audioUrl);
-          document.body.removeChild(a);
-      
+          a.style.display = 'none';      
           // Now reset the audio chunks
           return [];
         });

@@ -24,6 +24,8 @@ const Exercise = ({ params }) => {
       variables: {input: {name: inputValue}},
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
+    setInputValue("");
+    alert("Exercise has been added");
   }
 const router = useRouter();
 const [inputValue, setInputValue] = useState('');

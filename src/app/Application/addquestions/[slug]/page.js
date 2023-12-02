@@ -6,6 +6,7 @@ import { Amplify } from 'aws-amplify';
 import { API, graphqlOperation } from 'aws-amplify';
 import { useRouter } from 'next/navigation';
 import * as mutations from '@/graphql/mutations';
+import * as queries from '@/graphql/queries';
 import { Box, Button, TextField, Typography, Container, Paper } from '@mui/material';
 import awsExports from '@/aws-exports';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
@@ -30,6 +31,8 @@ const Question = ({ params }) => {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       }
     );
+    setInputValue("");
+    alert("Question has been added to the exercise");
   }
 const router = useRouter();
 const [inputValue, setInputValue] = useState('');
@@ -46,7 +49,7 @@ const [inputValue, setInputValue] = useState('');
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
         <Box sx={{ mb: 2 }}>
           <Typography variant="h6" gutterBottom>
-            Exercise: {params.slug}
+            Enter the Question to be added:
           </Typography>
         </Box>
         <form onSubmit={(e) => questionCreation(e, inputValue)} noValidate autoComplete="off">
