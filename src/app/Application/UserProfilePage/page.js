@@ -6,6 +6,7 @@ import {
   CircularProgress, Paper, Typography, Box, Button, TextField, Avatar
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { getProfilePicture, getS3Object, getUser, setProfilePicture } from '@/util/api';
 
 const Input = styled('input')({
   display: 'none',
@@ -23,6 +24,7 @@ const UserProfilePage = () => {
         setUser(currentUser);
         // Initialize aboutMe with data from the user object if it exists
         setAboutMe(currentUser.attributes.profile || '');
+        getProfilePicture(currentUser.attributes.email).then(picture => picture && setProfileImage(picture));
       })
       .catch(err => console.log(err));
   }, []);
@@ -42,6 +44,7 @@ const UserProfilePage = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result);
+        setProfilePicture(user.attributes.email, file.name, file, "image/jpg");
       };
       reader.readAsDataURL(file);
     }

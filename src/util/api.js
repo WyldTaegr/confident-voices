@@ -1,10 +1,11 @@
-import { API } from "aws-amplify"
+import { API, Storage } from "aws-amplify"
 import awsExports from '@/aws-exports';
 import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api";
 import * as mutations from '@/graphql/mutations'
 import * as queries from '@/graphql/queries';
 
-API.configure(awsExports)
+API.configure(awsExports);
+Storage.configure({ level: "protected" });
 
 export async function createUser(email, mode) {
     const userDetails = {
@@ -19,6 +20,20 @@ export async function createUser(email, mode) {
     });
     
     return newUser;
+}
+
+export async function getUser(email) {
+    const userDetails = {
+        id: email
+    }
+
+    const user = await API.graphql({
+        query: queries.getUser,
+        variables: userDetails,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return user.data.getUser;
 }
 
 export async function createTherapist(userId, parent) {
@@ -79,7 +94,7 @@ export async function createExerciseProgress(studentID){
     return newExerciseProgress;
 }
 
-export async function createS3Object(name){
+export async function createS3Object1(name){
     const s3ObjectData = {
     name: name,
     key: name, // or any other unique identifier you'd like to use
@@ -90,4 +105,76 @@ export async function createS3Object(name){
     variables:{input: s3ObjectData},
     authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
   });
+}
+
+export async function createS3Object(fileName, file, type) {
+    const objectDetails = {
+        name: fileName
+    }
+
+    const resultAPI = await API.graphql({
+        query: mutations.createS3Object,
+        variables: { input: objectDetails },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    const s3Object = resultAPI.data.createS3Object
+    const resultStorage = await Storage.put(`${s3Object.id}-${fileName}`, file, { contentType: type });
+
+    const updateDetails = {
+        id: s3Object.id,
+        key: resultStorage.key
+    }
+
+    const updateResponse = await API.graphql({
+        query: mutations.updateS3Object,
+        variables: { input: updateDetails },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    const updatedObject = updateResponse.data.updateS3Object;
+
+    const signedURL = await Storage.get(updatedObject.key);
+
+    return s3Object.id;
+}
+
+export async function getS3Object(id) {
+    const details = {
+        id: id
+    }
+
+    const result = await API.graphql({
+        query: queries.getS3Object,
+        variables: details,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    const s3Object = result.data.getS3Object;
+
+    const signedURL = await Storage.get(s3Object.key);
+    return signedURL;
+}
+
+export async function setProfilePicture(email, fileName, file, type) {
+    const id = await createS3Object(fileName, file, type);
+    const userDetails = {
+        id: email,
+        userPictureId: id
+    }
+
+    const result = await API.graphql({
+        query: mutations.updateUser,
+        variables: { input: userDetails },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    return await getS3Object(id);
+}
+
+export async function getProfilePicture(email) {
+    const user = await getUser(email);
+    if (!user.userPictureId) return null;
+
+    return await getS3Object(user.userPictureId);
 }
