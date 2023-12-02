@@ -23,7 +23,7 @@ export default function StudentProgress({ params }) {
                 {exerciseList ? exerciseList.map((exerciseProgress) => {
                     console.table(exerciseProgress)
                     return (
-                        <Paper>
+                        <Paper key={exerciseProgress.id}>
                             <p>{exerciseProgress.id}</p>
                         </Paper>
                     )
