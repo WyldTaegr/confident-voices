@@ -31,7 +31,7 @@ export default function LoginForm() {
         console.log("Login hit");
         const data = new FormData(e.target);
         await signIn(data.get("email"), data.get("password"));
-        router.push("/Application");
+        router.push("/Application/UserProfilePage");
     }
     
     const handleSignUp = async (e) => {
@@ -48,7 +48,7 @@ export default function LoginForm() {
         const data = new FormData(e.target);
         await confirmEmail(inputs["email"], inputs["password"], data.get("code"), inputs["role"])
 
-        router.push("/Application");
+        router.push("/Application/UserProfilePage");
     }
 
     const forceLogOut = async (e) => {
