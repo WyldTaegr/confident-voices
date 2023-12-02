@@ -37,7 +37,7 @@ const data = {
             userImage: images.testimonialAvatar,
             userName: "Rachel Yamamoto",
             userSubHeading: "Case Western Reserve University",
-            reviewText: "Our vision is to empower the next generation of learners by creating an engaging web application that makes speech therapy accessible to children of all backgrounds.",
+            reviewText: "Our goal is to transform educational experiences by providing innovative and interactive web-based solutions that make learning inclusive and enjoyable for children from diverse communities.",
         },
         {
             id: 2,
@@ -51,14 +51,14 @@ const data = {
             userImage: images.testimonialAvatar3,
             userName: "Dhananjay Surti",
             userSubHeading: "Case Western Reserve University",
-            reviewText: "Our vision is to empower the next generation of learners by creating an engaging web application that makes speech therapy accessible to children of all backgrounds.",
+            reviewText: "We are committed to bridging the educational gap by developing a user-friendly digital platform that simplifies and enhances the learning process for young minds everywhere.",
         },
         {
             id: 4,
             userImage: images.testimonialAvatar4,
             userName: "Tiger Tian",
             userSubHeading: "Case Western Reserve University",
-            reviewText: "Our vision is to empower the next generation of learners by creating an engaging web application that makes speech therapy accessible to children of all backgrounds.",
+            reviewText: "Our mission is to revolutionize the way children learn, offering a dynamic and inclusive online environment that supports and nurtures every child's potential, regardless of their background.",
         },
     ],
 };
