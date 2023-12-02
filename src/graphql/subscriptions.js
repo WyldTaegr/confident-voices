@@ -6,6 +6,7 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser(filter: $filter) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -44,6 +45,7 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser(filter: $filter) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -82,6 +84,7 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser(filter: $filter) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -124,6 +127,7 @@ export const onCreateTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -156,6 +160,7 @@ export const onUpdateTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -188,6 +193,7 @@ export const onDeleteTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -218,6 +224,7 @@ export const onCreateStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -251,6 +258,7 @@ export const onUpdateStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -284,6 +292,7 @@ export const onDeleteStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
