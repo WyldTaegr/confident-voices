@@ -106,7 +106,7 @@ const CommunityPage = () => {
         getAllPostInformation();
         //console.log(userPic); //DEBUG
         //console.log(postImage); //DEBUG
-  }, [post]);
+  }, [user]);
   
 
   //function to delete data

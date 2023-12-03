@@ -5,7 +5,7 @@ import * as mutations from '@/graphql/mutations'
 import * as queries from '@/graphql/queries';
 
 API.configure(awsExports);
-Storage.configure({ level: "protected" });
+Storage.configure({ level: "public" });
 
 export async function createUser(email, mode) {
     const userDetails = {
