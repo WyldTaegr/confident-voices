@@ -14,7 +14,6 @@ import '@aws-amplify/ui-react/styles.css';
 import { RiSpeakFill } from "react-icons/ri";
 import { ImBubbles, ImPlus, ImBin} from 'react-icons/im';
 import { BiSolidLike } from "react-icons/bi";
-import {defaultImage} from './Tahoe.jpg';
 import {Avatar} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { getProfilePicture, getS3Object, getUser,
