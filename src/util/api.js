@@ -243,3 +243,12 @@ export async function listExerciseProgressByStudent(studentId) {
     console.log(exercises);
     return exercises;
 }
+
+export async function listExercises() {
+    const result = await API.graphql({
+        query: queries.listExercises,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.listExercises.items
+}
