@@ -653,12 +653,22 @@ export const onCreatePostInfo = /* GraphQL */ `
       tags
       description
       likes
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       fname
       lname
       email
       id
       createdAt
       updatedAt
+      postInfoPictureId
       __typename
     }
   }
@@ -670,12 +680,22 @@ export const onUpdatePostInfo = /* GraphQL */ `
       tags
       description
       likes
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       fname
       lname
       email
       id
       createdAt
       updatedAt
+      postInfoPictureId
       __typename
     }
   }
@@ -687,12 +707,22 @@ export const onDeletePostInfo = /* GraphQL */ `
       tags
       description
       likes
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       fname
       lname
       email
       id
       createdAt
       updatedAt
+      postInfoPictureId
       __typename
     }
   }
