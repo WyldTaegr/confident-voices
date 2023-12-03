@@ -5,7 +5,7 @@ import * as mutations from '@/graphql/mutations'
 import * as queries from '@/graphql/queries';
 
 API.configure(awsExports);
-Storage.configure({ level: "protected" });
+Storage.configure({ level: "public" });
 
 export async function createUser(email, mode) {
     const userDetails = {
@@ -156,6 +156,21 @@ export async function getS3Object(id) {
     return signedURL;
 }
 
+export async function setAboutMe(email, text) {
+    const userDetails = {
+        id: email,
+        aboutMe: text
+    }
+
+    const result = await API.graphql({
+        query: mutations.updateUser,
+        variables: { input: userDetails },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.updateUser;
+}
+
 export async function setProfilePicture(email, fileName, file, type) {
     const id = await createS3Object(fileName, file, type);
     const userDetails = {
@@ -251,4 +266,48 @@ export async function listExercises() {
     })
 
     return result.data.listExercises.items
+}
+
+//RACHEL MESSED WITH THIS FUNCTION BELOW:
+export async function createPost(inputTitle, inputTags, inputDesc, user, fileName, file, type){
+    const id = await createS3Object(fileName, file, type);
+
+    const postDetails = {
+        title: inputTitle,
+        tags: inputTags,
+        description: inputDesc,
+        likes: 0,
+        fname: user.attributes.name,
+        lname: user.attributes.family_name,
+        email: user.attributes.email,
+        postInfoPictureId: id
+    }
+    const result = await API.graphql({
+              query: mutations.createPostInfo,
+              variables: {input: postDetails},
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    return await getS3Object(id);
+} 
+
+export async function getPost(post_id) {
+    const postDetails = {
+        id: post_id
+    }
+
+    const post = await API.graphql({
+        query: queries.getPostInfo,
+        variables: postDetails,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return post.data.getPostInfo;
+}
+
+export async function getPostPicture(id) {
+    const post = await getPost(id);
+    if (!post.postInfoPictureId) return null;
+
+    return await getS3Object(post.postInfoPictureId);
 }

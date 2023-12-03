@@ -7,13 +7,22 @@ import {useRouter} from 'next/navigation';
 import React, {useState, useEffect} from 'react';
 import { Button, Heading, Text, Card, Flex, Grid, Collection,
 Badge, Divider, useTheme, ToggleButton,
-TextAreaField} from '@aws-amplify/ui-react';
-import {ImPlus} from 'react-icons/im';
+TextAreaField, Icon, Image} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+
+//pictures
+import { RiSpeakFill } from "react-icons/ri";
+import { ImBubbles, ImPlus, ImBin} from 'react-icons/im';
+import { BiSolidLike } from "react-icons/bi";
+import {Avatar} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { getProfilePicture, getS3Object, getUser,
+setProfilePicture, getPost, getPostPicture } from '@/util/api';
+
 
 //import * as queries from '../../graphql/queries';
 //import {listPostInfos} from '../../graphql/queries';
-import {API, Amplify} from 'aws-amplify';
+import {API, Amplify, Auth} from 'aws-amplify';
 import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 import * as mutations from '../../../graphql/mutations';
 import * as queries from '../../../graphql/queries';
@@ -28,7 +37,11 @@ const CommunityPage = () => {
   const router = useRouter();
   //holds all post information
   const [post, setPost] = useState([]);
+  //holds all post pic info
+   const [postImage, setPostImage] = useState([]);
 
+  // holds all user pic info
+  const [userPic, setUserPic] = useState([]);
   // get current user
   const [user, setUser] = useState(false);
 
@@ -40,23 +53,60 @@ const CommunityPage = () => {
 	})
   }
 
+  
+ 
+
+ // useEffect(() => {
+   // Auth.currentAuthenticatedUser()
+     // .then(currentUser => {
+       // setUser(currentUser);
+        // Initialize profile picture if it exists
+        //getProfilePicture(currentUser.attributes.email).then(picture => picture && setProfileImage(picture));
+      //})
+      //.catch(err => console.log(err));
+  //}, []);
+
   // like button functionality (press/not press)
   //const [pressLike, setPressLike] = useState(false);
 
   //function to set all post information to post variable
   const getAllPostInformation = async() => {
-    const holdPostsResponse =  await API.graphql({
+    await API.graphql({
          query: queries.listPostInfos,
          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+     }).then((holdPostsResponse) => {
+        //set posts
+        setPost(holdPostsResponse.data.listPostInfos.items);
+        // deal with user profile pictures
+       let userProfilePromises = holdPostsResponse.data.listPostInfos.items.map(e => {
+            return getProfilePicture(e.email).then(response => {
+                return response;
+            })
+        });
+        // resolve promise for user profile pics
+        Promise.all(userProfilePromises).then((userDataList) =>{ 
+            setUserPic(userDataList)
+        });
+        // deal with post pictures
+       let postPicPromises = holdPostsResponse.data.listPostInfos.items.map(e => {
+            return getPostPicture(e.id).then(response => {
+                return response;
+            })
+        });
+        
+         // resolve promise for post pics
+       Promise.all(postPicPromises).then((postDataList) =>{ 
+            setPostImage(postDataList)
+        });
      });
-    setPost(holdPostsResponse.data.listPostInfos.items);
-    console.log(holdPostsResponse);
   };
 
   // get all previous post information
   useEffect(() => {
         getAllPostInformation();
-  }, []);
+        //console.log(userPic); //DEBUG
+        //console.log(postImage); //DEBUG
+  }, [user]);
   
 
   //function to delete data
@@ -72,7 +122,8 @@ const CommunityPage = () => {
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
      });
      //filter out deleted post 
-     setPost(post.filter(x => x.id !== id));
+     //setPost(post.filter(x => x.id !== id));
+     getAllPostInformation();
   }
 
   //function to update post likes
@@ -126,11 +177,11 @@ const CommunityPage = () => {
       </Button>
       
     </Flex>
-    <Flex direction="column" justifyContent = "flex-end">
+    <Flex direction="column">
       <div>
         <Collection
         type = "grid"
-        templateColumns="1fr 1fr 1fr"
+        templateColumns="1fr 1fr 1fr 1fr"
         templateRows="1fr"
         gap = "15px"
         items = {post}
@@ -144,16 +195,32 @@ const CommunityPage = () => {
             borderRadius="0.5rem"
             boxShadow="rgba(13, 26, 38, 0.25) 0px 4px 12px 0px"
             padding="1rem"
+            maxWidth = "35rem"
+            maxHeight = "35rem"
             key = {x.id}>
 
 
                 <Flex direction = "row">
-                    <Flex direction = "column" basis = "100%" gap="1rem">   
-                        <Heading level = {4}>{x.title}</Heading>
-                        <Text as = "span">Created By: {x.fname} {x.lname}</Text>
-                        <Flex direction = "row">
-                            <Badge variation = "info" size = "small">{x.tags}</Badge>
+                    <Flex direction = "column" gap="3px">   
+                         <Flex direction = "row" justifyContent="flex-end">
+                            <Avatar
+                                src={userPic.at(index)}
+                                sx={{ width: 40, height: 40}}
+                                alt="Profile Picture"
+                            />
+                            <Text as = "span">{x.fname} {x.lname}</Text>
                         </Flex>
+                        <Flex direction = "column" gap = "3px" alignItems="center">
+                            <Image
+                                src={postImage.at(index)}
+                                height="10rem"
+                                width="16rem"
+                                alt="Profile Picture"
+                            />
+                            <Heading level = {4}>{x.title}</Heading>
+                            <Text color = "gray">{x.tags}</Text>
+                        </Flex>
+                     
                         <Divider border={`dotted ${tokens.colors.brand.primary[100]}`} orientation = "horizontal" />
                         <TextAreaField
                             label = "desc"
@@ -163,9 +230,9 @@ const CommunityPage = () => {
                             placeholder={x.description}
                             rows={3}/>
                         <Flex direction = "row" basis = "100%" alignSelf = "flex-end">
-                            <Button variation="primary" colorTheme = "warning" onClick = {(e) => pushTo(e, x.id)}> Comment</Button>
-                            <Button size = "small" variation = "primary" colorTheme = "info" onClick={() => update_post_likes(x.id, x._version, x.likes)} >Like {x.likes}</Button>
-                            {(permission_delete(x.email)) ? (<Button size = "small" variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id, x._version)} >Delete</Button>): null}
+                            <Button variation="primary" colorTheme = "warning" onClick = {(e) => pushTo(e, x.id)}> <ImBubbles/>&nbsp;<Text color = "white">Comment</Text></Button>
+                            <Button size = "small" variation = "primary" colorTheme = "info" onClick={() => update_post_likes(x.id, x._version, x.likes)} ><Text color = "white">Like</Text>&nbsp; <BiSolidLike/> {x.likes}</Button>
+                            {(permission_delete(x.email)) ? (<Button size = "small" variation = "primary" colorTheme = "error" onClick={() => delete_post(x.id, x._version)} ><Text color ="white">Delete</Text>&nbsp;<ImBin/></Button>): null}
                         </Flex>
                         
                     </Flex>

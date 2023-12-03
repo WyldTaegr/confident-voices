@@ -6,6 +6,7 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -49,6 +50,7 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -68,6 +70,7 @@ export const getTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -118,6 +121,7 @@ export const getStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -498,12 +502,22 @@ export const getPostInfo = /* GraphQL */ `
       tags
       description
       likes
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       fname
       lname
       email
       id
       createdAt
       updatedAt
+      postInfoPictureId
       __typename
     }
   }
@@ -526,6 +540,7 @@ export const listPostInfos = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        postInfoPictureId
         __typename
       }
       nextToken
