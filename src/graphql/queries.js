@@ -6,6 +6,7 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -49,6 +50,7 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -68,6 +70,7 @@ export const getTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -118,6 +121,7 @@ export const getStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
