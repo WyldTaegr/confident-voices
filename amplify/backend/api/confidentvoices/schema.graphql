@@ -1,6 +1,7 @@
 type User @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   active: String!
+  aboutMe: String
   picture: S3Object @hasOne
   therapist: Therapist @hasOne
   student: Student @hasOne
@@ -63,6 +64,7 @@ type PostInfo @model @auth(rules: [{allow: public}, {allow: private}]) {
   tags: String!
   description: String!
   likes: Int
+  picture: S3Object @hasOne
   fname: String
   lname: String
   email: String
