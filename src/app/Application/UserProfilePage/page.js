@@ -6,7 +6,7 @@ import {
   CircularProgress, Paper, Typography, Box, Button, TextField, Avatar
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { getProfilePicture, getS3Object, getUser, setProfilePicture } from '@/util/api';
+import { getProfilePicture, getS3Object, getUser, setProfilePicture, setAboutMe as setAboutMeAPI } from '@/util/api';
 
 const Input = styled('input')({
   display: 'none',
@@ -24,6 +24,7 @@ const UserProfilePage = () => {
         setUser(currentUser);
         // Initialize aboutMe with data from the user object if it exists
         setAboutMe(currentUser.attributes.profile || '');
+        getUser(currentUser.attributes.email).then(user => user.aboutMe && setAboutMe(user.aboutMe));
         getProfilePicture(currentUser.attributes.email).then(picture => picture && setProfileImage(picture));
       })
       .catch(err => console.log(err));
@@ -83,7 +84,7 @@ const UserProfilePage = () => {
           multiline
           rows={4}
           value={aboutMe}
-          onChange={(e) => setAboutMe(e.target.value)}
+          onChange={(e) => {setAboutMe(e.target.value), setAboutMeAPI(user.attributes.email, e.target.value)}}
           variant="outlined"
           fullWidth
           margin="normal"

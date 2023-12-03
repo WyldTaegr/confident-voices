@@ -9,6 +9,7 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -50,6 +51,7 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -91,6 +93,7 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       active
+      aboutMe
       picture {
         id
         name
@@ -134,6 +137,7 @@ export const createTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -167,6 +171,7 @@ export const updateTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -200,6 +205,7 @@ export const deleteTherapist = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -233,6 +239,7 @@ export const createStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -269,6 +276,7 @@ export const updateStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId
@@ -305,6 +313,7 @@ export const deleteStudent = /* GraphQL */ `
       user {
         id
         active
+        aboutMe
         createdAt
         updatedAt
         userPictureId

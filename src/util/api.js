@@ -156,6 +156,21 @@ export async function getS3Object(id) {
     return signedURL;
 }
 
+export async function setAboutMe(email, text) {
+    const userDetails = {
+        id: email,
+        aboutMe: text
+    }
+
+    const result = await API.graphql({
+        query: mutations.updateUser,
+        variables: { input: userDetails },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.updateUser;
+}
+
 export async function setProfilePicture(email, fileName, file, type) {
     const id = await createS3Object(fileName, file, type);
     const userDetails = {
