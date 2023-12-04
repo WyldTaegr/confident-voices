@@ -4,15 +4,12 @@ import SectionHeading from "./SectionHeading";
 import Image from "next/image";
 import useEmblaCarousel from 'embla-carousel-react'
 import { DotButton, NextButton, PrevButton } from "./CarouselButtons";
-const Testimonials = ( {testimonoal} ) => {
+const Testimonials = ( {testimonial} ) => {
 	const [selectedIndex, setselectedIndex] = useState(0);
 	const [emblaRef, emblaApi] = useEmblaCarousel({
 		loop: true,
 	});
-	useEffect(() => {
-		if (!emblaApi) return;
-		emblaApi.on("select", onSlideChange);
-	}, [emblaApi]);
+
 	const scrollPrev = useCallback(
 		() => emblaApi && emblaApi.scrollPrev(),
 		[emblaApi]
@@ -28,6 +25,11 @@ const Testimonials = ( {testimonoal} ) => {
 	const onSlideChange = useCallback(() => {
 		setselectedIndex(emblaApi.selectedScrollSnap);
 	}, [emblaApi]);
+	
+	useEffect(() => {
+		if (!emblaApi) return;
+		emblaApi.on("select", onSlideChange);
+	}, [emblaApi, onSlideChange]);
 
 	const renderSingleTestimonial = (item, key) => {
 		return (
@@ -53,7 +55,7 @@ const Testimonials = ( {testimonoal} ) => {
 	const renderDots = () => {
 		return (
 			<div className={`row ${styles.dotContainer}`}>
-				{testimonoal.map((_, index) => {
+				{testimonial && testimonial.map((_, index) => {
 					return (
 						<DotButton
 							key={index}
@@ -77,7 +79,7 @@ const Testimonials = ( {testimonoal} ) => {
 				</div>
 				<div className="embla" ref={emblaRef}>
 					<div className="embla__container">
-						{testimonoal.map((item, index) =>
+						{testimonial && testimonial.map((item, index) =>
 							renderSingleTestimonial(item, index)
 						)}
 					</div>

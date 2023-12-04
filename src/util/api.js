@@ -5,7 +5,7 @@ import * as mutations from '@/graphql/mutations'
 import * as queries from '@/graphql/queries';
 
 API.configure(awsExports);
-Storage.configure({ level: "protected" });
+Storage.configure({ level: "public" });
 
 export async function createUser(email, mode) {
     const userDetails = {
@@ -192,4 +192,122 @@ export async function getProfilePicture(email) {
     if (!user.userPictureId) return null;
 
     return await getS3Object(user.userPictureId);
+}
+
+export async function listUsers() {
+    const result = await API.graphql({
+        query: queries.listUsers,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    return result.data.listUsers.items
+}
+
+export async function listStudents() {
+    const result = await API.graphql({
+        query: queries.listStudents,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.listStudents.items
+}
+
+export async function connectStudentToTherapist(studentId, therapistId) {
+    const connectionDetails = {
+        studentId: studentId,
+        therapistId: therapistId
+    }
+    try {
+        const result = await API.graphql({
+            query: mutations.createTherapistsStudents,
+              variables: {input: connectionDetails},
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        })
+    } catch (e) {
+        console.error("Error connecting student to therapist:", e)
+    }
+}
+
+export async function getStudentsByTherapist(therapistId) {
+    const connectionDetails = {
+        filter: {
+            therapistId: {
+                eq: therapistId
+            }
+        }
+    }
+
+    const result = await API.graphql({
+        query: queries.listTherapistsStudents,
+        variables: connectionDetails,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.listTherapistsStudents.items;
+}
+
+export async function listExerciseProgressByStudent(studentId) {
+    const result = await API.graphql({
+        query: queries.listExerciseProgresses,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    const exercises = result.data.listExerciseProgresses.items.filter(
+        (exercise) => exercise.studentID === studentId
+    )
+    console.log(exercises);
+    return exercises;
+}
+
+export async function listExercises() {
+    const result = await API.graphql({
+        query: queries.listExercises,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.listExercises.items
+}
+
+//RACHEL MESSED WITH THIS FUNCTION BELOW:
+export async function createPost(inputTitle, inputTags, inputDesc, user, fileName, file, type){
+    const id = await createS3Object(fileName, file, type);
+
+    const postDetails = {
+        title: inputTitle,
+        tags: inputTags,
+        description: inputDesc,
+        likes: 0,
+        fname: user.attributes.name,
+        lname: user.attributes.family_name,
+        email: user.attributes.email,
+        postInfoPictureId: id
+    }
+    const result = await API.graphql({
+              query: mutations.createPostInfo,
+              variables: {input: postDetails},
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    return await getS3Object(id);
+} 
+
+export async function getPost(post_id) {
+    const postDetails = {
+        id: post_id
+    }
+
+    const post = await API.graphql({
+        query: queries.getPostInfo,
+        variables: postDetails,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return post.data.getPostInfo;
+}
+
+export async function getPostPicture(id) {
+    const post = await getPost(id);
+    if (!post.postInfoPictureId) return null;
+
+    return await getS3Object(post.postInfoPictureId);
 }

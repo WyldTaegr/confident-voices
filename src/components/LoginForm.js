@@ -9,16 +9,8 @@ import { useRouter } from "next/navigation";
 export default function LoginForm() {
     const [inputs, setInputs] = useState({});
     const [verifyMode, setVerifyMode] = useState(false);
-    const [userID, setUserID] = useState("");
-    const [currentUser, setCurrentUser] = useState("");
 
     const router = useRouter();
-
-    const updateUser = async () => {
-        const user = await getCurrentUser();
-        console.log(user);
-        setCurrentUser(() => user === null ? "NULL" : user.attributes.email);
-    }
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -49,11 +41,6 @@ export default function LoginForm() {
         await confirmEmail(inputs["email"], inputs["password"], data.get("code"), inputs["role"])
 
         router.push("/Application/UserProfilePage");
-    }
-
-    const forceLogOut = async (e) => {
-        await signOut();
-        await updateUser();
     }
 
     return (
@@ -114,13 +101,6 @@ export default function LoginForm() {
                     </form>
                 </TabItem>
             </Tabs>
-            <Alert isDismissible={false} hasIcon={true} heading="Login State">
-                <Flex direction="column" gap="medium">
-                    {currentUser}
-                    <Button onClick={updateUser}>Update user info</Button>
-                    <Button onClick={forceLogOut}>Log Out</Button>
-                </Flex>
-            </Alert>
         </Card>
     )
 }

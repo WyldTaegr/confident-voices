@@ -502,12 +502,22 @@ export const getPostInfo = /* GraphQL */ `
       tags
       description
       likes
+      picture {
+        id
+        name
+        key
+        questionprogressID
+        createdAt
+        updatedAt
+        __typename
+      }
       fname
       lname
       email
       id
       createdAt
       updatedAt
+      postInfoPictureId
       __typename
     }
   }
@@ -530,6 +540,7 @@ export const listPostInfos = /* GraphQL */ `
         id
         createdAt
         updatedAt
+        postInfoPictureId
         __typename
       }
       nextToken

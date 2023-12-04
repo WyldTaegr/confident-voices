@@ -6,14 +6,16 @@ import {useRouter} from 'next/navigation';
 
 // front-end imports
 import { Amplify, Auth} from 'aws-amplify';
-import React, {useState, useEffect} from 'react';
-import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex, Radio,
-RadioGroupField } from '@aws-amplify/ui-react';
+import React, {useState, useEffect, useRef} from 'react';
+import { Button, Alert, Heading, Divider, Input, Label, Grid, 
+TextAreaField, Head, Flex, Radio,
+RadioGroupField, DropZone, VisuallyHidden, Text } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import {ImPlus} from 'react-icons/im';
+
 // backend imports
+import {createPost} from '@/util/api';
 import awsExports from '@/aws-exports';
-import {addInformation, allPostInformation} from '../../Database/postDB';
 import { getCurrentUser, signOut } from '@/util/auth';
 //import { Amplify } from 'aws-amplify';
 Amplify.configure(awsExports);
@@ -48,6 +50,22 @@ const PostCreationPage = () => {
   const [alertTitle, setAlertTitle] = useState(false);
   const [alertTags, setAlertTags] = useState(false);
   const [alertDesc, setAlertDesc] = useState(false);
+
+  // for allowed filetypes for post image
+  const acceptedFileTypes = ['image/png', 'image/jpeg'];
+
+  //for setting images
+  const [files, setFiles] = useState([]);
+  const hiddenInput = useRef(null);
+
+  // to change the image
+  const onFilePickerChange = (event) => {
+    const { files } = event.target;
+    if (!files || files.length === 0) {
+      return;
+    }
+    setFiles(Array.from(files));
+  };
 
   // check user input on submission
   const submitCheck = (e) => {
@@ -85,21 +103,15 @@ const PostCreationPage = () => {
       }
       
       if((titleCheck == false) && (tagsCheck == false) && (descCheck == false)){
-         
-          // holds new post info from user input
-          const newPostInfo = {
-              title: inputTitle,
-              tags: inputTags,
-              description: inputDesc,
-              likes: 0,
-              fname: user.attributes.name,
-              lname: user.attributes.family_name,
-              email: user.attributes.email
-
-          };
+          let fileName;
+          let fileContent;
+          files.map((file) => {
+              fileName = file.name;
+              fileContent = file;
+          });
+          console.log(files);
           // puts information to backend dB
-          addInformation(newPostInfo);
-          var holdposts = allPostInformation();
+          createPost(inputTitle, inputTags, inputDesc, user, fileName, fileContent, "image/jpg");// NOT DONET YET
           
           // go back to Community Page to see new post 
           router.push("/Application/CommunityPage");
@@ -110,17 +122,33 @@ const PostCreationPage = () => {
         <Flex as = "form" direction = "row" justifyContent = "space-evenly" alignContent = "stretch">
             <Flex direction = "column" justifyContent = "space-between">
                 <Heading level={1} color= "blue"> Post Creation</Heading>
-                 <Flex direction = "column">
+                <Flex direction = "column">
                     <br/><br/>
-                   
-                    <RadioGroupField label = "Color of Post:"
-                        name = "Color of Post"
-                        direction = "column"
-                        size = "large"
-                        defaultValue = "White">
-                        <Radio value = "White"> White </Radio>
-
-                    </RadioGroupField>
+                    <DropZone
+                        acceptedFileTypes={acceptedFileTypes}
+                        onDropComplete={({ acceptedFiles, rejectedFiles }) => {
+                        setFiles(acceptedFiles);
+                        }}>
+                            <Flex direction="column" alignItems="center">
+                                <Text>Drag images here or</Text>
+                                <Button size="small" onClick={() => hiddenInput.current.click()}>
+                                    Browse
+                                </Button>
+                            </Flex>
+                            <VisuallyHidden>
+                                <input
+                                type="file"
+                                tabIndex={-1}
+                                ref={hiddenInput}
+                                onChange={onFilePickerChange}
+                                multiple={true}
+                                accept={acceptedFileTypes.join(',')}/>
+                            </VisuallyHidden>
+                </DropZone>
+                    {files.map((file) => (
+                    <Text key={file.name}>{file.name}</Text>
+                    ))}
+                    
                 </Flex>
                 <Flex direction = "column">
                     {alertTitle? (<Alert variation="error" isDimissible={true} hasIcon={true}>Please enter a title</Alert>): null}

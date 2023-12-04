@@ -7,16 +7,20 @@ import { useState, useEffect } from 'react';
 import * as queries from '@/graphql/queries';
 import * as mutations from '@/graphql/mutations';
 import { API, Amplify } from 'aws-amplify';
-import {GRAPHQL_AUTH_MODE} from "@aws-amplify/api";
 import '@aws-amplify/ui-react/styles.css';
 import { getCurrentUser } from '@/util/auth';
+import { getProfilePicture, getS3Object, getUser,
+setProfilePicture, getPost, getPostPicture } from '@/util/api';
+import { GRAPHQL_AUTH_MODE } from "@aws-amplify/api";
 import awsExports from '@/aws-exports';
 Amplify.configure(awsExports);
 
 // front-end imports
 import { Button, Alert, Heading, Divider, Input, Label, Grid, TextAreaField, Head, Flex, Radio,
 RadioGroupField, Card, Badge, Text , Collection, View, ScrollView,
-Message} from '@aws-amplify/ui-react';
+Message, Image} from '@aws-amplify/ui-react';
+import {Avatar} from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 
 const CommentsPage = ({params}) => {
@@ -39,22 +43,48 @@ const CommentsPage = ({params}) => {
     //error input comment
     const [hasErrorDesc, setErrorDesc] = useState(false);
 
+    // hold post picture
+    const [postPic, setPostPic] = useState([]);
+
+    // hold user profile picture
+    const [userPic, setUserPic] = useState([]);
+
     // alerts to notify user of bad input
     const [alertDesc, setAlertDesc] = useState(false);
     //get post commenting on
     const fetchPost = async() => {
-    const get_post = await API.graphql({
+    await API.graphql({
         query: queries.getPostInfo,
         variables: {id: params.slugma},
         authMode: GRAPHQL_AUTH_MODE.API_KEY
+     }).then((get_post) => {
+         setPost(get_post.data.getPostInfo);
+         //console.log(get_post); DEBUG STATEMENT
+         let postPicPromises = getPostPicture(get_post.data.getPostInfo.id)
+            .then(response => {
+                return response;
+            });
+        console.log(postPicPromises);
+        // resolve promise for post pics
+        postPicPromises.then((userDataList) =>{ 
+            setPostPic(userDataList)
+        });
+        let userProfilePromises = getProfilePicture(get_post.data.getPostInfo.email).then(response => {
+                return response;
+            });
+        // resolve promise for user profile pics
+        userProfilePromises.then((userDataList) =>{ 
+            setUserPic(userDataList)
+        });
      });
-    setPost(get_post.data.getPostInfo);
-    console.log(get_post);
+    
   };
        
   //used to get the particular post
   useEffect(() => {
     fetchPost();
+    //console.log(userPic); //DEBUG
+    //console.log(postPic); //DEBUG
   }, []);
 
   //function to set all comment information to comment var
@@ -72,9 +102,12 @@ const CommentsPage = ({params}) => {
      console.log(related_comments); //can comment out later
   };
 
-  // get all previous comment information
   useEffect(() => {
+        //used to get the particular post
+        fetchPost();
+        // get all previous comment information
         getAllCommentInfo();
+        
   }, []);
 
 
@@ -154,40 +187,70 @@ const CommentsPage = ({params}) => {
     const delete_comment_data = await API.graphql({
               query: mutations.deleteComments,
               variables: {input: comment_details},
-              authMode: GRAPHQL_AUTH_MODE.API_KEY
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
      });
      //filter out deleted post 
-     //getAllCommentInfo();
-     setComment(comment.filter(x => x.id !== id));
+     getAllCommentInfo();
+     //setComment(comment.filter(x => x.id !== id));
   }
 
   return (
       <Grid
         columnGap="0.5rem"
         templateColumns="1fr 1fr">
+        <br /> <br/>
+         <Flex direction = "column" columnStart = "1" columnEnd = "2" gap="3px">   
+            <Flex direction = "row" justifyContent="center">
+            <Card variation = "elevated" 
+            borderRadius="0.5rem"
+            boxShadow="rgba(13, 26, 38, 0.25) 0px 4px 12px 0px"
+            padding="1rem"
+            maxWidth = "20rem"
+            maxHeight = "35rem"
+            key = {post.id}>
 
-         <Flex direction = "column" columnStart = "1" columnEnd = "2">       
-            <Flex direction = "column" basis = "100%" gap="1rem">   
-                <Heading level = {4}>{post.title}</Heading>
-                <Text as = "span">Created By: {post.fname} {post.lname}</Text>
                 <Flex direction = "row">
-                    <Badge variation = "info" size = "small">{post.tags}</Badge>
+                    <Flex direction = "column" gap="3px">   
+                         <Flex direction = "row" justifyContent="flex-end">
+                            <Avatar
+                                src={userPic}
+                                sx={{ width: 40, height: 40}}
+                                alt="Profile Picture"
+                            />
+                            <Text as = "span">{post.fname} {post.lname}</Text>
+                        </Flex>
+                        <Flex direction = "column" gap = "3px" alignItems="center">
+                            <Image
+                                src={postPic}
+                                height="10rem"
+                                width="16rem"
+                                alt="Profile Picture"
+                            />
+                            <Heading level = {4}>{post.title}</Heading>
+                            <Text color = "gray">{post.tags}</Text>
+                        </Flex>
+                     
+                        <Divider orientation = "horizontal" />
+                        <TextAreaField
+                            label = "desc"
+                            isDisabled={true}
+                            isReadOnly={true}
+                            labelHidden={true}
+                            placeholder={post.description}
+                            rows={3}/> 
+                    </Flex>
                 </Flex>
-                <Divider border={`dotted`} orientation = "horizontal" />
-                <Text as = "span">{post.description}</Text>
+            </Card>
             </Flex>
-            <br /><br />
-            {alertDesc? (<Alert variation="error" isDimissible={true} hasIcon={true}>Please enter a comment</Alert>): null}
-            <TextAreaField label = "Enter a Comment Below:"
-                maxLength = {250}
-                rows = {5}
-                placeholder = "Enter a comment (max length 250 characters) .." 
-                value = {inputDesc}
-                onChange = {(e) => setInputDesc(e.currentTarget.value)}
-                hasError = {hasErrorDesc}/>
-            <Button variation = "primary" onClick = {submitCheck}>Create Comment</Button>
+            <br/><br/>
+            {alertDesc? (<Alert variation="error" isDimissible={true} hasIcon={true}>Please enter a comment</Alert>): null}   
         </Flex>
-        <Flex direction = "column" columnStart = "2" columnEnd = "-1">
+        
+        <Flex direction = "column" columnStart = "2" columnEnd = "-1" gap="2px">
+        <Flex direction = "row">
+            <Divider orientation = "vertical"/>
+        </Flex>
+        <Flex direction = "column" justifyContent="space-between">
         <Heading level = {4}>Comments:</Heading>
         <Collection
         type = "grid"
@@ -212,6 +275,15 @@ const CommentsPage = ({params}) => {
             
             ))}
         </Collection>
+        <TextAreaField label = "Enter a Comment Below:"
+                maxLength = {75}
+                rows = {2}
+                placeholder = "Enter a comment (max length 75 characters) .." 
+                value = {inputDesc}
+                onChange = {(e) => setInputDesc(e.currentTarget.value)}
+                hasError = {hasErrorDesc}/>
+        <Button variation = "primary" onClick = {submitCheck}>Create Comment</Button>
+        </Flex>
         </Flex>
     </Grid>
   );

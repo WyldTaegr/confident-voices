@@ -21,7 +21,8 @@ const advantageData = [
 
 const Advantages = () => {
 	return (
-		<section className={`${styles.advContainer} margin-on-side`}>
+		// removed ${styles.advContainer} from className, no existing import
+		<section className={`margin-on-side`}>
 			<SingleAdvantage data={advantageData[0]} />
 		</section>
 	);

@@ -40,6 +40,8 @@ const SlugmaPage = ({params}) => {
   };
 
 
+
+  useEffect(() => {
   const fetchAllAudios = async (questions) => {
     const urls = {};
     for (const question of questions) {
@@ -51,8 +53,6 @@ const SlugmaPage = ({params}) => {
     }
     setAudioUrls(urls);
   };
-
-  useEffect(() => {
     const fetchQuestions = async () => {
       try {
         // Fetch all questions
