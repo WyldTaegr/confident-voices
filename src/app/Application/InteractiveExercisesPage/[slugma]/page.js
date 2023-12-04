@@ -86,7 +86,7 @@ const SlugmaPage = ({params}) => {
     ) :(
     <Box sx={{ flexGrow: 1, padding: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Pronounce the following
+        Answer the following
       </Typography>
       <Grid container spacing={2}>
         {questions.map((question) => (
