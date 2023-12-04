@@ -102,8 +102,10 @@ const CommentsPage = ({params}) => {
      console.log(related_comments); //can comment out later
   };
 
-  // get all previous comment information
   useEffect(() => {
+        //used to get the particular post
+        fetchPost();
+        // get all previous comment information
         getAllCommentInfo();
         
   }, []);
