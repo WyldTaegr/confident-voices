@@ -436,6 +436,7 @@ export const onCreateExerciseProgress = /* GraphQL */ `
   ) {
     onCreateExerciseProgress(filter: $filter) {
       id
+      name
       student {
         id
         createdAt
@@ -460,6 +461,7 @@ export const onUpdateExerciseProgress = /* GraphQL */ `
   ) {
     onUpdateExerciseProgress(filter: $filter) {
       id
+      name
       student {
         id
         createdAt
@@ -484,6 +486,7 @@ export const onDeleteExerciseProgress = /* GraphQL */ `
   ) {
     onDeleteExerciseProgress(filter: $filter) {
       id
+      name
       student {
         id
         createdAt
@@ -510,6 +513,7 @@ export const onCreateQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        name
         studentID
         createdAt
         updatedAt
@@ -545,6 +549,7 @@ export const onUpdateQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        name
         studentID
         createdAt
         updatedAt
@@ -580,6 +585,7 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        name
         studentID
         createdAt
         updatedAt

@@ -277,6 +277,7 @@ export const getExerciseProgress = /* GraphQL */ `
   query GetExerciseProgress($id: ID!) {
     getExerciseProgress(id: $id) {
       id
+      name
       student {
         id
         createdAt
@@ -308,6 +309,7 @@ export const listExerciseProgresses = /* GraphQL */ `
     ) {
       items {
         id
+        name
         studentID
         createdAt
         updatedAt
@@ -335,6 +337,7 @@ export const exerciseProgressesByStudentID = /* GraphQL */ `
     ) {
       items {
         id
+        name
         studentID
         createdAt
         updatedAt
@@ -351,6 +354,7 @@ export const getQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        name
         studentID
         createdAt
         updatedAt
