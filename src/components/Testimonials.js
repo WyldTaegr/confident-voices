@@ -4,7 +4,8 @@ import SectionHeading from "./SectionHeading";
 import Image from "next/image";
 import useEmblaCarousel from 'embla-carousel-react'
 import { DotButton, NextButton, PrevButton } from "./CarouselButtons";
-const Testimonials = ( {testimonial} ) => {
+const Testimonials = ( {testimonoal} ) => {
+	
 	const [selectedIndex, setselectedIndex] = useState(0);
 	const [emblaRef, emblaApi] = useEmblaCarousel({
 		loop: true,
@@ -55,7 +56,7 @@ const Testimonials = ( {testimonial} ) => {
 	const renderDots = () => {
 		return (
 			<div className={`row ${styles.dotContainer}`}>
-				{testimonial && testimonial.map((_, index) => {
+				{testimonoal && testimonoal.map((_, index) => {
 					return (
 						<DotButton
 							key={index}
@@ -79,7 +80,7 @@ const Testimonials = ( {testimonial} ) => {
 				</div>
 				<div className="embla" ref={emblaRef}>
 					<div className="embla__container">
-						{testimonial && testimonial.map((item, index) =>
+						{testimonoal && testimonoal.map((item, index) =>
 							renderSingleTestimonial(item, index)
 						)}
 					</div>
