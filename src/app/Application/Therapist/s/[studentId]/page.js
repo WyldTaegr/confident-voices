@@ -1,6 +1,6 @@
 'use client'
 
-import { listExerciseProgressByStudent, listExercises } from "@/util/api";
+import { listExerciseProgressByStudent, listExercisesUnassigned } from "@/util/api";
 import { useEffect, useState } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
 
@@ -9,13 +9,17 @@ export default function StudentProgress({ params }) {
     params.studentId = params.studentId.replace(/\%40/g, "@");
 
     const [progressList, setProgressList] = useState([]);
+    const [progressNames, setProgressNames] = useState([]);
     const [exerciseList, setExerciseList] = useState([]);
     
     useEffect(() => {
-        listExerciseProgressByStudent(params.studentId).then((exercises) => {
-            setProgressList(exercises);
+        listExerciseProgressByStudent(params.studentId).then((progresses) => {
+            setProgressList(progresses);
+            listExercisesUnassigned(progresses).then(exercises => {
+                console.log(exercises);
+                setExerciseList(exercises)
+            });
         })
-        listExercises().then(exercises => setExerciseList(exercises));
     }, [params.studentId]);
 
     return (

@@ -571,6 +571,7 @@ export const createQuestionProgress = /* GraphQL */ `
         questionExampleId
         __typename
       }
+      description
       completed
       submissions {
         nextToken
@@ -608,6 +609,7 @@ export const updateQuestionProgress = /* GraphQL */ `
         questionExampleId
         __typename
       }
+      description
       completed
       submissions {
         nextToken
@@ -645,6 +647,7 @@ export const deleteQuestionProgress = /* GraphQL */ `
         questionExampleId
         __typename
       }
+      description
       completed
       submissions {
         nextToken

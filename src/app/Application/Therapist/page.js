@@ -15,10 +15,10 @@ export default function TherapistDashboard() {
         getCurrentUser().then((currentUser) => {
             setTherapistId(currentUser.attributes.email);
 
-            getStudentsByTherapist(therapistId).then((students) => {
+            getStudentsByTherapist(currentUser.attributes.email).then((students) => {
                 setStudentList(students.map((connection) => {
                     return connection.studentId;
-                }))
+                }));
             });
 
             listStudents().then((students) => {

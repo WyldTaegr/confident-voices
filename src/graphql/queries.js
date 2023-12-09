@@ -369,6 +369,7 @@ export const getQuestionProgress = /* GraphQL */ `
         questionExampleId
         __typename
       }
+      description
       completed
       submissions {
         nextToken
@@ -395,6 +396,7 @@ export const listQuestionProgresses = /* GraphQL */ `
     ) {
       items {
         id
+        description
         completed
         exerciseprogressID
         createdAt
@@ -424,6 +426,7 @@ export const questionProgressesByExerciseprogressID = /* GraphQL */ `
     ) {
       items {
         id
+        description
         completed
         exerciseprogressID
         createdAt
