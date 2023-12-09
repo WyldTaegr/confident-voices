@@ -11,25 +11,22 @@ export default function TherapistDashboard() {
     const [studentList, setStudentList] = useState([]);
     const [userList, setUserList] = useState([]);
 
+    async function updateInfo() {
+        const user = await getCurrentUser();
+        setTherapistId(user.attributes.email);
+        const students = await getStudentsByTherapist(user.attributes.email);
+        setStudentList(students.map(connection => connection.studentId));
+        const users = await listStudents();
+        setUserList(users);
+    }
+
     useEffect(() => {
-        getCurrentUser().then((currentUser) => {
-            setTherapistId(currentUser.attributes.email);
-
-            getStudentsByTherapist(currentUser.attributes.email).then((students) => {
-                setStudentList(students.map((connection) => {
-                    return connection.studentId;
-                }));
-            });
-
-            listStudents().then((students) => {
-                setUserList(students);
-            });
-            
-        })
+        updateInfo();
     }, [therapistId]);
 
     async function addStudent(studentId) {
         await connectStudentToTherapist(studentId, therapistId);
+        await updateInfo();
     }
 
     return (

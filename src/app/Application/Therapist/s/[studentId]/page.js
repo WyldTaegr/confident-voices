@@ -11,6 +11,13 @@ export default function StudentProgress({ params }) {
 
     const [progressList, setProgressList] = useState([]);
     const [exerciseList, setExerciseList] = useState([]);
+
+    async function updateInfo() {
+        const progresses = await listExerciseProgressByStudent(params.studentId);
+        setProgressList(progresses);
+        const exercises = await listExercisesUnassigned(progresses);
+        setExerciseList(exercises);
+    }
     
     useEffect(() => {
         listExerciseProgressByStudent(params.studentId).then((progresses) => {
@@ -20,10 +27,8 @@ export default function StudentProgress({ params }) {
     }, [params.studentId]);
 
     async function assignExercise(exercise) {
-        console.log("Click!", exercise.name)
         const progress = await createExerciseProgress(params.studentId, exercise);
-        console.log("Complete!");
-        setProgressList([...progressList, progress]);
+        await updateInfo();
     }
 
     return (

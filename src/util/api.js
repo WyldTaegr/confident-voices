@@ -94,37 +94,6 @@ export async function createExerciseProgress(studentId, exercise) {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     })).data.createExerciseProgress;
 
-    // TODO: build questionProgress set
-    console.log(2);
-    const questionFilter = {
-        filter: {
-            exerciseID: {
-                eq: exercise.id
-            }
-        }
-    }
-
-    const questions = (await API.graphql({
-        query: queries.listQuestions,
-        variables: questionFilter,
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    })).data.listQuestions.items;
-    console.log(3);
-    console.log(questions);
-    for (const question of questions) {
-        const questionDetails = {
-            exerciseprogressID: progress.id,
-            description: question.description,
-            completed: false
-        }
-        console.log("loop");
-        const result = await API.graphql({
-            query: mutations.createQuestionProgress,
-            variables: { input: questionDetails },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-        })
-    }
-
     return progress;
 }
 
