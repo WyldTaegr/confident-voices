@@ -81,8 +81,10 @@ export async function getStudent(studentID){
 }
 
 export async function createExerciseProgress(studentId, exercise) {
+    console.log(1);
     const progressDetails = {
         name: exercise.name,
+        exerciseProgressExerciseId: exercise.id,
         studentID: studentId
     }
 
@@ -93,7 +95,7 @@ export async function createExerciseProgress(studentId, exercise) {
     })).data.createExerciseProgress;
 
     // TODO: build questionProgress set
-
+    console.log(2);
     const questionFilter = {
         filter: {
             exerciseID: {
@@ -107,13 +109,15 @@ export async function createExerciseProgress(studentId, exercise) {
         variables: questionFilter,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     })).data.listQuestions.items;
-
+    console.log(3);
+    console.log(questions);
     for (const question of questions) {
         const questionDetails = {
             exerciseprogressID: progress.id,
             description: question.description,
             completed: false
         }
+        console.log("loop");
         const result = await API.graphql({
             query: mutations.createQuestionProgress,
             variables: { input: questionDetails },
@@ -304,6 +308,38 @@ export async function listExercises() {
     })
 
     return result.data.listExercises.items
+}
+
+export async function getExercise(exerciseId) {
+    const details = {
+        id: exerciseId
+    }
+
+    const result = await API.graphql({
+        query: queries.getExercise,
+        variables: details,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.getExercise;
+}
+
+export async function getQuestions(exerciseId) {
+    const details = {
+        filter: {
+            exerciseID: {
+                eq: exerciseId
+            }
+        }
+    }
+
+    const result = await API.graphql({
+        query: queries.listQuestions,
+        variables: details,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    
+    return result.data.listQuestions.items;
 }
 
 //RACHEL MESSED WITH THIS FUNCTION BELOW:

@@ -1,26 +1,30 @@
 'use client'
 
-import { listExerciseProgressByStudent, listExercisesUnassigned } from "@/util/api";
+import { createExerciseProgress, listExerciseProgressByStudent, listExercisesUnassigned } from "@/util/api";
 import { useEffect, useState } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function StudentProgress({ params }) {
 
     params.studentId = params.studentId.replace(/\%40/g, "@");
 
     const [progressList, setProgressList] = useState([]);
-    const [progressNames, setProgressNames] = useState([]);
     const [exerciseList, setExerciseList] = useState([]);
     
     useEffect(() => {
         listExerciseProgressByStudent(params.studentId).then((progresses) => {
             setProgressList(progresses);
-            listExercisesUnassigned(progresses).then(exercises => {
-                console.log(exercises);
-                setExerciseList(exercises)
-            });
+            listExercisesUnassigned(progresses).then(exercises => setExerciseList(exercises));
         })
     }, [params.studentId]);
+
+    async function assignExercise(exercise) {
+        console.log("Click!", exercise.name)
+        const progress = await createExerciseProgress(params.studentId, exercise);
+        console.log("Complete!");
+        setProgressList([...progressList, progress]);
+    }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center', padding: 2}}>
@@ -29,9 +33,9 @@ export default function StudentProgress({ params }) {
                 <Typography variant="h5">Active Exercises</Typography>
                 {progressList.length > 0 ? progressList.map((exerciseProgress) => {
                     return (
-                        <Paper key={exerciseProgress.id}>
-                            <p>{exerciseProgress.id}</p>
-                        </Paper>
+                        <Link key={exerciseProgress.id} href={`${params.studentId}/e/${exerciseProgress.exerciseProgressExerciseId}`} passHref>
+                            <Button variant="text">{exerciseProgress.name}</Button>
+                        </Link>
                     )
                 }) : <p>No exercises active.</p>}
             </Paper>
@@ -39,7 +43,7 @@ export default function StudentProgress({ params }) {
                 <Typography variant="h5">Assign Exercises</Typography>
                 {exerciseList.map((exercise) => {
                     return (
-                        <Button key={exercise.id} variant="outlined">{exercise.name}</Button>
+                        <Button key={exercise.id} variant="outlined" onClick={() => assignExercise(exercise)}>{exercise.name}</Button>
                     )
                 })}
             </Paper>

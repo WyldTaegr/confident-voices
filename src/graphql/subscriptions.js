@@ -437,6 +437,13 @@ export const onCreateExerciseProgress = /* GraphQL */ `
     onCreateExerciseProgress(filter: $filter) {
       id
       name
+      exercise {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       student {
         id
         createdAt
@@ -451,6 +458,7 @@ export const onCreateExerciseProgress = /* GraphQL */ `
       studentID
       createdAt
       updatedAt
+      exerciseProgressExerciseId
       __typename
     }
   }
@@ -462,6 +470,13 @@ export const onUpdateExerciseProgress = /* GraphQL */ `
     onUpdateExerciseProgress(filter: $filter) {
       id
       name
+      exercise {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       student {
         id
         createdAt
@@ -476,6 +491,7 @@ export const onUpdateExerciseProgress = /* GraphQL */ `
       studentID
       createdAt
       updatedAt
+      exerciseProgressExerciseId
       __typename
     }
   }
@@ -487,6 +503,13 @@ export const onDeleteExerciseProgress = /* GraphQL */ `
     onDeleteExerciseProgress(filter: $filter) {
       id
       name
+      exercise {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       student {
         id
         createdAt
@@ -501,6 +524,7 @@ export const onDeleteExerciseProgress = /* GraphQL */ `
       studentID
       createdAt
       updatedAt
+      exerciseProgressExerciseId
       __typename
     }
   }
@@ -517,6 +541,7 @@ export const onCreateQuestionProgress = /* GraphQL */ `
         studentID
         createdAt
         updatedAt
+        exerciseProgressExerciseId
         __typename
       }
       question {
@@ -554,6 +579,7 @@ export const onUpdateQuestionProgress = /* GraphQL */ `
         studentID
         createdAt
         updatedAt
+        exerciseProgressExerciseId
         __typename
       }
       question {
@@ -591,6 +617,7 @@ export const onDeleteQuestionProgress = /* GraphQL */ `
         studentID
         createdAt
         updatedAt
+        exerciseProgressExerciseId
         __typename
       }
       question {
