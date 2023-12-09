@@ -15,6 +15,9 @@ const Navbar = ({ userName, onSignOut }) => {
             </div>
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
+                <Link href="/Application/Therapist">
+                  <button className="px-3 py-2 rounded-md hover:bg-gray-700">Therapist</button>
+                </Link>
                 <Link href="/Application/CommunityPage">
                   <button className="px-3 py-2 rounded-md hover:bg-gray-700 ">Community</button>
                 </Link>

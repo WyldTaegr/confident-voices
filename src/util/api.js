@@ -80,32 +80,26 @@ export async function getStudent(studentID){
     return student.data.getStudent;
 }
 
-export async function createExerciseProgress(studentID){
-    const exerciseProgressParams = {
-        studentID: studentID
-    };
+export async function createExerciseProgress(studentId, exercise) {
+    console.log(1);
+    const progressDetails = {
+        name: exercise.name,
+        exerciseProgressExerciseId: exercise.id,
+        studentID: studentId
+    }
 
-    const newExerciseProgress = await API.graphql({
+    const progress = (await API.graphql({
         query: mutations.createExerciseProgress,
-        variables:{input: exerciseProgressParams},
+        variables: { input: progressDetails },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    });
+    })).data.createExerciseProgress;
 
-    return newExerciseProgress;
+    return progress;
 }
 
-export async function createS3Object1(name){
-    const s3ObjectData = {
-    name: name,
-    key: name, // or any other unique identifier you'd like to use
-    // You need to determine how to get this ID
-  };
-  await API.graphql({
-    query: mutations.createS3Object,
-    variables:{input: s3ObjectData},
-    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-  });
-}
+// TODO: link button in student page with above function
+// Add list of exercise names for tracking which exercises are assigned
+// Filter exercise list through name list
 
 export async function createS3Object(fileName, file, type) {
     const objectDetails = {
@@ -241,22 +235,39 @@ export async function getStudentsByTherapist(therapistId) {
         query: queries.listTherapistsStudents,
         variables: connectionDetails,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    })
+    });
 
     return result.data.listTherapistsStudents.items;
 }
 
 export async function listExerciseProgressByStudent(studentId) {
+    const details = {
+        filter: {
+            studentID: {
+                eq: studentId
+            }
+        }
+    }
+
     const result = await API.graphql({
         query: queries.listExerciseProgresses,
+        variables: details,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 
-    const exercises = result.data.listExerciseProgresses.items.filter(
-        (exercise) => exercise.studentID === studentId
-    )
-    console.log(exercises);
+    const exercises = result.data.listExerciseProgresses.items;
     return exercises;
+}
+
+export async function listExercisesUnassigned(progresses) {
+    const progressNames = progresses.map(progress => progress.name);
+    
+    const result = await API.graphql({
+        query: queries.listExercises,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    return result.data.listExercises.items.filter(exercise => !progressNames.includes(exercise.name));
 }
 
 export async function listExercises() {
@@ -266,6 +277,38 @@ export async function listExercises() {
     })
 
     return result.data.listExercises.items
+}
+
+export async function getExercise(exerciseId) {
+    const details = {
+        id: exerciseId
+    }
+
+    const result = await API.graphql({
+        query: queries.getExercise,
+        variables: details,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    })
+
+    return result.data.getExercise;
+}
+
+export async function getQuestions(exerciseId) {
+    const details = {
+        filter: {
+            exerciseID: {
+                eq: exerciseId
+            }
+        }
+    }
+
+    const result = await API.graphql({
+        query: queries.listQuestions,
+        variables: details,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    
+    return result.data.listQuestions.items;
 }
 
 //RACHEL MESSED WITH THIS FUNCTION BELOW:

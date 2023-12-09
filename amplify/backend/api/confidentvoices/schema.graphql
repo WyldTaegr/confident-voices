@@ -38,6 +38,8 @@ type Question @model @auth(rules: [{allow: public}, {allow: private}]) {
 
 type ExerciseProgress @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
+  name: String!
+  exercise: Exercise! @hasOne
   student: Student @belongsTo
   progress: [QuestionProgress] @hasMany(indexName: "byExerciseProgress", fields: ["id"])
   studentID: ID @index(name: "byStudent")
@@ -47,6 +49,7 @@ type QuestionProgress @model @auth(rules: [{allow: public}, {allow: private}]) {
   id: ID!
   exerciseProgress: ExerciseProgress! @belongsTo
   question: Question! @hasOne
+  description: String!
   completed: Boolean!
   submissions: [S3Object] @hasMany(indexName: "byQuestionProgress", fields: ["id"])
   exerciseprogressID: ID! @index(name: "byExerciseProgress")

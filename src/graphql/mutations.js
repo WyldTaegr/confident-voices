@@ -476,6 +476,14 @@ export const createExerciseProgress = /* GraphQL */ `
   ) {
     createExerciseProgress(input: $input, condition: $condition) {
       id
+      name
+      exercise {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       student {
         id
         createdAt
@@ -490,6 +498,7 @@ export const createExerciseProgress = /* GraphQL */ `
       studentID
       createdAt
       updatedAt
+      exerciseProgressExerciseId
       __typename
     }
   }
@@ -501,6 +510,14 @@ export const updateExerciseProgress = /* GraphQL */ `
   ) {
     updateExerciseProgress(input: $input, condition: $condition) {
       id
+      name
+      exercise {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       student {
         id
         createdAt
@@ -515,6 +532,7 @@ export const updateExerciseProgress = /* GraphQL */ `
       studentID
       createdAt
       updatedAt
+      exerciseProgressExerciseId
       __typename
     }
   }
@@ -526,6 +544,14 @@ export const deleteExerciseProgress = /* GraphQL */ `
   ) {
     deleteExerciseProgress(input: $input, condition: $condition) {
       id
+      name
+      exercise {
+        id
+        name
+        createdAt
+        updatedAt
+        __typename
+      }
       student {
         id
         createdAt
@@ -540,6 +566,7 @@ export const deleteExerciseProgress = /* GraphQL */ `
       studentID
       createdAt
       updatedAt
+      exerciseProgressExerciseId
       __typename
     }
   }
@@ -553,9 +580,11 @@ export const createQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        name
         studentID
         createdAt
         updatedAt
+        exerciseProgressExerciseId
         __typename
       }
       question {
@@ -567,6 +596,7 @@ export const createQuestionProgress = /* GraphQL */ `
         questionExampleId
         __typename
       }
+      description
       completed
       submissions {
         nextToken
@@ -589,9 +619,11 @@ export const updateQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        name
         studentID
         createdAt
         updatedAt
+        exerciseProgressExerciseId
         __typename
       }
       question {
@@ -603,6 +635,7 @@ export const updateQuestionProgress = /* GraphQL */ `
         questionExampleId
         __typename
       }
+      description
       completed
       submissions {
         nextToken
@@ -625,9 +658,11 @@ export const deleteQuestionProgress = /* GraphQL */ `
       id
       exerciseProgress {
         id
+        name
         studentID
         createdAt
         updatedAt
+        exerciseProgressExerciseId
         __typename
       }
       question {
@@ -639,6 +674,7 @@ export const deleteQuestionProgress = /* GraphQL */ `
         questionExampleId
         __typename
       }
+      description
       completed
       submissions {
         nextToken
