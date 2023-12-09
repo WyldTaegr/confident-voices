@@ -6,10 +6,10 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
-import data from "../constants/data";
+import data from "@/constants/data";
 import Head from "next/head";
 import React from 'react';
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import Link from 'next/link';
 import { Button } from '@aws-amplify/ui-react';
 
