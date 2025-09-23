@@ -1,29 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 🧐 Overview  
 
-## Getting Started
+**confident-voices** is a web application built with Next.js, designed to bridge the gap between speech therapists and their patients by enabling asynchronous communication and progress tracking. The platform provides a secure, interactive environment where therapy sessions and feedback can happen outside of real-time appointments, making therapy more accessible, flexible, and effective.  
 
-First, run the development server:
+### Core Features  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+1. **Secure Audio & Video Recordings**  
+   - Patients can record themselves speaking, reading, or practicing exercises.  
+   - Video support allows therapists to assess both **facial movements** and **vocal sounds**, ensuring a more comprehensive evaluation.  
+   - Recordings are stored securely, protecting patient privacy while enabling easy review.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Therapist Feedback Portal**  
+   - A dedicated space for therapists to provide **personalized feedback** on patient submissions.  
+   - Enables therapists to highlight strengths, suggest targeted improvements, and track long-term progress.  
+   - Streamlines communication without requiring back-and-forth scheduling of live calls.  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. **Community Interaction Page**  
+   - A moderated space where **therapists, patients, and guardians** can engage in discussions.  
+   - Encourages collaborative learning, peer support, and shared resources.  
+   - Helps patients and families feel less isolated in their therapy journey, while allowing therapists to share best practices.  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Why It Matters  
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
+Traditional speech therapy often relies on scheduled, real-time sessions. With **confident-voices**, therapy continues outside of the clinic: patients can practice at their own pace, therapists can provide thoughtful feedback when available, and guardians can actively participate in supporting progress. The result is a more **flexible, connected, and supportive therapy ecosystem**.  
